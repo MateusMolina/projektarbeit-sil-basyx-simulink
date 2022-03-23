@@ -22,7 +22,7 @@
 % Main class definition of MTSreport.cls
 % ==============================================================================
 \ProvidesClass{MTSreport}
-\NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e} 
 
 % ==============================================================================
 % Define boolean variables
