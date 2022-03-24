@@ -12,6 +12,7 @@
 *.cb2
 .*.lb
 
+examples/
 ## Intermediate documents:
 *.dvi
 *.xdv
