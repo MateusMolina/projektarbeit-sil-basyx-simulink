@@ -2,19 +2,26 @@
 
 \section{Motivation}
 % Details über Anwendung von Simulink im Markt
+Simulink wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren. \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}
+
+% Verbidung mit model basierte Entwicklung
+% Verbidung mit Industrie 4.0
 
 % Details über Anwendung von BaSys im Markt
+BaSys 4.0 ist ein vom BMBF gefördertes Forschungsprojekt, das von Fraunhofer IESE gemeinsam mit 14 weiteren Partnern aus dem Bereich der Produktionstechnik entwickelt wird, um digitale Zwillinge als digitale Repräsentanzen für die Produktion zu realisieren.  \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}
 
-% Schwiriegkeiten bei der Verbidung beider Werkzeugen
-% - Ref an der Stand der Technik
+Eine Open-Source Implementierung der von BaSys festgelegten Konzepten, ist Eclipse BaSyx, ein von BaSys finanziertes Middleware, das wiederverwendbaren Industrie 4.0 Komponenten und SDK in verschiedenen Programmiersprachen bereitstellt, wobei die schnelle Entwicklung neuer Software-Komponenten ermöglicht wird. \cite{eclipsefoundationinc.BaSyxEclipsepedia}
 
-% für milestone @mai 
-% Wer würde sich dafür interessieren?
-% Das wäre ein interessanter Sprechpunkt fürs Meeting
-% - Wie macht man eine Marktforschung passend für diese Art von Projekten?
-% - Methodologien??
-% - UX??
-% - Umfrage?? 
+% TODO Was für Firmen nutzen BaSyx?
+
+% Was für Vorteilen würden sich ergeben, durch die Verbindung beider Plattformen?
+% TODO #7 Hardware-In-The-Loop vs Model-In-The-Loop vs Model-Based Systems Engineering (MBSE)
+Simulink zusammen mit BaSyx könnten eingesetzt werden, um Hardware-In-The-Loop leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für das Simulieren einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde.  
+
+% Noch ein Use-Case hinzufügen
+
+% Keine einfache Methode beider Tools zu verbinden
+Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass sich eine Verbindung nur durch zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx vorausgesetzt wird, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{verbindung_basyxsimulink} finden.
 
 
 \section{Zielstellung}
