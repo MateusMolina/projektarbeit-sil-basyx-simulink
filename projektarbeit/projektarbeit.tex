@@ -1,7 +1,17 @@
 \documentclass[german, pt]{MTSreport}
 
-\usepackage{lipsum} %just for generating placeholder text
+\usepackage{lipsum}
 \bibliography{listings/bibliography}
+
+
+% Custom methods
+\makeatletter
+\newcommand{\setword}[2]{%
+  \phantomsection
+  #1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
+}
+\makeatother
+% End 
 
 \title{Ermöglichen von Hardware-in-the-Loop mit BaSyx und Simulink}
 % \subtitle{Untertitel wenn nötig} % Just delete it if you don't have a subtitle
