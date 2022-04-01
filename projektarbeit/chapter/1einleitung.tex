@@ -21,20 +21,35 @@ Simulink zusammen mit BaSyx könnten eingesetzt werden, um Hardware-In-The-Loop 
 % Noch ein Use-Case hinzufügen
 
 % Keine einfache Methode beider Tools zu verbinden
-Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass sich eine Verbindung nur durch zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx vorausgesetzt wird, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{verbindung_basyxsimulink} finden.
+Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{verbindung_basyxsimulink} finden.
 
 
 \section{Zielstellung}
-Im Rahmen dieser Arbeit soll eine Simulink-Bibliothek entwickelt werden, die eine Kommunikation zwischen BaSyx-Servers und Simulink bereitstellt.
+Im Rahmen dieser Arbeit soll eine Simulink-Bibliothek entwickelt werden, die die Kommunikation zwischen BaSyx-Servers und Simulink ermöglicht. 
 
 % Zusammengefasster Umfang
 1. Bibliothek für Simulink
+2. Demonstrator für die entwickelte Bibliothek 
 
 
 % für milestone @mai
 % Anforderungstabelle
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c | c|} 
+        \hline
+        id & Anforderung \\ 
+        \hline
+        \setword{A10}{req:A10} & Soll mit einem BaSyx-Server verbinden können \\
+        \hline
+    \end{tabular}
+    \caption{Anforderungstabelle}
+    \label{table:Anforderungstabelle}
+    \end{table}
 % - Herleitung der Tabelle
 % - Ausgabe der Marktforshcung??
+
+Laut der Anforderung \ref{req:A10}
 
 
 \section{Gliederung der Arbeit}
