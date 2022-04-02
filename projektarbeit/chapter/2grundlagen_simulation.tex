@@ -1,0 +1,73 @@
+
+% ISSUE #11 add more sources to Simulationsprozess
+\section{Der Simulationsprozess}
+ 
+Unter Simulation wird die Nachahmung der Funktionsweise eines realen Systems verstanden. Im Kerne der Simulation steht ein Modell, Konstrukt, das die für die Anwendung wichtigste Merkmale des ausgewählten Systems darstellt. 
+
+Sie finden Anwendung in unterschiedliche Bereiche der Technik und nehmen eine wichtige Rolle bei der Lösung dynamischen und komplexen Problemen, die mittels analytischer Vorgehensweise nicht ohne weiteres gelöst werden können. Durch ihren Einsatz gewinnt der Nutzer Klarheit und Verständnis an dem Entwicklungsprozess \cite{zimmerDurchgangigerSimulationsprozessZur2015}. 
+
+In den folgenden Unterkapiteln werden \emph{Hardware-in-the-loop} und \emph{Software-in-the-loop} vorgestellt, zwei Prozessabläufe einer Simulation, die im Produktentstehungsprozess häufig verwendet werden. Der Begriff \emph{x-in-the-loop} deutet darauf hin, dass Abstraktionen eines Systems im Laufe des Entwicklungsprozesses eingesetzt werden, bzw. die Anbindung eines physischen Prototyps, sowie teil des Softwares an die Simulationsumgebung.  
+
+% RESEARCH
+\begin{comment}
+Simulationen werden häufig eingesetzt, wenn dynamische Vorgänge eines Systems beschrieben werden sollen, ein Lösungsansatz nach analytischer Vorgehensweise nicht ohne weiteres gefunden werden kann oder ein Lösungsansatz zu stark simplifiziert ist.
+Der Begriff „Simulation“ wird oftmals mit den Wörtern „Verifikation“ und „Validierung“ in Verbindung gebracht. Gemeint ist, dass die einzelnen Simulationsmodelle der durchzuführenden Simulation den Anforderungen, welche man an sie stellt, auch entsprechen
+
+Validierung Durch die Validierung soll die Anforderung an ein Produkt und eine Wiederholbarkeit des Ergebnisses sichergestellt werden. Die Validierung wird durchgeführt, indem das Modellverhalten mit dem Verhalten des realen Systems verglichen wird und die Differenzen evaluiert werden.
+
+Verifikation Die Verifikation soll gewährleisten, dass ein Simulationsmodell seiner Spezifikation entspricht und damit zum Beispiel die Wertigkeit eines Softwareproduktes für den operativen Einsatz aufzeigt
+
+Im Folgenden werden Prozessabläufe einer Simulation exemplarisch vorgestellt, welche unter anderem bei der Umsetzung des in dieser Arbeit entwickelten Simulationsprozesses als Modell dienen. Durch die sukzessive Weiterentwicklung von Simulationsmethoden können Lücken in der Prozesskette geschlossen und neue Felder identifiziert werden. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+
+x-in-the-Loop
+software-in-the-loop
+model-in-the-loop
+
+In Abbildung 30 sind die drei Eckpfeiler einer durchgängigen Simulationskette dargestellt. Dabei wird die Informationsnotwendigkeit durch die (verfügbaren) Modelle, das Konzept der Simulation durch die Architektur und die Zusammensetzung der einzelnen Simulationskomponenten durch die Anforderungen repräsentiert. Mit diesen Anforderungen an den Umgang der Durchgängigkeit lassen sich in dieser Produktentwicklungsphase ein besseres Gesamtverständnis des Systems und eine Steigerung des Reifegrades zu früheren Zeitpunkten erreichen.
+
+\begin{figure}[H]\centering
+\includegraphics[width=10cm,height=10cm,keepaspectratio]{media/2022-04-02-18-31-51.png}
+\caption{Die drei Eckpfeiler eines durchgängigen Simulationsprozesses: Modelle, Architektur und Anforderungen}
+\label{fig:simulationsprozess}
+\end{figure}
+
+\end{comment}
+
+\subsection{Hardware-in-the-Loop (HiL)}
+\emph{Hardware-in-the-Loop} (HiL)
+Ein reales System durch Einsatz von physischen Prototypen ist oftmals wegen den mehreren Konfigurationsmöglichkeiten nicht möglich. Eine Alternative dazu stellt die Anbindung der Hardware an die Simulationsumgebung, hauptsächlich durch eine elektrische Schnittstelle \cite{zimmerDurchgangigerSimulationsprozessZur2015}. Dieser Prozess wird als \emph{Hardware-in-the-Loop} (HiL) genannt. \textquote[\cite{zimmerDurchgangigerSimulationsprozessZur2015}]{Hardware-in-the-Loop (HiL) Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.}
+
+
+
+% RESEARCH
+\begin{comment}
+Durch die zunehmende Anzahl an vernetzten Steuergeräten in Fahrzeugen nimmt die Bedeutung der Simulation zur Steigerung von Synergiepotenzialen und zur Vermeidung von Fehlfunktionen stetig zu. Eine Überprüfung durch reale Prototypen ist durch die Vielzahl an Konfigurationsmöglichkeiten nicht mehr möglich. Außerdem sind häufig Einsatzszenarien gefordert, zu denen die Hardwarekomponente noch nicht verfügbar ist. Das Konzept des Hardware-in-the-Loop (HiL) Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.
+Im Fokus sind bei diesem Ansatz vor allem Steuergeräte wie Fahrwerksregelsysteme, Antriebssteuergeräte und Komfortsteuergeräte sowie Bauteile von Motor, Getriebe, etc. des Fahrzeugs. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+\end{comment}
+
+\subsection{Software-in-the-Loop}
+Ein Nachteil des \emph{Hardware-in-the-Loop} wäre der relativ Verzug, bis im Projekt die Hardware verfügbar wird \cite{zimmerDurchgangigerSimulationsprozessZur2015}. Eine Alternative für das Testen in früheren Phasen ist die Erstellung einer Software-Darstellung des Systems, die die für die Phase notwendigen Anforderungen abdeckt. Damit lässt sich eine reine Software-Schnittstelle zwischen den Testkomponenten verwenden, im Gegensatz zu einer aufwendigeren elektrischen Schnittstelle, was für das \emph{Hardware-in-the-Loop} der Fall ist \cite{zimmerDurchgangigerSimulationsprozessZur2015}. 
+
+
+% RESEARCH
+\begin{comment}
+Der Nachteil der oben erwähnten HiL-Systeme, dass die Hardware teilweise relativ spät zur Verfügung steht, kann durch den Software-in-the-loop (SiL) Ansatz kompensiert werden. Während der Implementierungsphase können Nutzer Regelungsstrategien anhand dieser SiL Systemen testen. Im Gegensatz zu HiL Systemen, bei denen eine elektrische Schnittstelle verwendet wird, sind die Schnittstellen zwischen den Testkomponenten auf Betriebssystem-Ebene, also reine Software-Schnittstellen. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+\end{comment}
+
+
+% \subsection{Model-in-the-Loop}
+
+% % RESEARCH
+% \begin{comment}
+% Das Funktionsmodell, welches getestet werden soll, ist ein Modell des Systems. Damit befindet es sich innerhalb der Regelschleife und umfangreiche Funktions157 Eigene Darstellung. Simulationsgrundlagen tests in einer frühen Entwicklungsphase sind möglich. Zusätzlich zu den Funktionstests können Modellabdeckungstests durchgeführt werden. In dieser Arbeit werden für die Bewertung von Fahrzeugkonzepten unterschiedliche Funktionsmodelle in das Simulationsmodell implementiert, so dass Anforderungen an die Komponenten im Kontext Gesamtsystem untersucht werden können. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+% \end{comment}
+
+
+% \subsection{Model-Based Systems Engineering (MBSE)}
+
+% % RESEARCH
+% \begin{comment}
+% Der Einsatz von Modellen anstatt von Dokumenten ist vorteilhaft in Entwicklungsszenarien, in welchen mehrere Disziplinen involviert sind. In diesem Unterkapitel werden zunächst die Vorteile digitaler Modelle in beiden zentralen Gruppen von Aktivitäten der Synthese und Analyse in der Produktentwicklung vorgestellt. Nach dieser Motivation wird der Begriff des Modellbasierten Systems Engineering (MBSE) eingeführt. \cite{eignerModellbasierteVirtuelleProduktentwicklung2014a}
+
+% Modellbasiertes Systems Engineering (engl.: Model-Based Systems Engineering) ist die formalisierte Anwendung von Modellbildung, um die Aktivitäten der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines Systems, beginnend von der Konzeptphase, über die Entwicklungsphase bis zu späteren Lebenszyklusphasen zu unterstützen (nach [21]). \cite{eignerModellbasierteVirtuelleProduktentwicklung2014a}
+% \end{comment}
