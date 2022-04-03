@@ -8,6 +8,18 @@ Simulink ist eine Blockdiagramm-Umgebung für die Auslegung von Systemen mit Meh
 
 Simulink bietet einen grafischen Editor, anpassbare Blockbibliotheken und Solver für die Modellierung und Simulation dynamischer Systeme. Dieses Werkzeug ist in MATLAB integriert, sodass das Einbinden von MATLAB-Algorithmen in Modelle und das Exportieren von Simulationsergebnissen zur weiteren Analyse nach MATLAB unterstützt werden \cite{themathworksinc.SimulinkGettingStarted}.
 
+Der fundamentale Baustein des Simulink ist der Block (Abb. \ref{fig:SimulinkBlock}), der aus einem Satz von Eingaben, Ausgaben, Zuständen und Parametern besteht. 
+
+\begin{figure}[H]\centering
+\includegraphics[width=10cm,height=10cm,keepaspectratio]{media/2022-04-03-12-48-03.png}
+\caption{Struktur eines Simulink-Blockes \cite{themathworksinc.WhatSFunctionMATLAB}}
+\label{fig:SimulinkBlock}
+\end{figure}
+
+Blocks können miteinander verbunden und verschachteln werden, wobei das Abbild eines Systems sofort sichtbar wird und sein Verhalten sich direkt in der Software in jedem Moment durch Testen validieren lässt.
+
+
+
 % TODO #13 MBSE in [2grundlagen_simulink]
 \subsection{Model-Based Systems Engineering (MBSE)}
 
@@ -23,10 +35,35 @@ Unter dem Begriff „Model-Based Systems Engineering (MBSE)“ versteht man die 
 
 % TODO #16 Schreiben S-Functions in Grundlagen
 \subsection{MATLAB S-Functions}
+\emph{S-Functions} (System-Funktionen) sind ein leistungsfähiger Mechanismus zur Erweiterung der Fähigkeiten der Simulink-Umgebung. Eine \emph{S-Function} ist eine in einer der unterstützten Programmiersprachen von MATLAB (MATLAB, C, C++ oder Fortran) geschriebene Beschreibung eines Simulink-Blocks in Computersprache.  \cite{themathworksinc.WhatSFunctionMATLAB}
+
+Sie werden in jedem Simulationsschritt ausgeführt und können in unterschiedlichen Momenten angewandt werden, z.B. an der Initialisierung, Aktualisierung und Terminierung, sowie bei Eingeben und Ausgeben eines Blockes. Damit lässt sich in Simulink personalisierte Verhalten einbetten, wie z.B. die Verbindung mit anderen Plattformen, wodurch der Austausch vom Parametersatz ermöglicht wird.  
+
+
 
 % RESEARCH
 \begin{comment}
-    
+S-Function Callback Methods
+
+An S-function comprises a set of S-function callback methods that perform tasks required at each simulation stage. During simulation of a model, at each simulation stage, the Simulink engine calls the appropriate methods for each S-Function block in the model. Tasks performed by S-function callback methods include:
+
+    Compilation — In this stage, the Simulink engine initializes the S-function. Tasks include:
+
+        Incorporating library blocks into the model, and propagating signal widths, data types, and sample times
+
+        Setting the number and dimensions of input and output ports
+
+        Evaluating block parameters, and determining the block execution order
+
+        Allocating memory and storage areas.
+
+    Calculation of outputs — At this state, outputs are calculated until all the block output ports are valid for the current time step, namely all output values are at a certain error range.
+
+    Update discrete states — In this call, the block performs once-per-time-step activities such as updating discrete states.
+
+    Initialize and Terminate Methods — These optional methods perform initialization and termination activities required by S-function only once. The initialization activities may include setting up user data, or initializing state vectors in an S-function. The termination method performs any actions such as freeing of memory that is required when the simulation is terminated, or when an S-function block is deleted from a model.
+
+    Integration — This applies to models with continuous states and/or nonsampled zero crossings. If your S-function has continuous states, the engine calls the output and derivative portions of your S-function at minor time steps. This is so the solvers can compute the states for your S-function. If your S-function has nonsampled zero crossings, the engine also calls the output and zero-crossings portions of your S-function at minor time steps so that it can locate the zero crossings.
 \end{comment}
 
 % TODO #14 Schreiben MatLab Production Server in [2grundlagen_simulink]
