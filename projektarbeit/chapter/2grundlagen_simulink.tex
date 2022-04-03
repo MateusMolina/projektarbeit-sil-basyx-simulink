@@ -1,10 +1,16 @@
 \section{MATLAB/Simulink}
 MATLAB ist ein leistungsfähiges Programm, um numerische Berechnungen in Ingenieurbereich. Diese Software findet Anwendung in der Berechnung, Modellierung und Simulation technischer Systeme und wird sowohl in unterschiedlichen Branchen der Industrie, als auch in der Universität eingesetzt. MATLAB bietet die Grundlage, um mathematische Berechnungen, Datenanalyse, Modellbildung und die Entwicklung von interaktiven Anwendungen zu realisieren \cite{boslEinfuhrungMATLABSimulink2020}.
 
-MATLAB setzt sich aus mehreren \emph{toolboxes} aus, die jeweils bestimmte Bereiche der Ingenieurwissenschaften abdecken. Eine der bekanntesten \emph{toolboxes} ist Simulink, die eine Blockdiagramm-Umgebung für Multi-Domäne-Simulationen und modellbasierten Entwurf bietet. Diese \emph{toolbox} wird in dem nächsten Unterkapitel besser erläutern.
+MATLAB setzt sich aus mehreren \emph{toolboxes} aus, die jeweils bestimmte Bereiche der Ingenieurwissenschaften abdecken. Eine der bekanntesten \emph{toolboxes} ist Simulink, die eine Blockdiagramm-Umgebung für Multi-Domäne-Simulationen und modellbasierten Entwurf bietet. Diese \emph{toolbox} und der obere Begriff \emph{Model-Based Systems Engineering} werden in dem nächsten Unterkapitel besser erläutern.
+
+% TODO #13 MBSE in [2grundlagen_simulink]
+\subsection{Model-Based Systems Engineering (MBSE)}
+Modellbasiertes Systems Engineering (engl.: \emph{Model-Based Systems Engineering}, MBSE) ist die \textquote[\cite{eignerModellbasierteVirtuelleProduktentwicklung2014a}]{formalisierte Anwendung von Modellbildung, um die Aktivitäten der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines Systems, beginnend von der Konzeptphase, über die Entwicklungsphase bis zu späteren Lebenszyklusphasen zu unterstützen}.
+
+Modellen dienen zur vereinfachten Darstellung von komplexen Szenarien und können in Lauf des Entwicklungsprozesses eingesetzt werden, wobei oftmals der reine Einsatz von Dokumenten zur Undeutlichkeit und Verkomplizierung eines Systems führen kann. Sie finden häufig Anwendung bei der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines technischen Projektes \cite{eignerModellbasierteVirtuelleProduktentwicklung2014a}.
 
 \subsection{Simulink}
-Simulink ist eine Blockdiagramm-Umgebung für die Auslegung von Systemen mit Mehrdomänenmodellen, Simulationen vor der Umstellung auf Hardware und Bereitstellung des Systems. Mit diesem Werkzeug werden der Entwurf auf Systemebene, die Simulation, die automatische Codegenerierung sowie den kontinuierlichen Test und die Verifikation eingebetteter Systeme unterstützt \cite{themathworksinc.SimulinkGettingStarted}.
+Simulink ist eine Blockdiagramm-Umgebung für die Auslegung von Systemen mit Mehrdomänenmodellen, Simulationen vor der Umstellung auf Hardware und Bereitstellung des Systems. Mit diesem Werkzeug werden der Entwurf auf Systemebene, die Simulation, die automatische Codegenerierung sowie den kontinuierlichen Test und die Verifikation eingebetteter Systeme unterstützt \cite{themathworksinc.SimulinkGettingStarted}. Daher lassen sich MBSE und wichtige Aufgaben des Produktentstehungsprozesses wie Architekturwahl, detaillierter Entwurf, die Implementierung und das Testen durch dieses Werkzeuges realisieren \cite{themathworksinc.SimulinkGettingStarted}.
 
 Simulink bietet einen grafischen Editor, anpassbare Blockbibliotheken und Solver für die Modellierung und Simulation dynamischer Systeme. Dieses Werkzeug ist in MATLAB integriert, sodass das Einbinden von MATLAB-Algorithmen in Modelle und das Exportieren von Simulationsergebnissen zur weiteren Analyse nach MATLAB unterstützt werden \cite{themathworksinc.SimulinkGettingStarted}.
 
@@ -20,8 +26,7 @@ Blocks können miteinander verbunden und verschachteln werden, wobei das Abbild 
 
 
 
-% TODO #13 MBSE in [2grundlagen_simulink]
-\subsection{Model-Based Systems Engineering (MBSE)}
+
 
 % RESEARCH
 \begin{comment}
@@ -67,10 +72,8 @@ An S-function comprises a set of S-function callback methods that perform tasks 
 \end{comment}
 
 % TODO #14 Schreiben MatLab Production Server in [2grundlagen_simulink]
-\subsection{MATLAB Production Server}
+% \subsection{MATLAB Production Server}
 
-
-
-% RESEARCH
-\begin{comment}
-\end{comment}
+% % RESEARCH
+% \begin{comment}
+% \end{comment}
