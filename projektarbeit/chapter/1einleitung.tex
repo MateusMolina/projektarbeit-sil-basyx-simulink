@@ -16,20 +16,30 @@ Eine Open-Source Implementierung der von BaSys festgelegten Konzepten, ist Eclip
 
 % Was für Vorteilen würden sich ergeben, durch die Verbindung beider Plattformen?
 % TODO #7 Hardware-In-The-Loop vs Model-In-The-Loop vs Model-Based Systems Engineering (MBSE)
-Simulink zusammen mit BaSyx könnten eingesetzt werden, um Hardware-In-The-Loop leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für das Simulieren einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde.  
+Simulink zusammen mit BaSyx könnten eingesetzt werden, um \emph{Hardware-In-The-Loop}, bzw. \emph{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für das Simulieren einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde.  
 
-% Noch ein Use-Case hinzufügen
+Mit der erfolgreichen Umsetzung des Projekts werden folgende Leistungen erwartet:
+
+\begin{itemize}
+    \item Mehr Anreiz, früher im Projekt nach BaSys strukturierte digitale Zwillinge einzusetzen
+    \item vereinfachte und schnellereAnbindung eines zu testen Hardware/Software an ein MATLAB/Simulink-Modell;
+    \item Reduzieren der Lernkurve, Ingenieure in Simulink mit BaSyx verträglichen Modellen herstellen zu können;
+    \item wirksame Einsetzung realer Daten in MATLAB/Simulink/Modellen.  
+\end{itemize}
+
 
 % Keine einfache Methode beider Tools zu verbinden
-Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{verbindung_basyxsimulink} finden.
+Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{marktforschung} finden.
 
 
 \section{Zielstellung}
 Im Rahmen dieser Arbeit soll eine Simulink-Bibliothek entwickelt werden, die die Kommunikation zwischen BaSyx-Servers und Simulink ermöglicht. 
 
 % Zusammengefasster Umfang
-1. Bibliothek für Simulink
-2. Demonstrator für die entwickelte Bibliothek 
+\begin{enumerate}
+    \item Entwicklung einer Bibliothek für MATLAB/Simulink, um die Verbindung mit BaSyx AAS zu vereinfachen.
+    \item Einsetzung der Bibliothek in einem Anwendungsbeispiel, das alle Anforderungen aus der Tabelle \ref{table:Anforderungstabelle} erfüllt.
+\end{enumerate}
 
 
 % für milestone @mai
