@@ -1,0 +1,104 @@
+\documentclass{beamer}
+
+\usetheme{Dresden}
+\title{Ermöglichen von Hardware- und Software-in-the-Loop mit BaSyx und MATLAB/Simulink}
+\subtitle{Aktueller Zustand}
+\author{Mateus Molina}
+\institute{Technische Universität Kaiserslautern}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Zusammenfassung der abgearbeiteten Punkte}
+\subsection{Einleitung}
+\begin{frame}
+    \frametitle{Motivation}
+    \begin{itemize}
+        \item Simulink zusammen mit BaSyx könnten eingesetzt werden, um \emph{Hardware-In-The-Loop}, bzw. \emph{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für das Simulieren einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde.
+        \item Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Motivation}
+    Eine unkomplizierte und erfolgreiche Verbindung der beiden Plattformen würde dem Stand der Technik folgende Vorteile bringen:
+    \begin{itemize}
+        \item Mehr Anreiz, früher im Projekt nach BaSys strukturierte digitale Zwillinge einzusetzen
+        \item vereinfachte und schnellere Anbindung eines zu testen Hardware/Software an ein MATLAB/Simulink-Modell;
+        \item Reduzieren der Lernkurve, Ingenieure in Simulink mit BaSyx verträglichen Modellen herstellen zu können;
+        \item wirksame Einsetzung realer Daten in MATLAB/Simulink/Modellen.  
+    \end{itemize}
+
+\end{frame}
+\begin{frame}
+    \frametitle{Zielstellung}
+    \begin{enumerate}
+        \item Entwicklung einer Bibliothek für MATLAB/Simulink, um die Verbindung mit BaSyx AAS zu vereinfachen;
+        \item Einsetzung der Bibliothek in einem Anwendungsbeispiel.
+    \end{enumerate}    
+\end{frame}
+
+\subsection{Theoretische Grundlagen}
+\begin{frame}
+    \frametitle{Theoretische Grundlagen}
+    \begin{itemize}
+        \item Simulationsprozess
+        \begin{itemize}
+            \item Hardware-in-the-Loop
+            \item Software-in-the-Loop
+        \end{itemize}
+        \item MATLAB/Simulink und MBSE
+        \begin{itemize}
+            \item Model-Based Systems Engineering
+            \item Simulink
+            \item MATLAB S-Functions
+        \end{itemize}    
+        \item Industrie 4.0
+        \begin{itemize}
+            \item BaSys
+            \item Eclipse BaSyx
+                \begin{itemize}
+                    \item digitaler Zwilling (AAS)
+                    \item BaSyx-Komponenten
+                \end{itemize}
+        \end{itemize}    
+        \item REST-Schnittstelle
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Aufbau der Referenzen}
+    \begin{itemize}
+        \item Uni-Bibliothek
+        \item Eclipse BaSyx Online Wiki und Papers von dessen Entwicklern
+        \item MATLAB Wiki und Starting Guides
+    \end{itemize}
+\end{frame}
+
+\section{Diskussion}
+\begin{frame}
+    \frametitle{Verteilung erstes Entwurfes}
+    Der erste Entwurf der Projektarbeit wird am Ende des Meetings verteilt. 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Diskussion}
+    \begin{enumerate}
+        \item Umfang und Datum für die nächste Abgabe
+        \item Notwendigkeit einer Machbarkeitsstudie
+        \item Marktforschung, um das Projekt zu rechtfertigen. Wie könnte ich es am besten durchführen?
+    \end{enumerate}
+
+\end{frame}
+
+
+\end{document}
