@@ -12,13 +12,13 @@ BaSys 4.0 ist ein vom BMBF gefördertes Forschungsprojekt, das von Fraunhofer IE
 % TODO Was für Firmen nutzen BaSyx?
 % Was für Vorteilen würden sich ergeben, durch die Verbindung beider Plattformen?
 % TODO #7 Hardware-In-The-Loop vs Model-In-The-Loop vs Model-Based Systems Engineering (MBSE)
-Simulink zusammen mit BaSyx könnten eingesetzt werden, um \emph{Hardware-In-The-Loop}, bzw. \emph{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für das Simulieren einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde. 
+Simulink zusammen mit BaSyx könnten eingesetzt werden, um \emph{Hardware-In-The-Loop}, bzw. \emph{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde. 
 
 Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine unkomplizierte und erfolgreiche Verbindung der beiden Plattformen würde dem Stand der Technik folgende Vorteile bringen:
 
 \begin{itemize}
     \item Mehr Anreiz, früher im Projekt nach BaSys strukturierte digitale Zwillinge einzusetzen
-    \item vereinfachte und schnellereAnbindung eines zu testen Hardware/Software an ein MATLAB/Simulink-Modell;
+    \item vereinfachte und schnellere Anbindung eines zu testen Hardware/Software an ein MATLAB/Simulink-Modell;
     \item Reduzieren der Lernkurve, Ingenieure in Simulink mit BaSyx verträglichen Modellen herstellen zu können;
     \item wirksame Einsetzung realer Daten in MATLAB/Simulink/Modellen.  
 \end{itemize}
@@ -27,7 +27,7 @@ Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{ma
 
 \section{Zielstellung}
 
-Eine mögliche Lösung besteht in einer Simulink-Bibliothek, die in der Lage ist, Verbindungen mit BaSyx-Servern zu realisieren und das Abrufen und Aktualisieren von AAS-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
+Eine mögliche Lösung für die oben besprochene Problemstellung besteht in einer Simulink-Bibliothek, die in der Lage ist, Verbindungen mit BaSyx-Servern zu realisieren und das Abrufen und Aktualisieren von AAS-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
 
 Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek und eines Anwendungsbeispieles, das im Wesentlichen aus einem Simulink-Modell besteht, das die entwickelte Bibliothek in Zusammenhang mit einem AAS nutzt. Unten wird der vorgesehene Umfang zusammengefasst:
 
