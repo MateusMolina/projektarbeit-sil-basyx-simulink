@@ -1,5 +1,3 @@
-
-#include "../libs/CxxUrl/url.hpp"
 #include<string>
 
 using std::string;
@@ -7,12 +5,12 @@ using std::string;
 class AasProvider{
     private:
         string aasId;
-        Url aasUrl;
+        string aasUrl;
         
         void testConnection();
 
     public:
-        AasProvider(const string &aasId, const Url &aasUrl);
+        AasProvider(const string &aasId, const string &aasUrl);
 
         auto getPropertyValue(const string &submodelIdShort, const string &propId);
         void setPropertyValue(const string &submodelIdShort, const string &propId, const string &value);
