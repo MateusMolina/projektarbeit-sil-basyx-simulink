@@ -12,17 +12,13 @@ struct HttpResponse{
 };
 class HttpConnection{
     private:
-
-    public:
         CURLcode curlCode = CURLE_OK;
         CURL* _curlHandle;
 
+    public:
+
         HttpConnection(const string &urlStr);
  
-        static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
-
-        static HttpConnection startHttpConnection(const string &urlStr);
-        
         ~HttpConnection();
 
         HttpResponse post(string &&payload);
@@ -32,6 +28,8 @@ class HttpConnection{
         HttpResponse get();  
         
         CURLcode getCurlCode() { return curlCode; }
+
+        static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
 };
 
 #endif

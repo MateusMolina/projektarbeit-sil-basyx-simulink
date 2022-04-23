@@ -16,10 +16,6 @@ HttpConnection::HttpConnection(const string &urlStr){
 
 }
 
-HttpConnection HttpConnection::startHttpConnection(const string &urlStr){
-    return HttpConnection(urlStr);
-}
-
 HttpResponse HttpConnection::get(){
     string readBuffer;
     curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
