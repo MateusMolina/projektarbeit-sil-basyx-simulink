@@ -20,22 +20,33 @@ HttpConnection HttpConnection::startHttpConnection(const string &urlStr){
     return HttpConnection(urlStr);
 }
 
-string HttpConnection::get(){
+HttpResponse HttpConnection::get(){
     string readBuffer;
     curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(_curlHandle, CURLOPT_WRITEDATA, &readBuffer);
     curlCode = curl_easy_perform(_curlHandle);
-    return readBuffer;
+    HttpResponse r = HttpResponse();
+    r.curlCode = curlCode;
+    r.raw = readBuffer;
+    return r;
 }
 
-void HttpConnection::post(string &&payload){
+HttpResponse HttpConnection::post(string &&payload){
+    string readBuffer;
     char* data = payload.data();
     curl_easy_setopt(_curlHandle, CURLOPT_POSTFIELDS, data);
+    curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(_curlHandle, CURLOPT_WRITEDATA, &readBuffer);
     curlCode = curl_easy_perform(_curlHandle);
+
+    HttpResponse r = HttpResponse();
+    r.curlCode = curlCode;
+    r.raw = readBuffer;
+    return r;
 }
 
-void HttpConnection::put(string &&payload){
-
+HttpResponse HttpConnection::put(string &&payload){
+    return HttpResponse();
 }
 
 HttpConnection::~HttpConnection(){

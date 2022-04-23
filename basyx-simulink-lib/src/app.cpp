@@ -4,6 +4,6 @@
 
 int main(void) {
     std::string urlStr = "https://gorest.co.in/public/v2/users/2900";
-    std::cout << HttpConnection::startHttpConnection(urlStr).get();
+    std::cout << HttpConnection::startHttpConnection(urlStr).get().raw;
 
 }

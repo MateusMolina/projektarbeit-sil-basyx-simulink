@@ -6,7 +6,10 @@
 
 using std::string;
 
-
+struct HttpResponse{
+    string raw; 
+    CURLcode curlCode;
+};
 class HttpConnection{
     private:
 
@@ -22,11 +25,11 @@ class HttpConnection{
         
         ~HttpConnection();
 
-        void post(string &&payload);
+        HttpResponse post(string &&payload);
 
-        void put(string &&payload);
+        HttpResponse put(string &&payload);
 
-        string get();  
+        HttpResponse get();  
         
         CURLcode getCurlCode() { return curlCode; }
 };
