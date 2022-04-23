@@ -1,1 +1,5 @@
 build/
+/_build/
+.cproject
+.project
+.settings/

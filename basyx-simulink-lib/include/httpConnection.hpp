@@ -11,7 +11,7 @@ class HttpConnection{
     private:
 
     public:
-        CURLcode curlCode;
+        CURLcode curlCode = CURLE_OK;
         CURL* _curlHandle;
 
         HttpConnection(const string &urlStr);
