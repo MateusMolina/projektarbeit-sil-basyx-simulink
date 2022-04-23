@@ -10,16 +10,18 @@ size_t HttpConnection::WriteCallback(void *contents, size_t size, size_t nmemb, 
 }
 
 
-HttpConnection::HttpConnection(const string &urlStr){
+
+HttpConnection::HttpConnection(Url& url) {
     _curlHandle = curl_easy_init(); 
+    string urlStr =  url.getStr();
+
     curl_easy_setopt(_curlHandle, CURLOPT_URL, urlStr.c_str());
-
-}
-
-HttpResponse HttpConnection::get(){
-    string readBuffer;
     curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(_curlHandle, CURLOPT_WRITEDATA, &readBuffer);
+}
+
+
+HttpResponse HttpConnection::get(){
     curlCode = curl_easy_perform(_curlHandle);
     HttpResponse r = HttpResponse();
     r.curlCode = curlCode;
@@ -28,11 +30,8 @@ HttpResponse HttpConnection::get(){
 }
 
 HttpResponse HttpConnection::post(string &&payload){
-    string readBuffer;
     char* data = payload.data();
     curl_easy_setopt(_curlHandle, CURLOPT_POSTFIELDS, data);
-    curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
-    curl_easy_setopt(_curlHandle, CURLOPT_WRITEDATA, &readBuffer);
     curlCode = curl_easy_perform(_curlHandle);
 
     HttpResponse r = HttpResponse();

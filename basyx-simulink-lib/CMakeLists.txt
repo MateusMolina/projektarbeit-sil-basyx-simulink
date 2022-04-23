@@ -15,16 +15,20 @@ include_directories(${CURL_INCLUDE_DIR})
 
 include_directories(./include)
 
-file(GLOB all_SRCS
-        "${PROJECT_SOURCE_DIR}/src/*.cpp"
-        )
+# file(GLOB all_SRCS
+#         "${PROJECT_SOURCE_DIR}/src/*.cpp"
+#         )
 
+set(all_SRCS 
+        ${PROJECT_SOURCE_DIR}/src/httpConnection.cpp 
+        ${PROJECT_SOURCE_DIR}/src/urlHandler.cpp 
+)
 
 add_executable(app ./src/app.cpp)
 # add_executable(runTests tests/test_httpconnection.cpp)
 
 # target_link_libraries(app ${CURL_LIBRARIES} ${all_SRCS})
-target_link_libraries(app ${PROJECT_SOURCE_DIR}/src/httpConnection.cpp ${CURL_LIBRARIES} )
+target_link_libraries(app ${all_SRCS} ${CURL_LIBRARIES} )
 # target_link_libraries(runTests ${GTEST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${CURL_LIBRARIES} ${all_SRCS})
 
 # enable_testing()

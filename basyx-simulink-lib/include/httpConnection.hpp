@@ -2,7 +2,8 @@
 #define _HTTPCONNECTION_
 
 #include<string>
-#include <curl/curl.h>
+#include<curl/curl.h>
+#include"urlHandler.hpp"
 
 using std::string;
 
@@ -14,10 +15,12 @@ class HttpConnection{
     private:
         CURLcode curlCode = CURLE_OK;
         CURL* _curlHandle;
+        string readBuffer;
 
     public:
 
-        HttpConnection(const string &urlStr);
+
+        HttpConnection(Url& url);       
  
         ~HttpConnection();
 
