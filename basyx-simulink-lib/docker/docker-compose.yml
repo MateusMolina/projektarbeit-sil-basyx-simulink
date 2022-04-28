@@ -1,18 +1,18 @@
 version: '2.1'
 services:
   registry:
-    image: eclipsebasyx/aas-registry:1.0.3
+    image: eclipsebasyx/aas-registry:1.1.0
     container_name: registry
     volumes:
-        - ./conf/reg-config:/usr/share/config
+        - ./conf/reg-config:/usr/share/config:z
     ports:
       - 8082:4000
 
   aas:
-    image: eclipsebasyx/aas-server:1.0.1
+    image: eclipsebasyx/aas-server:1.1.0
     container_name: aas
     volumes:
-        - ./conf/aas-config:/usr/share/config
+        - ./conf/aas-config:/usr/share/config:z
     ports:
       - 4001:4001
 
