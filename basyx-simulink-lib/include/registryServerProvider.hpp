@@ -1,21 +1,47 @@
+#ifndef __REGISTRYSERVERPROVIDER_H__
+#define __REGISTRYSERVERPROVIDER_H__
 
-/*
-registryServerProvider
-*/
 #include<string>
+#include"urlHandler.hpp"
+#include"httpconnection/httpConnection.hpp"
 
 using std::string;
 
 class RegistryServerProvider{
     private:
-        string registerUrl;
+        Url registerUrl;
+        HttpConnection &httpCon;
+        /**
+         * @brief checks if connection to reg. server can be stabilished
+         * 
+         * @return true if connection is successful
+         * @return false if connection is not successful
+         */
+        bool testConnection();
 
-        void testConnection();
+        const string API_PATH = "api/v1/registry/";
 
     public:
-        RegistryServerProvider(const string &registerUrl);
+        RegistryServerProvider(Url &&registerUrl, HttpConnection &httpCon);
 
         ~RegistryServerProvider();
         
-        string fetchAASUrl(const string &aasId);
+        Url fetchAASUrl(const string &aasId);
 };
+
+#pragma region Exceptions
+
+class RegisterConnectionErrorException: public std::exception{
+    private:
+        const string registerUrl;
+    
+    public:
+        RegisterConnectionErrorException(const string &registerUrl);
+
+        ~RegisterConnectionErrorException() = default;
+
+        const char* what() const noexcept override;
+
+};
+#pragma endregion
+#endif // __REGISTRYSERVERPROVIDER_H__
