@@ -5,19 +5,20 @@ class TestUrlHandler : public ::testing::Test {
  protected:
     public:
         const string URLSTR = "https://this.is/a/test/url";
+        const string URLSTR2 = "https://this.is:8000/a/test/url/";
 };
 
 TEST_F(TestUrlHandler, ParsesUrlCorrectly) {
     
     Url url1 = Url(URLSTR);
-    Url url2 = Url(URLSTR+"/");
+    Url url2 = Url(URLSTR2);
 
     EXPECT_EQ(url1.getStr(), URLSTR);
     EXPECT_EQ(url1.getRootUrlStr(), "https://this.is");
     EXPECT_EQ(url1.getApiPath(), "a/test/url");
 
-    EXPECT_EQ(url2.getStr(), URLSTR);
-    EXPECT_EQ(url2.getRootUrlStr(), "https://this.is");
+    EXPECT_EQ(url2.getStr(), "https://this.is:8000/a/test/url");
+    EXPECT_EQ(url2.getRootUrlStr(), "https://this.is:8000");
     EXPECT_EQ(url2.getApiPath(), "a/test/url");
 
 }

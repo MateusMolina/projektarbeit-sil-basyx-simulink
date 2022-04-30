@@ -6,17 +6,21 @@ using std::string;
 
 struct Url{
     private:
-        string urlStr;
-        string rootUrlStr;
-        string apiPath;
-        string endpointPath;
+        //root url
+        string scheme_;
+        string user_;
+        string host_;
+        string port_;
 
+        string apiPath_;
+        string endpointPath_;
+
+        string buildRootUrlStr() const;
+        string buildUrlStr() const;
+
+        void parseUri(const string &path);
     public:
-        /**
-         * @brief Construct a new Url object. The string is escaped, decomposed and the trailing slash is removed
-         * 
-         * @param url 
-         */
+
         Url(const string &url);
 
         string getStr() const;
@@ -32,20 +36,20 @@ struct Url{
 
         void setEndPointPath(const string &endpointPath);
 
-        static bool s_arePathsEqual(string path1, string path2);
-
-
-        static string parse(string path);
-
         /**
          * @brief trims and removes trailing slash from string
          * 
          * @param string 
          * @return string 
          */
-        static string fixPathSlash(string path);
 
-        static string joinPaths(string path1, string path2);
+        static string parsePath(const string &path);
+
+        static string joinPaths(const string &p1, const string &p2);
+        static string joinPaths(const string &p1, const string &p2, const string &p3);
+
 };
+
+
 
 #endif
