@@ -1,6 +1,5 @@
-#include "../include/urlHandler.hpp"
-
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
+#include <urlhandler/urlHandler.hpp>
 
 class TestUrlHandler : public ::testing::Test {
  protected:

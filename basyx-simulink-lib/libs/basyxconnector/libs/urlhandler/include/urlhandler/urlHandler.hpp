@@ -13,19 +13,19 @@ struct Url{
 
     public:
         /**
-         * @brief Construct a new Url object. The string is escaped, decomponsed and the trailing slash is removed
+         * @brief Construct a new Url object. The string is escaped, decomposed and the trailing slash is removed
          * 
          * @param url 
          */
         Url(const string &url);
 
-        string getStr();
+        string getStr() const;
 
-        string getRootUrlStr();
+        string getRootUrlStr() const;
 
-        string getApiPath();
+        string getApiPath() const;
 
-        string getEndPointPath();
+        string getEndPointPath() const;
 
         // TODO all the methods below should call a parse algo
         void setApiPath(const string &apiPath);

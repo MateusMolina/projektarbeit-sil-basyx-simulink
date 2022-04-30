@@ -1,7 +1,6 @@
-// #include <json/json.h>
-
-#include "../include/registryServerProvider.hpp"
-#include "../include/httpconnection/httpConnection.hpp"
+#include "basyxconnector/registryServerProvider.hpp"
+#include <json/json.h>
+#include <httpclient/httpConnection.hpp>
 
 
 bool RegistryServerProvider::testConnection()
@@ -25,25 +24,21 @@ Url RegistryServerProvider::fetchAASUrl(const string &aasId)
     HttpResponse r = httpCon.get(registerUrl);
 
     if(r.httpCode == 200){
-        // JSONCPP_STRING err;
-        // Json::Value js;
+        JSONCPP_STRING err;
+        Json::Value js;
 
-        // Json::Reader reader;
-        // reader.parse(r.raw, js);
+        Json::Reader reader;
+        reader.parse(r.raw, js);
         
-        // string aasUrlStr = js["endpoints"][0]["address"].asString();
+        string aasUrlStr = js["endpoints"][0]["address"].asString();
 
-        // return Url(aasUrlStr); 
-        return Url(""); 
-
-    }else{
+        return Url(aasUrlStr); 
     }
+    throw std::logic_error(registerUrl.getStr());
 }
 
-// RegisterConnectionErrorException
 RegisterConnectionErrorException::RegisterConnectionErrorException(const string &registerUrl) : registerUrl(registerUrl)
 {
-    
 }
 const char* RegisterConnectionErrorException::what() const noexcept {
     return "";

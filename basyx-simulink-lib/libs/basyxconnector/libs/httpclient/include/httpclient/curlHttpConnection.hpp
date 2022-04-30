@@ -1,0 +1,27 @@
+
+#include<curl/curl.h>
+#include"httpConnection.hpp"
+
+class CurlHttpConnection : HttpConnection{
+    private:
+        CURLcode curlCode = CURLE_OK;
+        CURL* _curlHandle; //TODO change to smart ptr
+        string readBuffer;
+        HttpResponse response;
+
+        void perform(const Url &url);
+    public:
+        CurlHttpConnection();
+ 
+        ~CurlHttpConnection();
+
+        HttpResponse post(const Url &url, string &&payload) override;
+
+        HttpResponse put(const Url &url, string &&payload) override;
+
+        HttpResponse get(const Url &url) override;  
+        
+        CURLcode getCurlCode() { return curlCode; }
+
+        static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
+};

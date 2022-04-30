@@ -2,7 +2,7 @@
 #define _HTTPCONNECTION_
 
 #include<string>
-#include "../urlHandler.hpp"
+#include <urlhandler/urlHandler.hpp>
 
 using std::string;
 

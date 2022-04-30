@@ -2,8 +2,8 @@
 #define __REGISTRYSERVERPROVIDER_H__
 
 #include<string>
-#include"urlHandler.hpp"
-#include"httpconnection/httpConnection.hpp"
+#include<urlhandler/urlHandler.hpp>
+#include<httpclient/httpConnection.hpp>
 
 using std::string;
 

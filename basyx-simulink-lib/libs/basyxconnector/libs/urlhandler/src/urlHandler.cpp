@@ -1,23 +1,23 @@
-#include "../include/urlHandler.hpp"
+#include "urlhandler/urlHandler.hpp"
 
 
 Url::Url(const string &url){
     urlStr = url;
 }
 
-string Url::getStr(){
+string Url::getStr() const{
     return urlStr;
 }
 
-string Url::getRootUrlStr(){
+string Url::getRootUrlStr() const{
     return rootUrlStr;
 }
 
-string Url::getApiPath(){
+string Url::getApiPath() const{
     return apiPath;
 }
 
-string Url::getEndPointPath(){
+string Url::getEndPointPath() const{
     return endpointPath;
 }
 

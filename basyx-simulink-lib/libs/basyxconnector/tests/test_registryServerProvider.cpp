@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "../include/registryServerProvider.hpp"
+#include <basyxconnector/registryServerProvider.hpp>
 #include "mock/mock_httpConnection.hpp"
 
 using ::testing::Return;
