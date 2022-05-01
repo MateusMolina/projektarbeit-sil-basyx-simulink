@@ -9,8 +9,6 @@ find_library(GMOCK_LIBRARY_MAIN
                 PATHS "${GMOCK_DIR}")
 
 find_package(Threads)
-include_directories(${GTEST_INCLUDE_DIRS})
-include_directories(${CURL_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME}
     main.cpp
@@ -33,6 +31,8 @@ target_sources(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         basyxConnector::basyxconnector
+        httpClient::httpclient
+        urlHandler::urlhandler
         gmock_main
         gmock
         gtest_main

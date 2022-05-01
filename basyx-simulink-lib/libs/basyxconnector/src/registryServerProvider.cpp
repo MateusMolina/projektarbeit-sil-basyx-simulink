@@ -2,9 +2,10 @@
 #include <json/json.h>
 #include <httpclient/httpConnection.hpp>
 
+#include <iostream>
 
-bool RegistryServerProvider::testConnection()
-{
+bool RegistryServerProvider::testConnection(){
+
     return httpCon.get(registerUrl).httpCode == 200  ? true : false;
 }
 
@@ -12,7 +13,7 @@ RegistryServerProvider::RegistryServerProvider(Url &&registerUrl, HttpConnection
 {
     registerUrl.setApiPath(API_PATH);
     if(!testConnection()){
-        throw RegisterConnectionErrorException(registerUrl.getStr());
+        throw std::runtime_error("Failed to connect with Registry Server '"+registerUrl.getStr()+"'");
     }
 }
 
@@ -31,16 +32,7 @@ Url RegistryServerProvider::fetchAASUrl(const string &aasId)
         reader.parse(r.raw, js);
         
         string aasUrlStr = js["endpoints"][0]["address"].asString();
-
         return Url(aasUrlStr); 
     }
     throw std::logic_error(registerUrl.getStr());
 }
-
-RegisterConnectionErrorException::RegisterConnectionErrorException(const string &registerUrl) : registerUrl(registerUrl)
-{
-}
-const char* RegisterConnectionErrorException::what() const noexcept {
-    return "";
-}
-

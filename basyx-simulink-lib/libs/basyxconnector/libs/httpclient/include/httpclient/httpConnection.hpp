@@ -8,10 +8,10 @@ using std::string;
 
 struct HttpResponse{
     HttpResponse() : raw(""), httpCode(0) {}
-    HttpResponse(string raw, long code) : raw(raw), httpCode(httpCode) {};
+    HttpResponse(string raw, long code) : raw(raw), httpCode(code) {};
     
-    string raw; 
-    long httpCode;
+    string raw = ""; 
+    long httpCode = 0;
 };
 class HttpConnection{
     public:

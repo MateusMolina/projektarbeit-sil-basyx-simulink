@@ -29,19 +29,4 @@ class RegistryServerProvider{
         Url fetchAASUrl(const string &aasId);
 };
 
-#pragma region Exceptions
-
-class RegisterConnectionErrorException: public std::exception{
-    private:
-        const string registerUrl;
-    
-    public:
-        RegisterConnectionErrorException(const string &registerUrl);
-
-        ~RegisterConnectionErrorException() = default;
-
-        const char* what() const noexcept override;
-
-};
-#pragma endregion
 #endif // __REGISTRYSERVERPROVIDER_H__
