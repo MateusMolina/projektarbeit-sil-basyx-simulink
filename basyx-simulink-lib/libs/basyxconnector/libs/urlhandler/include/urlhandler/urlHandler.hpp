@@ -50,6 +50,19 @@ struct Url{
 
 };
 
+#pragma region Exceptions
 
+class FailedToParseUrl: public std::exception{
+    private:
+        string urlStr_;
+    
+    public:
+        FailedToParseUrl(const string &urlStr);
 
+        ~FailedToParseUrl() = default;
+
+        const char* what() const noexcept override;
+
+};
+#pragma endregion
 #endif
