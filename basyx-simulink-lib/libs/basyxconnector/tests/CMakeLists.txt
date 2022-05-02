@@ -20,7 +20,7 @@ target_include_directories(${PROJECT_NAME}
 )
 set(ALL_TESTS
     ${PROJECT_SOURCE_DIR}/mock/mock_httpConnection.hpp 
-    ${PROJECT_SOURCE_DIR}/test_registryServerProvider.cpp 
+    ${PROJECT_SOURCE_DIR}/test_registryServerConnector.cpp 
     ${PROJECT_SOURCE_DIR}/test_aasServerConnector.cpp 
 )
 

@@ -14,16 +14,20 @@ class TestAasServerConnector : public ::testing::Test {
         const string SMIDSHORT = "smIdShort";
         const string PROPIDSHORT = "propIdShort";
         const string PROPVALUE = "newPropValue";
-        const string URLSTR = "https://aasserver.com:8080/path/to/aas";
+        const string AASID = "aasId";
+        const string URLSTR = "https://aasserver.com:8080/path/to/"+AASID;
+        
+        Aas aas = Aas(Url(URLSTR), AASID);
+        Submodel sm = Submodel(aas, SMIDSHORT);
+        SubmodelElement se = SubmodelElement(sm, PROPIDSHORT);
 
         std::unique_ptr<MockHttpConnection> httpCon;
         std::unique_ptr<AasServerConnector> aasCon;
 
         void SetUp() override {
-            Url aasUrl = Url(URLSTR);
 
             httpCon = std::make_unique<MockHttpConnection>();
-            aasCon = std::make_unique<AasServerConnector>(std::move(aasUrl), *httpCon);
+            aasCon = std::make_unique<AasServerConnector>(aas, *httpCon);
         }
 
         string buildEPPath(const string &smIdShort, const string &seIdShort) const{
@@ -35,26 +39,25 @@ class TestAasServerConnector : public ::testing::Test {
 
 TEST_F(TestAasServerConnector, CanFetchPropValue) {
     Url url = Url(URLSTR);
-    url.setEndPointPath(buildEPPath(SMIDSHORT,PROPIDSHORT));
+    url.setEndPointPath(buildEPPath(sm.submodelIdShort, se.seIdShort));
     EXPECT_CALL(*httpCon, get(url)) 
         .WillOnce(Return(HttpResponse(PROPVALUE,200)));
-
-    ASSERT_EQ(aasCon->getSeValue(SMIDSHORT, PROPIDSHORT), PROPVALUE);
+    ASSERT_EQ(aasCon->getSeValue(se), PROPVALUE);
 }
 
 TEST_F(TestAasServerConnector, CanUpdatePropValue) {
     Url url = Url(URLSTR);
-    url.setEndPointPath(buildEPPath(SMIDSHORT,PROPIDSHORT));
+    url.setEndPointPath(buildEPPath(sm.submodelIdShort, se.seIdShort));
     string payload = PROPVALUE;
     EXPECT_CALL(*httpCon, post(url, std::move(payload)))
         .WillOnce(Return(HttpResponse("",200)));
 
-    ASSERT_NO_THROW(aasCon->updateSeValue(SMIDSHORT, PROPIDSHORT, PROPVALUE));
+    ASSERT_NO_THROW(aasCon->updateSeValue(se, PROPVALUE));
 
     EXPECT_CALL(*httpCon, get(url)) 
         .WillOnce(Return(HttpResponse(PROPVALUE,200)));
 
-    ASSERT_EQ(aasCon->getSeValue(SMIDSHORT, PROPIDSHORT), PROPVALUE);
+    ASSERT_EQ(aasCon->getSeValue(se), PROPVALUE);
 }
 
 TEST_F(TestAasServerConnector, CanHandleNonEscapedStrings) {
@@ -66,10 +69,12 @@ TEST_F(TestAasServerConnector, CanHandleNonEscapedStrings) {
 
     Url url = Url(URLSTR);
     url.setEndPointPath(buildEPPath(E_SMIDSHORT,E_PROPIDSHORT));
-
+    
+    Submodel nsm = Submodel(aas, NE_SMIDSHORT);
+    SubmodelElement nse = SubmodelElement(nsm, NE_PROPIDSHORT);
 
     EXPECT_CALL(*httpCon, get(url)) 
         .WillOnce(Return(HttpResponse(PROPVALUE,200)));
 
-    ASSERT_EQ(aasCon->getSeValue(NE_SMIDSHORT, NE_PROPIDSHORT), PROPVALUE);
+    ASSERT_EQ(aasCon->getSeValue(nse), PROPVALUE);
 }

@@ -12,30 +12,35 @@ string AasServerConnector::buildValueEPPath(string smIdShort, string seIdShort) 
     return SM_EPP_+e_smIdShort+SE_EPP_+e_seIdShort+VALUE_EPP_;
 
 }
-AasServerConnector::AasServerConnector(Url &&aasUrl, HttpConnection &httpCon) : aasUrl_(aasUrl), httpCon_(httpCon){
+AasServerConnector::AasServerConnector(Aas &aas, HttpConnection &httpCon) : aas_(aas), httpCon_(httpCon){
 
 }
 
-string AasServerConnector::getSeValue(const string &smIdShort, const string &seIdShort)
+string AasServerConnector::getSeValue(SubmodelElement &se)
 {
-    string urlUpd = buildValueEPPath(smIdShort, seIdShort);
-    aasUrl_.setEndPointPath(urlUpd);
 
-    HttpResponse resp = httpCon_.get(aasUrl_);
+    string urlUpd = buildValueEPPath(se.submodel.submodelIdShort, se.seIdShort);
+    aas_.aasUrl.setEndPointPath(urlUpd);
+
+    HttpResponse resp = httpCon_.get(aas_.aasUrl);
     
     if(resp.httpCode != 200 )
-        throw std::runtime_error("Unable to get SubmodelElement value at '"+aasUrl_.getStr()+"'");
+        throw std::runtime_error("Unable to get SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");
 
+    se.updateValue(resp.raw);
     return resp.raw;
 }
 
-void AasServerConnector::updateSeValue(const string &smIdShort, const string &seIdShort, const string &value)
+void AasServerConnector::updateSeValue(SubmodelElement &se, const string &value)
 {
-    string urlUpd = buildValueEPPath(smIdShort, seIdShort);
-    aasUrl_.setEndPointPath(urlUpd);
+    string urlUpd = buildValueEPPath(se.submodel.submodelIdShort, se.seIdShort);
+    aas_.aasUrl.setEndPointPath(urlUpd);
+
     string valueProc = value; // TODO Preprocessing needed?
     
-    if(httpCon_.post(aasUrl_,std::move(valueProc)).httpCode != 200 )
-        throw std::runtime_error("Unable to update SubmodelElement value at '"+aasUrl_.getStr()+"'");
+    if(httpCon_.post(aas_.aasUrl,std::move(valueProc)).httpCode == 200 )
+        se.updateValue(value);
+    else    
+        throw std::runtime_error("Unable to update SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");
 
 }

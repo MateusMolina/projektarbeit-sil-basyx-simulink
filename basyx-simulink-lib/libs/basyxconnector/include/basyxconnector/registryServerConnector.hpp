@@ -1,13 +1,18 @@
-#ifndef __REGISTRYSERVERPROVIDER_H__
-#define __REGISTRYSERVERPROVIDER_H__
-
+/**
+ * @file registryServerConnector.hpp
+ * @author @MateusMolina
+ * @brief  Connector for fetching Asset Administration Shells over a Registry Server
+ * @version 0.1
+ * 
+ */
 #include<string>
 #include<urlhandler/urlHandler.hpp>
 #include<httpclient/httpConnection.hpp>
+#include"components.hpp"
 
 using std::string;
 
-class RegistryServerProvider{
+class RegistryServerConnector{
     private:
         Url registerUrl;
         HttpConnection &httpCon;
@@ -22,11 +27,9 @@ class RegistryServerProvider{
         const string API_PATH = "api/v1/registry";
 
     public:
-        RegistryServerProvider(Url &&registerUrl, HttpConnection &httpCon);
+        RegistryServerConnector(Url &&registerUrl, HttpConnection &httpCon);
 
-        ~RegistryServerProvider();
+        ~RegistryServerConnector();
         
-        Url fetchAASUrl(const string &aasId);
+        Aas fetchAAS(const string &aasId);
 };
-
-#endif // __REGISTRYSERVERPROVIDER_H__

@@ -1,14 +1,14 @@
-#include "basyxconnector/registryServerProvider.hpp"
+#include "basyxconnector/registryServerConnector.hpp"
 #include <json/json.h>
 #include <httpclient/httpConnection.hpp>
 
 
-bool RegistryServerProvider::testConnection(){
+bool RegistryServerConnector::testConnection(){
 
     return httpCon.get(registerUrl).httpCode == 200  ? true : false;
 }
 
-RegistryServerProvider::RegistryServerProvider(Url &&registerUrl, HttpConnection &httpCon) : registerUrl(registerUrl), httpCon(httpCon)
+RegistryServerConnector::RegistryServerConnector(Url &&registerUrl, HttpConnection &httpCon) : registerUrl(registerUrl), httpCon(httpCon)
 {
     if(registerUrl.getApiPath() == "")
         registerUrl.setApiPath(API_PATH);
@@ -18,9 +18,9 @@ RegistryServerProvider::RegistryServerProvider(Url &&registerUrl, HttpConnection
     }
 }
 
-RegistryServerProvider::~RegistryServerProvider() = default;
+RegistryServerConnector::~RegistryServerConnector() = default;
 
-Url RegistryServerProvider::fetchAASUrl(const string &aasId)
+Aas RegistryServerConnector::fetchAAS(const string &aasId)
 {
     registerUrl.setEndPointPath(aasId);
     HttpResponse r = httpCon.get(registerUrl);
@@ -32,8 +32,10 @@ Url RegistryServerProvider::fetchAASUrl(const string &aasId)
         Json::Reader reader;
         reader.parse(r.raw, js);
         
-        string aasUrlStr = js["endpoints"][0]["address"].asString();
-        return Url(aasUrlStr); 
+        string aasUrl = js["endpoints"][0]["address"].asString();
+        string aasId = js["identification"]["id"].asString();
+        
+        return Aas(Url(aasUrl), aasId); 
     }
-    throw std::logic_error(registerUrl.getStr());
+    throw std::runtime_error("Failed to fetch data from AAS '"+aasId+"'");
 }

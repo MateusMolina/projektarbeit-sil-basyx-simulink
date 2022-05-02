@@ -6,8 +6,9 @@ project(basyxconnector
 )
 
 add_library(${PROJECT_NAME}
-	src/registryServerProvider.cpp
+	src/registryServerConnector.cpp
 	src/aasServerConnector.cpp
+	include/basyxconnector/components.hpp
 )
 
 add_library(basyxConnector::${PROJECT_NAME} ALIAS ${PROJECT_NAME})

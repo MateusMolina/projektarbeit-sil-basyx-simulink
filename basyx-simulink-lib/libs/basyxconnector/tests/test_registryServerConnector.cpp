@@ -3,17 +3,17 @@
 
 #include <urlhandler/urlHandler.hpp>
 #include <httpclient/httpConnection.hpp>
-#include <basyxconnector/registryServerProvider.hpp>
+#include <basyxconnector/registryServerConnector.hpp>
 #include "mock/mock_httpConnection.hpp"
 
 using ::testing::Return;
 using ::testing::_;
 
-class TestRegistryServerProvider : public ::testing::Test {
+class TestRegistryServerConnector : public ::testing::Test {
     public:
 };
 
-TEST_F(TestRegistryServerProvider, CanFetchAASUrl) {
+TEST_F(TestRegistryServerConnector, CanFetchAASUrl) {
   const string REGURLSTR = "https://regserver.com:4000/apipath";
   const string AASID = "testAas";
   const string AASURLSTR = "http://aasserver.com:8000/apipath/"+AASID;
@@ -26,7 +26,7 @@ TEST_F(TestRegistryServerProvider, CanFetchAASUrl) {
   EXPECT_CALL(httpCon, get(_))                  
       .WillOnce(Return(HttpResponse("", 200)));
   
-  RegistryServerProvider reg = RegistryServerProvider(std::move(testUrl), httpCon);
+  RegistryServerConnector reg = RegistryServerConnector(std::move(testUrl), httpCon);
 
   EXPECT_NO_THROW();
 
@@ -37,13 +37,13 @@ TEST_F(TestRegistryServerProvider, CanFetchAASUrl) {
   EXPECT_CALL(httpCon, get(_))                  
       .WillOnce(Return(mockResp));
 
-  Url aasUrl = reg.fetchAASUrl(AASID);
+  Url aasUrl = reg.fetchAAS(AASID).aasUrl;
 
   ASSERT_EQ(AASURLSTR, aasUrl.getStr());
 
 }
 
-TEST_F(TestRegistryServerProvider, UnableToConnectToRegServer){
+TEST_F(TestRegistryServerConnector, UnableToConnectToRegServer){
   
   Url testUrl = Url("http://regserver.com:4000/asdas");
 
@@ -54,6 +54,6 @@ TEST_F(TestRegistryServerProvider, UnableToConnectToRegServer){
   EXPECT_CALL(httpCon, get)                  
       .WillOnce(Return(mockResp));
   
-  RegistryServerProvider *reg;
-  EXPECT_ANY_THROW(reg = new RegistryServerProvider(std::move(testUrl), httpCon));
+  RegistryServerConnector *reg;
+  EXPECT_ANY_THROW(reg = new RegistryServerConnector(std::move(testUrl), httpCon));
 }
