@@ -1,7 +1,7 @@
 #include "basyxconnector/registryServerConnector.hpp"
+#include "basyxconnector/basyxConfig.hpp"
 #include <json/json.h>
 #include <httpclient/httpConnection.hpp>
-
 
 bool RegistryServerConnector::testConnection(){
 
@@ -11,7 +11,7 @@ bool RegistryServerConnector::testConnection(){
 RegistryServerConnector::RegistryServerConnector(Url &&registerUrl, HttpConnection &httpCon) : registerUrl(registerUrl), httpCon(httpCon)
 {
     if(registerUrl.getApiPath() == "")
-        registerUrl.setApiPath(API_PATH);
+        registerUrl.setApiPath(BasyxConfig::REG_API_PATH);
         
     if(!testConnection()){
         throw std::runtime_error("Failed to connect with Registry Server '"+registerUrl.getStr()+"'");

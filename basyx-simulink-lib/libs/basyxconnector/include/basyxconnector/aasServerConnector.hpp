@@ -20,12 +20,6 @@ class AasServerConnector{
         Aas aas_;
         HttpConnection &httpCon_;
     
-        const string SM_EPP_ = "aas/submodels/"; //+smIdShort
-        const string SE_EPP_ = "/submodel/submodelElements/"; //+seIdShort
-        const string VALUE_EPP_ = "/value";
-    
-        string buildValueEPPath(string smIdShort, string seIdShort) const; // TODO refactor every api const into a single access class
-
     public:
 
         AasServerConnector(Aas &aas, HttpConnection &httpCon);

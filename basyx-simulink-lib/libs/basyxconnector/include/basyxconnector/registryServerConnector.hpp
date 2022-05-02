@@ -27,8 +27,6 @@ class RegistryServerConnector{
          */
         bool testConnection();
 
-        const string API_PATH = "api/v1/registry";
-
     public:
         RegistryServerConnector(Url &&registerUrl, HttpConnection &httpCon);
 
