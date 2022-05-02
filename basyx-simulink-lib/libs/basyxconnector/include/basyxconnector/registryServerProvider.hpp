@@ -19,7 +19,7 @@ class RegistryServerProvider{
          */
         bool testConnection();
 
-        const string API_PATH = "api/v1/registry/";
+        const string API_PATH = "api/v1/registry";
 
     public:
         RegistryServerProvider(Url &&registerUrl, HttpConnection &httpCon);

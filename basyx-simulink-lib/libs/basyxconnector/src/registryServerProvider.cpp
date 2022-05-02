@@ -2,7 +2,6 @@
 #include <json/json.h>
 #include <httpclient/httpConnection.hpp>
 
-#include <iostream>
 
 bool RegistryServerProvider::testConnection(){
 
@@ -11,7 +10,9 @@ bool RegistryServerProvider::testConnection(){
 
 RegistryServerProvider::RegistryServerProvider(Url &&registerUrl, HttpConnection &httpCon) : registerUrl(registerUrl), httpCon(httpCon)
 {
-    registerUrl.setApiPath(API_PATH);
+    if(registerUrl.getApiPath() == "")
+        registerUrl.setApiPath(API_PATH);
+        
     if(!testConnection()){
         throw std::runtime_error("Failed to connect with Registry Server '"+registerUrl.getStr()+"'");
     }
