@@ -1,3 +1,6 @@
+#ifndef __REGISTRYSERVERCONNECTOR_H__
+#define __REGISTRYSERVERCONNECTOR_H__
+
 /**
  * @file registryServerConnector.hpp
  * @author @MateusMolina
@@ -33,3 +36,5 @@ class RegistryServerConnector{
         
         Aas fetchAAS(const string &aasId);
 };
+
+#endif // __REGISTRYSERVERCONNECTOR_H__
