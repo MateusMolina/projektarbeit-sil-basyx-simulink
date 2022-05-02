@@ -36,19 +36,24 @@ struct Url{
 
         void setEndPointPath(const string &endpointPath);
 
+
+        bool operator==(const Url& other) const;
+
         /**
          * @brief trims and removes trailing slash from string
          * 
          * @param string 
          * @return string 
          */
-
         static string parsePath(const string &path);
+        
+        static string enconde(const string &string);
 
         static string joinPaths(const string &p1, const string &p2);
         static string joinPaths(const string &p1, const string &p2, const string &p3);
 
 };
+
 
 #pragma region Exceptions
 

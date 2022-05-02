@@ -73,6 +73,15 @@ void Url::parseUri(const string &uri){
 
 }
 
+bool Url::operator==(const Url& other) const{
+    bool equ = true;
+    equ *= this->getRootUrlStr() == other.getRootUrlStr(); 
+    equ *= this->getApiPath() == other.getApiPath(); 
+    equ *= this->getEndPointPath() == other.getEndPointPath(); 
+    return equ;
+}
+
+
 string Url::parsePath(const string &path){
     
     if(path == "") return "";
@@ -111,3 +120,5 @@ string Url::joinPaths(const string &p1, const string &p2){
 string Url::joinPaths(const string &p1, const string &p2, const string &p3){ // TODO make recurssion with args
     return joinPaths(joinPaths(p1, p2), p3);
 }
+
+
