@@ -26,30 +26,32 @@ class TestAasServerConnector : public ::testing::Test {
             aasCon = std::make_unique<AasServerConnector>(std::move(aasUrl), *httpCon);
         }
 
-        string buildPath(const string &urlStr, const string &smIdShort, const string &seIdShort) const{
-           return urlStr+"/aas/submodels/"+smIdShort+"/submodel/submodelElements/"+seIdShort+"/value";
+        string buildEPPath(const string &smIdShort, const string &seIdShort) const{
+           return "/aas/submodels/"+smIdShort+"/submodel/submodelElements/"+seIdShort+"/value";
         }
 
     public:
 };
 
 TEST_F(TestAasServerConnector, CanFetchPropValue) {
-
-    EXPECT_CALL(*httpCon, get(Url(buildPath(URLSTR,SMIDSHORT,PROPIDSHORT)))) 
+    Url url = Url(URLSTR);
+    url.setEndPointPath(buildEPPath(SMIDSHORT,PROPIDSHORT));
+    EXPECT_CALL(*httpCon, get(url)) 
         .WillOnce(Return(HttpResponse(PROPVALUE,200)));
 
     ASSERT_EQ(aasCon->getSeValue(SMIDSHORT, PROPIDSHORT), PROPVALUE);
 }
 
 TEST_F(TestAasServerConnector, CanUpdatePropValue) {
-
+    Url url = Url(URLSTR);
+    url.setEndPointPath(buildEPPath(SMIDSHORT,PROPIDSHORT));
     string payload = PROPVALUE;
-    EXPECT_CALL(*httpCon, post(Url(buildPath(URLSTR,SMIDSHORT,PROPIDSHORT)), std::move(payload)))
+    EXPECT_CALL(*httpCon, post(url, std::move(payload)))
         .WillOnce(Return(HttpResponse("",200)));
 
     ASSERT_NO_THROW(aasCon->updateSeValue(SMIDSHORT, PROPIDSHORT, PROPVALUE));
 
-    EXPECT_CALL(*httpCon, get(Url(buildPath(URLSTR,SMIDSHORT,PROPIDSHORT)))) 
+    EXPECT_CALL(*httpCon, get(url)) 
         .WillOnce(Return(HttpResponse(PROPVALUE,200)));
 
     ASSERT_EQ(aasCon->getSeValue(SMIDSHORT, PROPIDSHORT), PROPVALUE);
@@ -58,11 +60,15 @@ TEST_F(TestAasServerConnector, CanUpdatePropValue) {
 TEST_F(TestAasServerConnector, CanHandleNonEscapedStrings) {
 
     const string NE_PROPIDSHORT = "https://this/is/a/prop/idshort";
-    const string E_PROPIDSHORT = "Url%28buildPath%28URLSTR%2CSMIDSHORT%2CPROPIDSHORT%29%29%29%29+";
+    const string E_PROPIDSHORT = "https%3A%2F%2Fthis%2Fis%2Fa%2Fprop%2Fidshort";
     const string NE_SMIDSHORT = "https://this:5000/is/a/sm/idshort";
     const string E_SMIDSHORT = "https%3A%2F%2Fthis%3A5000%2Fis%2Fa%2Fsm%2Fidshort";
 
-    EXPECT_CALL(*httpCon, get(Url(buildPath(URLSTR,E_SMIDSHORT,E_PROPIDSHORT)))) 
+    Url url = Url(URLSTR);
+    url.setEndPointPath(buildEPPath(E_SMIDSHORT,E_PROPIDSHORT));
+
+
+    EXPECT_CALL(*httpCon, get(url)) 
         .WillOnce(Return(HttpResponse(PROPVALUE,200)));
 
     ASSERT_EQ(aasCon->getSeValue(NE_SMIDSHORT, NE_PROPIDSHORT), PROPVALUE);

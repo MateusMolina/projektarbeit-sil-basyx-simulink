@@ -22,9 +22,9 @@ class AasServerConnector{
 
         AasServerConnector(Url &&aasUrl, HttpConnection &httpCon);
 
-        string getSeValue(const string &smIdShort, const string &propIdShort);
+        string getSeValue(const string &smIdShort, const string &seIdShort);
 
-        void updateSeValue(const string &smIdShort, const string &propIdShort, const string &value);
+        void updateSeValue(const string &smIdShort, const string &seIdShort, const string &value);
 
 };
 

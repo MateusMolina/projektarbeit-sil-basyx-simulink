@@ -47,8 +47,6 @@ struct Url{
          */
         static string parsePath(const string &path);
         
-        static string enconde(const string &string);
-
         static string joinPaths(const string &p1, const string &p2);
         static string joinPaths(const string &p1, const string &p2, const string &p3);
 
