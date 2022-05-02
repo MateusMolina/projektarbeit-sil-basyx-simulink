@@ -9,6 +9,7 @@ project(httpclient
 add_library(${PROJECT_NAME}  
 	STATIC
 		src/curlHttpConnection.cpp
+		src/utils.cpp
 )
 
 # Find Curl
