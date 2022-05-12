@@ -1,6 +1,5 @@
 #include "httpclient/utils.hpp"
 #include<curl/curl.h>
-#include<stdexcept>
 
 string escapeStr(const string& str){
     CURL* c = curl_easy_init();
