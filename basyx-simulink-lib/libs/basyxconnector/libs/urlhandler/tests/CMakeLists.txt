@@ -1,18 +1,6 @@
 project(urlhandler-tests)
 
-
-find_package(GTest REQUIRED)
-find_library(GMOCK_LIBRARY_MAIN 
-                NAMES gmock_main 
-                      libgmock_main  
-                      libgmock_main.a  
-                PATHS "${GMOCK_DIR}")
-
-find_package(Threads)
-include_directories(${GTEST_INCLUDE_DIRS})
-include_directories(${CURL_INCLUDE_DIR})
-                
-
+include(FetchContent)
 
 add_executable(${PROJECT_NAME}
         main.cpp
@@ -29,13 +17,21 @@ target_sources(${PROJECT_NAME}
       ${ALL_TESTS} 
 )
 
+FetchContent_Declare(
+      testgoogle
+      GIT_REPOSITORY https://github.com/google/googletest.git
+      GIT_TAG        703bd9caab50b139428cea1aaff9974ebee5742e # release-1.10.0
+)
+
+FetchContent_MakeAvailable(testgoogle )
+
+include(GoogleTest)
+
+
 target_link_libraries(${PROJECT_NAME}
       urlHandler::urlhandler
-      gmock_main
-      gmock
-      gtest_main
       gtest
-      pthread
+      gmock
 )
 
 

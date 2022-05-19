@@ -24,15 +24,21 @@ target_include_directories(${PROJECT_NAME}
 add_subdirectory(libs)
 
 # External Dep
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(JSONCPP jsoncpp)
-include_directories(${JSONCPP_INCLUDE_DIRS})
+## Working on Linux
+# find_package(PkgConfig REQUIRED)
+# pkg_check_modules(JSONCPP jsoncpp)
+# include_directories(${JSONCPP_INCLUDE_DIRS})
 
+### Working on WINDOWS
 
+#TODO make conditionals based on a WIN32 env var
+add_library(jsoncpp STATIC IMPORTED)
+set_target_properties(jsoncpp PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/external/jsoncpp/lib/libjsoncpp.a)
+set_target_properties(jsoncpp PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/external/jsoncpp/include)
 
 target_link_libraries(${PROJECT_NAME}
 	PUBLIC
-		${JSONCPP_LIBRARIES} 
+		jsoncpp
 		urlHandler::urlhandler
 		httpClient::httpclient
 )
