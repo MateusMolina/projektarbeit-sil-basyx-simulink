@@ -21,7 +21,7 @@ TEST_F(TestRegistryServerConnector, CanFetchAASUrl) {
 
   Url testUrl = Url(REGURLSTR);
 
-  MockHttpConnection httpCon = MockHttpConnection();
+  MockHttpConnection httpCon;
 
   EXPECT_CALL(httpCon, get(_))                  
       .WillOnce(Return(HttpResponse("", 200)));
@@ -47,7 +47,7 @@ TEST_F(TestRegistryServerConnector, UnableToConnectToRegServer){
   
   Url testUrl = Url("http://regserver.com:4000/asdas");
 
-  MockHttpConnection httpCon = MockHttpConnection();
+  MockHttpConnection httpCon;
 
   HttpResponse mockResp = HttpResponse("", 404);
 
