@@ -1,5 +1,5 @@
 
-#define S_FUNCTION_NAME  registryConnectorBlock // Specifies the name of the function
+#define S_FUNCTION_NAME  RegistryConnectorBlock // Specifies the name of the function
 #define S_FUNCTION_LEVEL 2
 
 #include "simstruc.h"
@@ -18,7 +18,7 @@
  */
 static void mdlInitializeSizes(SimStruct *S)
 {
-    ssSetNumSFcnParams(S, 1);  /* Number of expected parameters */
+    ssSetNumSFcnParams(S, 0);  /* Number of expected parameters */
     if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
         /* Return if number of expected != number of actual parameters */
         return;
@@ -87,12 +87,12 @@ static void mdlInitializeSampleTimes(SimStruct *S)
 #endif /* MDL_INITIALIZE_CONDITIONS */
 
 
- typedef HRESULT(CALLBACK* proc_api_init)(std::string);
- typedef HRESULT(CALLBACK* proc_call_api)(double&, double&);
- HINSTANCE hDLL;               // Handle to DLL
- HINSTANCE altDLL;
- proc_api_init api_init;    // Function pointer
- proc_call_api callAPI;    // Function pointer
+//  typedef HRESULT(CALLBACK* proc_api_init)(std::string);
+//  typedef HRESULT(CALLBACK* proc_call_api)(double&, double&);
+//  HINSTANCE hDLL;               // Handle to DLL
+//  HINSTANCE altDLL;
+//  proc_api_init api_init;    // Function pointer
+//  proc_call_api callAPI;    // Function pointer
 
 #define MDL_START  /* Change to #undef to remove function */
 #if defined(MDL_START) 
@@ -105,25 +105,25 @@ static void mdlInitializeSampleTimes(SimStruct *S)
   static void mdlStart(SimStruct *S)
   {
 	  //Parameter #1: API web address
-	  const mxArray* pArrayValue = ssGetSFcnParam(S, 0);
-	  const char* apiCharArray = mxArrayToString(pArrayValue);
-	  std::string apiAddress(apiCharArray);
+	  // const mxArray* pArrayValue = ssGetSFcnParam(S, 0);
+	  // const char* apiCharArray = mxArrayToString(pArrayValue);
+	  // std::string apiAddress(apiCharArray);
 
-	  //Dynamically load DLL files required for REST client
-	  altDLL = LoadLibrary("include\\cpprest_2_10.dll");
-	  hDLL = LoadLibrary("include\\example_api.dll");
-      if (hDLL) {
-		  api_init = (proc_api_init)GetProcAddress(hDLL, "initializeAPI");
-		  callAPI = (proc_call_api)GetProcAddress(hDLL, "callAPI");
+	  // //Dynamically load DLL files required for REST client
+	  // altDLL = LoadLibrary("include\\cpprest_2_10.dll");
+	  // hDLL = LoadLibrary("include\\example_api.dll");
+    //   if (hDLL) {
+		//   api_init = (proc_api_init)GetProcAddress(hDLL, "initializeAPI");
+		//   callAPI = (proc_call_api)GetProcAddress(hDLL, "callAPI");
 
-		  if (api_init) {
-			  api_init(apiAddress);
-		  }
-	  }
-	  else {
-		  api_init = NULL;
-		  callAPI = NULL;
-	  }
+		//   if (api_init) {
+		// 	  api_init(apiAddress);
+		//   }
+	  // }
+	  // else {
+		//   api_init = NULL;
+		//   callAPI = NULL;
+	  // }
   }
 #endif /*  MDL_START */
 
@@ -151,20 +151,23 @@ static void mdlOutputs(SimStruct *S, int_T tid)
    */
   static void mdlUpdate(SimStruct *S, int_T tid)
   {
-      real_T       *y = ssGetOutputPortRealSignal(S,0);
+    real_T inputValue;
+    real_T outputValue;
+    real_T       *y = ssGetOutputPortRealSignal(S,0);
 	  const real_T* u = (const real_T*)ssGetInputPortRealSignal(S, 0);
 	  inputValue = u[0];
 
 	  //Call web API each time step, if it's available
-	  if ssIsSampleHit(S, 0, tid) {
-		  if (callAPI) {
-			  callAPI(inputValue, outputValue);
-		  }
-		  else {
-			  outputValue = 0.0;
-		  }
-	  }
-      
+	  // if ssIsSampleHit(S, 0, tid) {
+		//   if (callAPI) {
+		// 	  callAPI(inputValue, outputValue);
+		//   }
+		//   else {
+		// 	  outputValue = 0.0;
+		//   }
+	  // }
+      outputValue = inputValue*10;
+
       y[0] = outputValue;
   }
 #endif /* MDL_UPDATE */
@@ -193,8 +196,8 @@ static void mdlOutputs(SimStruct *S, int_T tid)
  */
 static void mdlTerminate(SimStruct *S)
 {
-    FreeLibrary(hDLL);
-	FreeLibrary(altDLL);
+  //   FreeLibrary(hDLL);
+	// FreeLibrary(altDLL);
 }
 
 
