@@ -4,6 +4,7 @@
 #include <httpclient/httpConnection.hpp>
 
 bool RegistryServerConnector::testConnection(){
+    // TODO should be faster (download only headers?)
 
     return httpCon.get(registerUrl).httpCode == 200  ? true : false;
 }
@@ -14,7 +15,7 @@ RegistryServerConnector::RegistryServerConnector(Url &&registerUrl, HttpConnecti
         registerUrl.setApiPath(BasyxConfig::REG_API_PATH);
         
     if(!testConnection()){
-        throw std::runtime_error("Failed to connect with Registry Server '"+registerUrl.getStr()+"'");
+        throw std::runtime_error("Failed to connect with Registry Server '"+registerUrl.getStr()+"' with http code "+std::to_string(httpCon.getCurrentResponse().httpCode));
     }
 }
 

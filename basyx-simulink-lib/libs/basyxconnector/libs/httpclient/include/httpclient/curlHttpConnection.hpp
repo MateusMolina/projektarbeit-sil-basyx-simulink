@@ -2,7 +2,7 @@
 #include<curl/curl.h>
 #include"httpConnection.hpp"
 
-class CurlHttpConnection : HttpConnection{
+class CurlHttpConnection : public HttpConnection{
     private:
         CURLcode curlCode = CURLE_OK;
         CURL* _curlHandle; //TODO change to smart ptr
@@ -22,6 +22,8 @@ class CurlHttpConnection : HttpConnection{
         HttpResponse get(const Url &url) override;  
         
         CURLcode getCurlCode() { return curlCode; }
+
+        HttpResponse getCurrentResponse() override { return response; }
 
         static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
 };

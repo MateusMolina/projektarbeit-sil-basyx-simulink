@@ -5,7 +5,7 @@ project(basyxconnector
 		0.0.1
 )
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} 
 	src/registryServerConnector.cpp
 	src/aasServerConnector.cpp
 	include/basyxconnector/components.hpp
@@ -37,8 +37,9 @@ set_target_properties(jsoncpp PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURC
 set_target_properties(jsoncpp PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/external/jsoncpp/include)
 
 target_link_libraries(${PROJECT_NAME}
-	PUBLIC
+	PRIVATE
 		jsoncpp
+	PUBLIC
 		urlHandler::urlhandler
 		httpClient::httpclient
 )

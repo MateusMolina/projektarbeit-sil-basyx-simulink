@@ -23,6 +23,7 @@ class HttpConnection{
 
         virtual HttpResponse get(const Url &url) = 0;  
 
+        virtual HttpResponse getCurrentResponse() = 0;
 };
 
 #endif
