@@ -6,6 +6,10 @@
 
 #include <cstdio>
 #include <string>
+#include <memory>
+#include <urlhandler/urlHandler.hpp>
+#include <httpclient/curlHttpConnection.hpp>
+#include <basyxconnector/registryServerConnector.hpp>
 
 /*====================*
  * S-function methods *
@@ -18,7 +22,7 @@
  */
 static void mdlInitializeSizes(SimStruct *S)
 {
-    ssSetNumSFcnParams(S, 0);  /* Number of expected parameters */
+    ssSetNumSFcnParams(S, 1);  /* Number of expected parameters */
     if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
         /* Return if number of expected != number of actual parameters */
         return;
@@ -86,7 +90,7 @@ static void mdlInitializeSampleTimes(SimStruct *S)
   }
 #endif /* MDL_INITIALIZE_CONDITIONS */
 
-
+std::unique_ptr<RegistryServerConnector> regCon;
 //  typedef HRESULT(CALLBACK* proc_api_init)(std::string);
 //  typedef HRESULT(CALLBACK* proc_call_api)(double&, double&);
 //  HINSTANCE hDLL;               // Handle to DLL
@@ -124,6 +128,14 @@ static void mdlInitializeSampleTimes(SimStruct *S)
 		//   api_init = NULL;
 		//   callAPI = NULL;
 	  // }
+    try{
+      Url url = Url(std::string(mxArrayToString(ssGetSFcnParam(S,0))));
+      CurlHttpConnection httpCon = CurlHttpConnection();
+      regCon = std::make_unique<RegistryServerConnector>(std::move(url), httpCon);
+    }catch (const std::exception& e){
+      ssSetErrorStatus(S,e.what());
+      return;
+    }
   }
 #endif /*  MDL_START */
 

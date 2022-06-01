@@ -11,10 +11,12 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE 
         mock
 )
+
 set(ALL_TESTS
     ${PROJECT_SOURCE_DIR}/mock/mock_httpConnection.hpp 
     ${PROJECT_SOURCE_DIR}/test_registryServerConnector.cpp 
     ${PROJECT_SOURCE_DIR}/test_aasServerConnector.cpp 
+    ${PROJECT_SOURCE_DIR}/test_curlHttpClient.cpp  # FIXME
 )
 
 target_sources(${PROJECT_NAME}
@@ -32,7 +34,6 @@ FetchContent_MakeAvailable(testgoogle)
 
 include(GoogleTest)
 
-
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         gtest
@@ -40,11 +41,10 @@ target_link_libraries(${PROJECT_NAME}
         basyxConnector::basyxconnector
         httpClient::httpclient
 		urlHandler::urlhandler
-        
 )
 
 # TODO find a better solution than copying the .dll dep individually
-add_custom_command ( TARGET ${PROJECT_NAME} POST_BUILD
+add_custom_command ( TARGET ${PROJECT_NAME} PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     $<TARGET_FILE:libcurl> $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )

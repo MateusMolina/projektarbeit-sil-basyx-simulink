@@ -21,6 +21,7 @@ ELSE("$ENV{MATLAB_ROOT}" STREQUAL "" )
                   $ENV{MATLAB_ROOT}/simulink/include)
 
         INCLUDE_DIRECTORIES(${MATLAB_INCLUDE_DIR})
+
         INCLUDE_DIRECTORIES(${SIMULINK_INCLUDE_DIR})
 
         FIND_LIBRARY( MATLAB_MEX_LIBRARY
@@ -31,7 +32,7 @@ ELSE("$ENV{MATLAB_ROOT}" STREQUAL "" )
         FIND_LIBRARY( MATLAB_MX_LIBRARY
                       NAMES libmx mx
                       PATHS $ENV{MATLAB_ROOT}/bin $ENV{MATLAB_ROOT}/extern/lib 
-                      PATH_SUFFIXES glnxa64 glnx86 win64/microsoft win32/microsoft)
+                      PATH_SUFFIXES glnxa64 glnx86 win64/mingw64 win32/mingw64)
 
     MESSAGE (STATUS "MATLAB_ROOT: $ENV{MATLAB_ROOT}")
 
@@ -53,6 +54,7 @@ MARK_AS_ADVANCED(
   MATLAB_MEX_LIBRARY
   MATLAB_MX_LIBRARY
   MATLAB_INCLUDE_DIR
+  SIMULINK_INCLUDE_DIR
   MATLAB_FOUND
   MATLAB_ROOT
 )
