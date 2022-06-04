@@ -2,6 +2,7 @@
 #include "basyxconnector/basyxConfig.hpp"
 #include <json/json.h>
 #include <httpclient/httpConnection.hpp>
+#include <httpclient/utils.hpp>
 
 bool RegistryServerConnector::testConnection(){
     // TODO should be faster (download only headers?)
@@ -13,6 +14,8 @@ RegistryServerConnector::RegistryServerConnector(Url &&registerUrl, HttpConnecti
 {
     if(registerUrl.getApiPath() == "")
         registerUrl.setApiPath(BasyxConfig::REG_API_PATH);
+    else if(registerUrl.getApiPath().find(BasyxConfig::REG_API_PATH) == std::string::npos)
+        registerUrl.setApiPath(registerUrl.joinPaths(registerUrl.getApiPath(),BasyxConfig::REG_API_PATH));
         
     if(!testConnection()){
         throw std::runtime_error("Failed to connect with Registry Server '"+registerUrl.getStr()+"' with http code "+std::to_string(httpCon.getCurrentResponse().httpCode));
@@ -22,8 +25,9 @@ RegistryServerConnector::RegistryServerConnector(Url &&registerUrl, HttpConnecti
 RegistryServerConnector::~RegistryServerConnector() = default;
 
 Aas RegistryServerConnector::fetchAAS(const string &aasId)
-{
-    registerUrl.setEndPointPath(aasId);
+{   
+    string aasId_esc = escapeStr(aasId);
+    registerUrl.setEndPointPath(aasId_esc);
     HttpResponse r = httpCon.get(registerUrl);
 
     if(r.httpCode == 200){

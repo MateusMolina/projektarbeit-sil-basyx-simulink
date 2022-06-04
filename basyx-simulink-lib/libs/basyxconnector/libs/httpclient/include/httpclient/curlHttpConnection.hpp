@@ -10,6 +10,8 @@ class CurlHttpConnection : public HttpConnection{
         HttpResponse response;
 
         void perform(const Url &url);
+
+        void initCurl();
     public:
         CurlHttpConnection();
  

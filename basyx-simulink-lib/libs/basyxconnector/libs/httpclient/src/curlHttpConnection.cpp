@@ -12,23 +12,18 @@ size_t CurlHttpConnection::WriteCallback(void *contents, size_t size, size_t nme
 }
 
 CurlHttpConnection::CurlHttpConnection() {
-    _curlHandle = curl_easy_init(); 
-    if(_curlHandle){
-        curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
-        curl_easy_setopt(_curlHandle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-        curl_easy_setopt(_curlHandle, CURLOPT_SSL_VERIFYPEER, 0L);          // TODO Remove CURLOPT_SSL_VERIFYPEER
-        curl_easy_setopt(_curlHandle, CURLOPT_FOLLOWLOCATION, TRUE);
-    }else
-        throw std::runtime_error("Failed to stabilish connection to cURL");
+
 }
 
 
 HttpResponse CurlHttpConnection::get(const Url &url){
+    this->initCurl();
     this->perform(url);
     return response;
 }
 
 HttpResponse CurlHttpConnection::post(const Url &url, string &&payload){
+    this->initCurl();
     const char* data = payload.data();
     curl_easy_setopt(_curlHandle, CURLOPT_POSTFIELDS, data);
 
@@ -46,8 +41,8 @@ void CurlHttpConnection::perform(const Url &url){
     string urlStr =  url.getStr();
     long httpCode;
 
-    curl_easy_setopt(_curlHandle, CURLOPT_URL,  urlStr.c_str());
     curl_easy_setopt(_curlHandle, CURLOPT_WRITEDATA, &buffer);
+    curlCode = curl_easy_setopt(_curlHandle, CURLOPT_URL,  urlStr.c_str());
 
     curlCode = curl_easy_perform(_curlHandle);
 
@@ -57,6 +52,17 @@ void CurlHttpConnection::perform(const Url &url){
 
     response.raw = buffer;
     response.httpCode = httpCode;
+}
+
+void CurlHttpConnection::initCurl(){
+    _curlHandle = curl_easy_init(); 
+    if(_curlHandle){
+        curl_easy_setopt(_curlHandle, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(_curlHandle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+        curl_easy_setopt(_curlHandle, CURLOPT_SSL_VERIFYPEER, 0L);          // TODO Remove CURLOPT_SSL_VERIFYPEER
+        curl_easy_setopt(_curlHandle, CURLOPT_FOLLOWLOCATION, TRUE);
+    }else
+        throw std::runtime_error("Failed to stabilish connection to cURL");
 }
 
 CurlHttpConnection::~CurlHttpConnection(){

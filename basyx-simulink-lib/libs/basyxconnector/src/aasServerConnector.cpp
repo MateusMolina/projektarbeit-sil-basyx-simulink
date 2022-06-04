@@ -10,8 +10,9 @@ AasServerConnector::AasServerConnector(Aas &aas, HttpConnection &httpCon) : aas_
 
 string AasServerConnector::getSeValue(SubmodelElement &se)
 {
-
-    string urlUpd = BasyxConfig::buildSeEpPath(se.submodel.submodelIdShort, se.seIdShort);
+    string smIdShort = se.submodel.submodelIdShort;
+    string seIdShort = se.seIdShort;
+    string urlUpd = BasyxConfig::buildSeEpPath(smIdShort, seIdShort);
     aas_.aasUrl.setEndPointPath(urlUpd);
 
     HttpResponse resp = httpCon_.get(aas_.aasUrl);
@@ -25,7 +26,9 @@ string AasServerConnector::getSeValue(SubmodelElement &se)
 
 void AasServerConnector::updateSeValue(SubmodelElement &se, const string &value)
 {
-    string urlUpd = BasyxConfig::buildSeEpPath(se.submodel.submodelIdShort, se.seIdShort);
+    string smIdShort = se.submodel.submodelIdShort;
+    string seIdShort = se.seIdShort;
+    string urlUpd = BasyxConfig::buildSeEpPath(smIdShort, seIdShort);
     aas_.aasUrl.setEndPointPath(urlUpd);
 
     string valueProc = value; // TODO Preprocessing needed?
