@@ -9,6 +9,7 @@
 #include <memory>
 #include <urlhandler/urlHandler.hpp>
 #include <httpclient/curlHttpConnection.hpp>
+#include <basyxconnector/components.hpp>
 #include <basyxconnector/registryServerConnector.hpp>
 
 /*====================*
@@ -22,7 +23,7 @@
  */
 static void mdlInitializeSizes(SimStruct *S)
 {
-    ssSetNumSFcnParams(S, 1);  /* Number of expected parameters */
+    ssSetNumSFcnParams(S, 2);  /* Number of expected parameters */
     if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
         /* Return if number of expected != number of actual parameters */
         return;
@@ -91,12 +92,24 @@ static void mdlInitializeSampleTimes(SimStruct *S)
 #endif /* MDL_INITIALIZE_CONDITIONS */
 
 std::unique_ptr<RegistryServerConnector> regCon;
+std::unique_ptr<CurlHttpConnection> httpCon;
 //  typedef HRESULT(CALLBACK* proc_api_init)(std::string);
 //  typedef HRESULT(CALLBACK* proc_call_api)(double&, double&);
 //  HINSTANCE hDLL;               // Handle to DLL
 //  HINSTANCE altDLL;
 //  proc_api_init api_init;    // Function pointer
 //  proc_call_api callAPI;    // Function pointer
+
+
+static void fetchAAS(string aasId){
+  Aas aas = regCon->fetchAAS(aasId);
+  ssPrintf(aas.aasUrl.getStr().c_str());
+  ssPrintf(aas.aasId.c_str());
+}
+
+static string getPar(SimStruct *S, int n){
+  return std::string(mxArrayToString(ssGetSFcnParam(S,n)));
+}
 
 #define MDL_START  /* Change to #undef to remove function */
 #if defined(MDL_START) 
@@ -129,9 +142,10 @@ std::unique_ptr<RegistryServerConnector> regCon;
 		//   callAPI = NULL;
 	  // }
     try{
-      Url url = Url(std::string(mxArrayToString(ssGetSFcnParam(S,0))));
-      CurlHttpConnection httpCon = CurlHttpConnection();
-      regCon = std::make_unique<RegistryServerConnector>(std::move(url), httpCon);
+      Url url = Url(getPar(S,0));
+      httpCon = std::make_unique<CurlHttpConnection>();
+      regCon = std::make_unique<RegistryServerConnector>(std::move(url), *httpCon);
+      fetchAAS(getPar(S,1));
     }catch (const std::exception& e){
       ssSetErrorStatus(S,e.what());
       return;
