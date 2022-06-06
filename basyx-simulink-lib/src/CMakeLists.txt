@@ -5,7 +5,7 @@
 # set_target_properties(basyxconnector PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/libs/basyxconnector/include)
 
 
-set(BLOCKS RegistryConnectorBlock)
+set(BLOCKS RegistryConnectorBlock PropertySAConnectorBlock)
 
 foreach(BLOCK ${BLOCKS})
     add_library(${BLOCK} SHARED ${BLOCK}.cpp ${CMAKE_SOURCE_DIR}/Matlabdef.def)
