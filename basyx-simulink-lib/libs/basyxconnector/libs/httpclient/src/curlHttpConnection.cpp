@@ -12,7 +12,7 @@ size_t CurlHttpConnection::WriteCallback(void *contents, size_t size, size_t nme
 }
 
 CurlHttpConnection::CurlHttpConnection() {
-
+    curl_global_init(CURL_GLOBAL_ALL);
 }
 
 
@@ -22,9 +22,10 @@ HttpResponse CurlHttpConnection::get(const Url &url){
     return response;
 }
 
-HttpResponse CurlHttpConnection::post(const Url &url, string &&payload){
+HttpResponse CurlHttpConnection::post(const Url &url, const string &payload){
     this->initCurl();
     const char* data = payload.data();
+    curl_easy_setopt(_curlHandle, CURLOPT_POST, 1);
     curl_easy_setopt(_curlHandle, CURLOPT_POSTFIELDS, data);
 
     this->perform(url);
@@ -32,8 +33,14 @@ HttpResponse CurlHttpConnection::post(const Url &url, string &&payload){
 }
 
 // TODO Implement
-HttpResponse CurlHttpConnection::put(const Url &url, string &&payload){
-    return HttpResponse();
+HttpResponse CurlHttpConnection::put(const Url &url, const string &payload){
+    this->initCurl();
+    const char* data = payload.data();
+    curl_easy_setopt(_curlHandle, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_easy_setopt(_curlHandle, CURLOPT_POSTFIELDS, data);
+
+    this->perform(url);
+    return response;
 }
 
 void CurlHttpConnection::perform(const Url &url){
@@ -66,6 +73,6 @@ void CurlHttpConnection::initCurl(){
 }
 
 CurlHttpConnection::~CurlHttpConnection(){
-    // curl_easy_cleanup(_curlHandle);
+    curl_global_cleanup();
 }
 

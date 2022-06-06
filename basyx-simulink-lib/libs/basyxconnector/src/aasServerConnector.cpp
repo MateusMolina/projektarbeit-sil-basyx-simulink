@@ -33,7 +33,7 @@ void AasServerConnector::updateSeValue(SubmodelElement &se, const string &value)
 
     string valueProc = value; // TODO Preprocessing needed?
     
-    if(httpCon_.post(aas_.aasUrl,std::move(valueProc)).httpCode == 200 )
+    if(httpCon_.put(aas_.aasUrl,valueProc).httpCode == 200 )
         se.updateValue(value);
     else    
         throw std::runtime_error("Unable to update SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");

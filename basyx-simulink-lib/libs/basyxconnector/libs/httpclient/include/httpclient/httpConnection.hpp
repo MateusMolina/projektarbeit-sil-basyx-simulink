@@ -17,9 +17,9 @@ class HttpConnection{
     public:
         virtual ~HttpConnection() {};
 
-        virtual HttpResponse post(const Url &url, string &&payload) = 0;
+        virtual HttpResponse post(const Url &url, const string &payload) = 0;
 
-        virtual HttpResponse put(const Url &url, string &&payload) = 0;
+        virtual HttpResponse put(const Url &url, const string &payload) = 0;
 
         virtual HttpResponse get(const Url &url) = 0;  
 

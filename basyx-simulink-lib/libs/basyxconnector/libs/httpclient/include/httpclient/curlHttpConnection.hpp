@@ -17,9 +17,9 @@ class CurlHttpConnection : public HttpConnection{
  
         ~CurlHttpConnection();
 
-        HttpResponse post(const Url &url, string &&payload) override;
+        HttpResponse post(const Url &url, const string &payload) override;
 
-        HttpResponse put(const Url &url, string &&payload) override;
+        HttpResponse put(const Url &url, const string &payload) override;
 
         HttpResponse get(const Url &url) override;  
         

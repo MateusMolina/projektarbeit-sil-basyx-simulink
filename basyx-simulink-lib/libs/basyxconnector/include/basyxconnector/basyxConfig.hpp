@@ -15,7 +15,7 @@ namespace BasyxConfig
 
     // Endpoint Builder
 
-    static const string SM_EPP_ = "aas/submodels/"; //+smIdShort
+    static const string SM_EPP_ = "submodels/"; //+smIdShort
     static const string SE_EPP_ = "/submodel/submodelElements/"; //+seIdShort
     static const string VALUE_EPP_ = "/value";
     

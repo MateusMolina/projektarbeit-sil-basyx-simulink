@@ -3,17 +3,20 @@
 
 #include <urlhandler/urlHandler.hpp>
 #include <basyxconnector/registryServerConnector.hpp>
+#include <basyxconnector/aasServerConnector.hpp>
 #include <basyxconnector/components.hpp>
 #include <httpclient/curlHttpConnection.hpp>
 
 using ::testing::Return;
 using ::testing::_;
 
+
 class TestCurlHttpClient : public ::testing::Test {
     protected: 
         const string AASID = "smart.festo.com/demo/aas/1/1/454576463545648365874";
         const string AASURLSTR = "http://localhost:4001/aasServer/shells/smart.festo.com%2Fdemo%2Faas%2F1%2F1%2F454576463545648365874/aas";
         const string REGURLSTR = "http://localhost:8082/registry/api/v1/registry";
+        const string SEUPDURLSTR = "http://localhost:4001/aasServer/shells/smart.festo.com%2Fdemo%2Faas%2F1%2F1%2F454576463545648365874/aas/submodels/Nameplate/submodel/submodelElements/YearOfConstruction/value";
         
         std::unique_ptr<CurlHttpConnection> httpCon;
 
@@ -43,4 +46,21 @@ TEST_F(TestCurlHttpClient, RegServerFetchsAasSuccesfully){
     
     EXPECT_EQ(aas.aasId, AASID);
     EXPECT_EQ(aas.aasUrl, AASURLSTR);
+}
+
+TEST_F(TestCurlHttpClient, UpdatePropertyValue){
+    Url regUrl = Url(REGURLSTR);
+    RegistryServerConnector regCon = RegistryServerConnector(std::move(regUrl), *httpCon);
+    Aas aas = regCon.fetchAAS(AASID);
+
+    AasServerConnector aasCon = AasServerConnector(aas, *httpCon);
+    
+    Submodel sm = Submodel(aas, "Nameplate");
+    SubmodelElement se = SubmodelElement(sm, "YearOfConstruction");
+
+    aasCon.updateSeValue(se, "2020");
+    ASSERT_EQ(aasCon.getSeValue(se), "2020");
+
+    aasCon.updateSeValue(se, "2015");
+    ASSERT_EQ(aasCon.getSeValue(se), "2015");
 }

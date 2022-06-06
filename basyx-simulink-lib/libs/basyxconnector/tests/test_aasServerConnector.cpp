@@ -15,7 +15,7 @@ class TestAasServerConnector : public ::testing::Test {
         const string PROPIDSHORT = "propIdShort";
         const string PROPVALUE = "newPropValue";
         const string AASID = "aasId";
-        const string URLSTR = "https://aasserver.com:8080/path/to/"+AASID;
+        const string URLSTR = "https://aasserver.com:8080/path/to/"+AASID+"/aas";
         
         Aas aas = Aas(Url(URLSTR), AASID);
         Submodel sm = Submodel(aas, SMIDSHORT);
@@ -31,7 +31,7 @@ class TestAasServerConnector : public ::testing::Test {
         }
 
         string buildEPPath(const string &smIdShort, const string &seIdShort) const{
-           return "/aas/submodels/"+smIdShort+"/submodel/submodelElements/"+seIdShort+"/value";
+           return "/submodels/"+smIdShort+"/submodel/submodelElements/"+seIdShort+"/value";
         }
 
     public:
@@ -49,7 +49,7 @@ TEST_F(TestAasServerConnector, CanUpdatePropValue) {
     Url url = Url(URLSTR);
     url.setEndPointPath(buildEPPath(sm.submodelIdShort, se.seIdShort));
     string payload = PROPVALUE;
-    EXPECT_CALL(*httpCon, post(url, std::move(payload)))
+    EXPECT_CALL(*httpCon, put(url, std::move(payload)))
         .WillOnce(Return(HttpResponse("",200)));
 
     ASSERT_NO_THROW(aasCon->updateSeValue(se, PROPVALUE));
