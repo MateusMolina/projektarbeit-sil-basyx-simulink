@@ -49,7 +49,7 @@ static void mdlInitializeSizes(SimStruct *S)
     ssSetNumSampleTimes(S, 1);
     ssSetNumRWork(S, 0);
     ssSetNumIWork(S, 0);
-    ssSetNumPWork(S, 0);
+    ssSetNumPWork(S, 4);
     ssSetNumModes(S, 0);
     ssSetNumNonsampledZCs(S, 0);
 
@@ -93,17 +93,7 @@ static void mdlInitializeSampleTimes(SimStruct *S)
 #endif /* MDL_INITIALIZE_CONDITIONS */
 
 std::unique_ptr<RegistryServerConnector> regCon;
-std::unique_ptr<AasServerConnector> aasCon;
 std::unique_ptr<CurlHttpConnection> httpCon;
-std::unique_ptr<Aas> aas_;
-std::unique_ptr<Submodel> sm_;
-std::unique_ptr<SubmodelElement> se_;
-//  typedef HRESULT(CALLBACK* proc_api_init)(std::string);
-//  typedef HRESULT(CALLBACK* proc_call_api)(double&, double&);
-//  HINSTANCE hDLL;               // Handle to DLL
-//  HINSTANCE altDLL;
-//  proc_api_init api_init;    // Function pointer
-//  proc_call_api callAPI;    // Function pointer
 
 
 static string getPar(SimStruct *S, int n){
@@ -120,26 +110,6 @@ static string getPar(SimStruct *S, int n){
    */
   static void mdlStart(SimStruct *S)
   {
-	  //Parameter #1: API web address
-	  // const mxArray* pArrayValue = ssGetSFcnParam(S, 0);
-	  // const char* apiCharArray = mxArrayToString(pArrayValue);
-	  // std::string apiAddress(apiCharArray);
-
-	  // //Dynamically load DLL files required for REST client
-	  // altDLL = LoadLibrary("include\\cpprest_2_10.dll");
-	  // hDLL = LoadLibrary("include\\example_api.dll");
-    //   if (hDLL) {
-		//   api_init = (proc_api_init)GetProcAddress(hDLL, "initializeAPI");
-		//   callAPI = (proc_call_api)GetProcAddress(hDLL, "callAPI");
-
-		//   if (api_init) {
-		// 	  api_init(apiAddress);
-		//   }
-	  // }
-	  // else {
-		//   api_init = NULL;
-		//   callAPI = NULL;
-	  // }
     string regUrlStr, aasId, smIdShort, seIdShort;
     regUrlStr = getPar(S,0);
     aasId = getPar(S,1);
@@ -149,10 +119,14 @@ static string getPar(SimStruct *S, int n){
       Url urlStr = Url(regUrlStr);
       httpCon = std::make_unique<CurlHttpConnection>();
       regCon = std::make_unique<RegistryServerConnector>(std::move(urlStr), *httpCon);
-      aas_ =  std::make_unique<Aas>(regCon->fetchAAS(aasId));
-      aasCon = std::make_unique<AasServerConnector>(*aas_, *httpCon);
-      sm_ = std::make_unique<Submodel>(*aas_,smIdShort);
-      se_ = std::make_unique<SubmodelElement>(*sm_,seIdShort);
+      Aas* aas = new Aas(regCon->fetchAAS(aasId));
+      Submodel* sm = new Submodel(*aas,smIdShort);
+      SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
+
+      void **PWork = ssGetPWork(S);
+      PWork[0] = aas;
+      PWork[1] = sm;
+      PWork[2] = se;
     }catch (const std::exception& e){
       ssSetErrorStatus(S,e.what());
       return;
@@ -169,11 +143,33 @@ static string getPar(SimStruct *S, int n){
  */
 static void mdlOutputs(SimStruct *S, int_T tid)
 {    
+    try{
+      Aas* aas = (Aas*) ssGetPWorkValue(S,0);
+      SubmodelElement* se =(SubmodelElement*) ssGetPWorkValue(S,2);
+      AasServerConnector aasCon = AasServerConnector(*aas, *httpCon);
+
+      if (ssGetInputPortConnected(S,0)){
+        double inputValue;
+        const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
+        inputValue = u[0];
+        aasCon.updateSeValue(*se,std::to_string(u[0])); 
+      }
+
+      if (ssGetOutputPortConnected(S,0)){
+        double outputValue;
+        double       *y = ssGetOutputPortRealSignal(S,0);
+        outputValue = std::stod(aasCon.getSeValue(*se));
+        y[0] = outputValue;
+      }
+    }catch (const std::exception& e){
+      ssSetErrorStatus(S,e.what());
+      return;
+    }
 }
 
 
 
-#define MDL_UPDATE  /* Change to #undef to remove function */
+#undef MDL_UPDATE  /* Change to #undef to remove function */
 #if defined(MDL_UPDATE)
   /* Function: mdlUpdate ======================================================
    * Abstract:
@@ -184,34 +180,13 @@ static void mdlOutputs(SimStruct *S, int_T tid)
    */
   static void mdlUpdate(SimStruct *S, int_T tid)
   {
-    double inputValue;
-    double outputValue;
-    double       *y = ssGetOutputPortRealSignal(S,0);
-	  const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
-	  inputValue = u[0];
 
-	  //Call web API each time step, if it's available
-	  // if ssIsSampleHit(S, 0, tid) {
-		//   if (callAPI) {
-		// 	  callAPI(inputValue, outputValue);
-		//   }
-		//   else {
-		// 	  outputValue = 0.0;
-		//   }
-	  // }
-
-
-    aasCon->updateSeValue(*se_,std::to_string(u[0])); 
-
-    outputValue = std::stod(aasCon->getSeValue(*se_));
-
-    y[0] = outputValue;
   }
 #endif /* MDL_UPDATE */
 
 
 
-#define MDL_DERIVATIVES  /* Change to #undef to remove function */
+#undef MDL_DERIVATIVES  /* Change to #undef to remove function */
 #if defined(MDL_DERIVATIVES)
   /* Function: mdlDerivatives =================================================
    * Abstract:
@@ -233,8 +208,34 @@ static void mdlOutputs(SimStruct *S, int_T tid)
  */
 static void mdlTerminate(SimStruct *S)
 {
-  //   FreeLibrary(hDLL);
-	// FreeLibrary(altDLL);
+
+
+  if (ssGetPWork(S) != NULL) {
+
+    SubmodelElement *se;
+    se = (SubmodelElement *) ssGetPWorkValue(S,2);
+    if (se != NULL) {
+      delete se;
+    }
+    ssSetPWorkValue(S,2,NULL);
+
+    Submodel *sm;
+    sm = (Submodel *) ssGetPWorkValue(S,1);
+    if (sm != NULL) {
+      delete sm;
+    }
+    ssSetPWorkValue(S,1,NULL);
+
+    Aas *aas;
+    aas = (Aas *) ssGetPWorkValue(S,0);
+    if (aas != NULL) {
+      delete aas;
+    }
+    ssSetPWorkValue(S,0,NULL);
+  }
+
+  delete regCon.release();
+  delete httpCon.release();
 }
 
 
