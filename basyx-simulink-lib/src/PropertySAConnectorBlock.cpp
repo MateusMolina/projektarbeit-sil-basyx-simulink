@@ -24,7 +24,7 @@
  */
 static void mdlInitializeSizes(SimStruct *S)
 {
-    ssSetNumSFcnParams(S, 4);  /* Number of expected parameters */
+    ssSetNumSFcnParams(S, 5);  /* Number of expected parameters */
     if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
         /* Return if number of expected != number of actual parameters */
         return;
@@ -70,7 +70,7 @@ static void mdlInitializeSizes(SimStruct *S)
  */
 static void mdlInitializeSampleTimes(SimStruct *S)
 {
-    ssSetSampleTime(S, 0, 1.0);
+    ssSetSampleTime(S, 0, *mxGetPr(ssGetSFcnParam(S,0)));
     ssSetOffsetTime(S, 0, 0.0);
 }
 
@@ -111,10 +111,10 @@ static string getPar(SimStruct *S, int n){
   static void mdlStart(SimStruct *S)
   {
     string regUrlStr, aasId, smIdShort, seIdShort;
-    regUrlStr = getPar(S,0);
-    aasId = getPar(S,1);
-    smIdShort = getPar(S,2);
-    seIdShort = getPar(S,3);
+    regUrlStr = getPar(S,1);
+    aasId = getPar(S,2);
+    smIdShort = getPar(S,3);
+    seIdShort = getPar(S,4);
     try{
       Url urlStr = Url(regUrlStr);
       httpCon = std::make_unique<CurlHttpConnection>();
