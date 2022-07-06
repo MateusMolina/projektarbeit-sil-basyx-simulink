@@ -1,10 +1,43 @@
 \section{Entwicklungsprozess} \label{Entwicklungsprozess}
 
-\subsection{Anforderungsdefinition}
-\begin{figure}[H]\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{media/diagrams/CRB.jpg}
-\caption{Capabilities Diagram)}
-\label{fig:CRB}
-\end{figure}
+Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutet, und die für dessen Realisierung notwendingen Anforderungen aufgeführt. Die funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
 
-\subsection{Funktionale Spezifikation}
+\subsection{Konzept und Anforderungsdefinition} \label{Konzept}
+
+Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die standarde Simulink-Umgebung, indem personalisierten Blöcker in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
+
+
+
+Für die ordentliche Realisierung dieses Konzeptes setzt sich voraus, dass das System in der Lagen sein muss,
+\begin{enumerate}
+    \item A1: den Wert aus einem SubmodelElement abzulesen
+    \item A2: den Wert aus einem SubmodelElement zu aktualisieren
+    \item A3: aus einem Registry Server Daten vom einen AAS abzurufen.
+    \item A4: Fehler in Simulink-konformen Fehlermeldungen anzuzeigen
+    \item A5: Parallelität angemessen zu implementieren, indem die Verbindung mit mehreren Submodel Elements ermöglicht wird.
+\end{enumerate}
+
+\subsection{Funktionale Spezifikation} \label{Funspec}
+
+Für die Modellierung des funktionalen Anteil des Systemes wurde die Arcadia-Methodologie mit der Capella-Modellierungsumgebung verwendet. Das System lässt sich in 3 Teilsystemen unterteilen: der (1) \textit{BasyxConnector}, der (2) \textit{HttpClient} und die Blöcker (3.1) \textit{ConnectedRegistryServerBlock} und (3.2) \textit{ConnectedPropertyBlock}.
+
+Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden durch den die sämtlichen für eine Client-Anfrage notwendigen Informationen generiert und diese an den intern-gespeicherten Client weitergeleitet. Für den Umfang dieses Projekt wurde nur eine Sorte von Client entworfen, bzw. die \textit{HttpClient}, dessen Aufgabe sowohl die Abgabe von Http-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch das Empfangen der Antwort seitens des Servers besteht.
+
+Außerdem wurden nur Open-Source Bibliotheken angewendet, beziehungsweise die \textit{libcurl} und \textit{jsoncpp}. Das Erstere wird effektiv als Implemmentierungsgrundlage für den \textit{HttpClient} angewendt, wärend das Letzere zur Dekodierung von Http-Antworten dient.
+
+Die Blöcker nehmen die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch die Ein- und Ausgabe von Werten an \textit{Simulink} sich  implementieren lassen. Partikulär vom \textit{ConnectedPropertyBlock} ist eine Funktionsbaustein, um Leseanfrage und Aktualiserungsanfrage an einen eingegebenen Submodel Element mittels den \textit{BasyxConnector} zu tätigen. Andererseits wird das Abrufen von Informationen aus einem \textit{Registry Server} durch den \textit{ConnectedRegistryServerBlock} realisiert. Beide Blöcker können miteinander verbunden werden, im den Fall, dass der Pfad bis zum gewünschten \textit{AAS} nicht bekanntgegeben war. 
+
+
+Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese Komponente wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinem Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
+
+Ein normaler Kommunikationsfluss besteht darin, dass eines der (3.x) Blöcker seitens Simulink ausgeführt wird, wodurch nun Methoden vom  \textit{BasyxConnector} aufgerufen werden. Dieser setzt im Anschluss den \textit{HttpClient} ein, um effektiv die HttpAnfrage auszusetzen. Die Antwort des Servers wird im Anschluss vom \textit{BasyxConnector} abgewickelt und entweder den abgerufenen Wert oder eine Fehlermeldung dem ursprünglichen Block weitergegeben.
+
+Mögliche Ausführevents sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und widerrum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Schluss-Event sollen grundsätzlich für diesen Anwendungsfall alle initialisierten Objekten vom Arbeitspeicher bereinigt werden.
+
+In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Komponenten sich veranschaulichen. 
+
+\begin{figure}[H]\centering
+\includegraphics[width=15cm,keepaspectratio]{media/diagrams/LAB_Structure.jpg}
+\caption{Capabilities Diagram}
+\label{fig:LABs}
+\end{figure}
