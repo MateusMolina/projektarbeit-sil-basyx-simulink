@@ -1,8 +1,8 @@
 ## System Architecture
 
 
-![[architecture/ComponentsDiagram.PNG]]
+![[ComponentsDiagram.PNG]]
 
 ## Sequency Diagram
 
-![[architecture/SequenceDiagram.PNG]]
+![[SequenceDiagram.PNG]]

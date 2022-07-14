@@ -1,14 +1,16 @@
 \section{Entwicklungsprozess} \label{Entwicklungsprozess}
 
-Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutet, und die für dessen Realisierung notwendingen Anforderungen aufgeführt. Die funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
+Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Den funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
 
 \subsection{Konzept und Anforderungsdefinition} \label{Konzept}
 
-Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die standarde Simulink-Umgebung, indem personalisierten Blöcker in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
+% - Problemstellung und Motivation NOCHMALS AUFÜHRLICHER
+
+Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die d Simulink-Umgebung, indem personalisierten Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
 
 
 
-Für die ordentliche Realisierung dieses Konzeptes setzt sich voraus, dass das System in der Lagen sein muss,
+Für die ordentliche Realisierung dieses Konzeptes setzt sich voraus, dass das System in der Lage sein muss,
 \begin{enumerate}
     \item A1: den Wert aus einem SubmodelElement abzulesen
     \item A2: den Wert aus einem SubmodelElement zu aktualisieren
@@ -19,25 +21,42 @@ Für die ordentliche Realisierung dieses Konzeptes setzt sich voraus, dass das S
 
 \subsection{Funktionale Spezifikation} \label{Funspec}
 
-Für die Modellierung des funktionalen Anteil des Systemes wurde die Arcadia-Methodologie mit der Capella-Modellierungsumgebung verwendet. Das System lässt sich in 3 Teilsystemen unterteilen: der (1) \textit{BasyxConnector}, der (2) \textit{HttpClient} und die Blöcker (3.1) \textit{ConnectedRegistryServerBlock} und (3.2) \textit{ConnectedPropertyBlock}.
+Für die Modellierung des funktionalen Anteils des Systems wurde die Arcadia-Methodologie mit der Capella-Modellierungsumgebung verwendet. Das System lässt sich in 3 Teilsystemen unterteilen: der (1) \textit{BasyxConnector}, der (2) \textit{HttpClient} und die Blöcke (3.1) \textit{ConnectedRegistryServerBlock} und (3.2) \textit{ConnectedPropertyBlock}.
 
-Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden durch den die sämtlichen für eine Client-Anfrage notwendigen Informationen generiert und diese an den intern-gespeicherten Client weitergeleitet. Für den Umfang dieses Projekt wurde nur eine Sorte von Client entworfen, bzw. die \textit{HttpClient}, dessen Aufgabe sowohl die Abgabe von Http-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch das Empfangen der Antwort seitens des Servers besteht.
+Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden durch den die sämtlichen für eine Client-Anfrage notwendigen Informationen generiert und diese an den intern-gespeicherten Client weitergeleitet. Darüber hinaus wird die Logik für die Kommunikation mit einem BaSyx-AAS-Server, bzw. Basyx-Registry-Server, in dieser Komponente   integriert. Für den Umfang dieses Projekt wurde nur eine Art von \textit{Client} entworfen, bzw. die \textit{HttpClient}, dessen Aufgabe aus sowohl der Abgabe von Http-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch dem Empfangen der Antwort seitens des Servers besteht.
 
-Außerdem wurden nur Open-Source Bibliotheken angewendet, beziehungsweise die \textit{libcurl} und \textit{jsoncpp}. Das Erstere wird effektiv als Implemmentierungsgrundlage für den \textit{HttpClient} angewendt, wärend das Letzere zur Dekodierung von Http-Antworten dient.
+Außerdem wurden nur Open-Source Bibliotheken angewendet, beziehungsweise die \textit{libcurl} und \textit{jsoncpp}. Das Erstere wird effektiv als Implementierungsgrundlage für den \textit{HttpClient} angewendet, während das Letztere zur Dekodierung von Http-Antworten dient.
 
-Die Blöcker nehmen die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch die Ein- und Ausgabe von Werten an \textit{Simulink} sich  implementieren lassen. Partikulär vom \textit{ConnectedPropertyBlock} ist eine Funktionsbaustein, um Leseanfrage und Aktualiserungsanfrage an einen eingegebenen Submodel Element mittels den \textit{BasyxConnector} zu tätigen. Andererseits wird das Abrufen von Informationen aus einem \textit{Registry Server} durch den \textit{ConnectedRegistryServerBlock} realisiert. Beide Blöcker können miteinander verbunden werden, im den Fall, dass der Pfad bis zum gewünschten \textit{AAS} nicht bekanntgegeben war. 
+Die Blöcke nehmen die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch die Ein- und Ausgabe von Werten an \textit{Simulink} sich  implementieren lassen. Partikulär vom \textit{ConnectedPropertyBlock} ist ein Funktionsbaustein, um Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels den \textit{BasyxConnector} zu tätigen. Andererseits wird das Abrufen von Informationen aus einem \textit{Registry Server} durch den \textit{ConnectedRegistryServerBlock} realisiert. Beide Blöcke können miteinander verbunden werden, in den Fall, dass der Pfad bis zum gewünschten \textit{AAS} nicht bekannt gegeben war. 
 
 
-Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese Komponente wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinem Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
+Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese Komponente wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinen Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
 
-Ein normaler Kommunikationsfluss besteht darin, dass eines der (3.x) Blöcker seitens Simulink ausgeführt wird, wodurch nun Methoden vom  \textit{BasyxConnector} aufgerufen werden. Dieser setzt im Anschluss den \textit{HttpClient} ein, um effektiv die HttpAnfrage auszusetzen. Die Antwort des Servers wird im Anschluss vom \textit{BasyxConnector} abgewickelt und entweder den abgerufenen Wert oder eine Fehlermeldung dem ursprünglichen Block weitergegeben.
+Ein normaler Kommunikationsfluss besteht darin, dass eines der (3.x) Blöcke seitens Simulink ausgeführt wird, wodurch nun Methoden vom  \textit{BasyxConnector} aufgerufen werden. Dieser setzt im Anschluss den \textit{HttpClient} ein, um effektiv die Http-Anfrage auszusetzen. Die Antwort des Servers wird im Anschluss vom \textit{BasyxConnector} abgewickelt und entweder den abgerufenen Wert oder eine Fehlermeldung dem ursprünglichen Block weitergegeben.
 
-Mögliche Ausführevents sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und widerrum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Schluss-Event sollen grundsätzlich für diesen Anwendungsfall alle initialisierten Objekten vom Arbeitspeicher bereinigt werden.
+Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielsweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und wiederum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Schluss-Event sollen grundsätzlich für diesen Anwendungsfall alle initialisierten Objekten vom Arbeitsspeicher bereinigt werden.
 
 In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Komponenten sich veranschaulichen. 
 
 \begin{figure}[H]\centering
 \includegraphics[width=15cm,keepaspectratio]{media/diagrams/LAB_Structure.jpg}
-\caption{Capabilities Diagram}
+\caption{Funktionsbausteine jeder Teilkomponente}
 \label{fig:LABs}
 \end{figure}
+
+
+\subsection{Systemarchitektur} \label{SysArch}
+
+\emph{Logische Architektur für das Erfüllen vom A1, A2 und A4}
+
+\begin{landscape}
+    \begin{figure}[hbtp] 
+        \centering
+         \makebox[\textwidth]{\includegraphics[width=.9\paperwidth]{media/diagrams/LAB_C10C20C40.jpg}}
+        \caption{Darstellung des Kommunikationsflusses vom A1, A2 und A4}
+        \label{fig:LAB_ALL}
+    \end{figure}    
+\end{landscape}
+    
+\emph{Klassendiagramm}
+% UML DIAGRAMM

@@ -1,7 +1,69 @@
 \section{Entwurf} \label{Entwurf}
 
-% Beschreibung jedes Capabilities des Projektes
-% - Problemstellung und Motivation
-% - Methodologie
-% - Endarchitektur
+% [ ] Übersicht von was hier besprochen wird
+
 \subsection{Wrappen des BaSyx als S-Function}
+
+% [ ] Funktionweise des BasyxConnectors und wie es mit dem Block verbunden ist
+
+% [ ] Übersicht von den Config-Datei und die benötigten APIs-Pfade usw
+
+% [ ] Übersicht der S-Function Methoden und was im Projekt verwendet wurde
+
+
+% [ ] Beschreibung jedes Capabilities des Projektes
+\subsection{A1: Ablesen des Wertes aus einem SubmodelElement}
+
+% [ ] Übersicht von dem Diagramm unten
+
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C20.jpg}
+    \caption{Funktionsbausteine jeder Teilkomponente}
+    \label{fig:LABs}
+\end{figure}
+    
+\subsection{A2: Aktualisieren des Wertes aus einem SubmodelElement}
+
+% [ ] Übersicht von dem Diagramm unten
+
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C10.jpg}
+    \caption{Funktionsbausteine jeder Teilkomponente}
+    \label{fig:LABs}
+\end{figure}
+\subsection{A3: Abrufen von AAS-Daten aus einem Registry Server}
+
+% [ ] Übersicht von dem Diagramm unten
+
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C30.jpg}
+    \caption{Funktionsbausteine jeder Teilkomponente}
+    \label{fig:LABs}
+\end{figure}
+\subsection{A4: Anzeigen von Simulink-konformen Fehlermeldungen}
+
+Wäre ein Status-Code nicht gleich 200 erhalten, löst der BasyxConnector eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an dem entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehldermeldungen direkt im Simulink-Console angezeigt werden können.
+
+% [ ] Bild vom Console mit irgendwelchem Fehler
+
+Diese ist ein wesentlicher Aspekt der Anwendung, was unnötige Abstürze im Programm vermeidet und den Nutzern ermöglicht, Tippfehler schnell zu erkennen und die Verbindung mit dem BaSyx-Server zu überprüfen.
+
+
+\subsection{A5: Anwendung von mehreren Blöcken in demselben Simulink-Modell}
+
+% [ ] Was passiert wenn mehrere Block im gleichen Modell eingeführt werden? (seitens Matlab)
+
+% [ ] Beispieles Modell aufzeigen
+
+% [ ] Anwendung dieser komischen Vektoren Simulinks, um das Problem von static Parameters umzugehen 
+
+\subsection{Entwurf einer Benutzeroberfläche für die Simulink-Blöcke}
+
+Wie in Kapitel \ref{BenutzeroberflaecheSimulink} erklärt, bietet Simulink mehrere Möglichkeiten der Benutzeroberfläche eines Blockes zu personalisieren. 
+
+Für beiden Blöcke war eine kritische Anforderung, dass alle einzustellenden Parameter gut erkennbar waren, um schnell von mehrfachen eingefügten Blöcken zu unterscheiden.
+
+% [ ] Beschreibung der Bilder
+
+% [ ] Bilder von Blöckenbenutzeroberflächen
+
