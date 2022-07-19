@@ -121,7 +121,7 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A1: Ablesen des Wertes aus einem SubmodelElement}
 
-% [X] vomÜbersicht von dem Diagramm unten
+% [X] Übersicht von dem Diagramm unten
 Für das Ablesenverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
 
 \begin{lstlisting}
@@ -180,7 +180,12 @@ Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall e
 % [X] Übersicht von dem Diagramm unten
 Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet.
 
-vom   
+
+\begin{lstlisting}
+    // PropertySAConnectorBlock.cpp
+    ...
+    static void mdlOutputs(SimStruct *S, int_T tid)
+    {    
         try{
             ...
             if (ssGetInputPortConnected(S,0)){
