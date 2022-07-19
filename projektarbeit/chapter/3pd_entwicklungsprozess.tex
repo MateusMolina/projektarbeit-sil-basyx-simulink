@@ -4,10 +4,9 @@ Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und w
 
 \subsection{Konzept und Anforderungsdefinition} \label{Konzept}
 
-% - Problemstellung und Motivation NOCHMALS AUFÜHRLICHER
+% [ ] Problemstellung und Motivation NOCHMALS AUFÜHRLICHER
 
 Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die d Simulink-Umgebung, indem personalisierten Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
-
 
 
 Für die ordentliche Realisierung dieses Konzeptes setzt sich voraus, dass das System in der Lage sein muss,
@@ -42,7 +41,7 @@ In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Kom
 \includegraphics[width=15cm,keepaspectratio]{media/diagrams/LAB_Structure.jpg}
 \caption{Funktionsbausteine jeder Teilkomponente}
 \label{fig:LABs}
-\end{figure}
+\end{figure} einer Bibliothek für Si
 
 
 \subsection{Systemarchitektur} \label{SysArch}
@@ -62,10 +61,10 @@ In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Kom
 
 
 % [X] Erklärung der Klassendiagramm
-Im Diagramm \ref{fig:uml} lässt sich ein Überblick der Architektur der Bibliothek erhalten. Zusätzlich zu den internen Komponenten (BasyxConnector, httpClient) und den externen Bibliotheken (jsoncpp, curlcpp, und simstruc) wird die Komponente \textit{UrlHandler} im Anspruch genommen, wobei die für die Bearbeitung von URL, Zergliedern von \textit{strings} verantwortlich ist.
+Im Diagramm \ref{fig:uml} lässt sich ein Überblick der Architektur der Bibliothek erhalten. Zusätzlich zu den internen Komponenten (BasyxConnector, httpClient) und den externen Bibliotheken (jsoncpp, curlcpp, und simstruc) wird die Komponente \textit{UrlHandler} im Anspruch genommen, wobei die für die Bearbeitung von URL und Zergliedern von \textit{strings} verantwortlich ist.
 
-% [ ] Kurze erklärung von den externen Bibliotheken
-
+% [X] Kurze erklärung von den externen Bibliotheken
+Wie in den vorherigen Kapiteln erklärt wurde, wird \textit{curlcpp} für das Tätigen HTTP-Anfragen und \textit{jsoncpp} für die Dekodierung dieser verwendet. Außerdem legt \textit{simstruc} die Datenstruktur für Simulink fest und kapselt die auf das Modell, bzw. \textit{S-Function} bezogenen Parameter und Ausgaben ein. 
 
 % [X] UML DIAGRAMM
 \begin{figure}[H]\centering

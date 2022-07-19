@@ -4,42 +4,240 @@
 
 \subsection{Wrappen des BaSyx als S-Function}
 
-% [ ] Funktionweise des BasyxConnectors und wie es mit dem Block verbunden ist
+% [X] Funktionweise des BasyxConnectors und wie es mit dem Block verbunden ist
 
-% [ ] Übersicht von den Config-Datei und die benötigten APIs-Pfade usw
+Der \textit{BasyxConnector} wird innerhalb eines Blockes direkt aufgerufen, um Operationen wie einen AAS aus dem Registry-Server abzurufen und den Wert eines \textit{SubmodelElements} anzufragen, bzw. aktualisieren.
 
-% [ ] Übersicht der S-Function Methoden und was im Projekt verwendet wurde
+Ein Öffner der Klasse \textit{aasServerConnector} zeigt auf, dass diese im Konstruktor beide ein Objekt des Typs \textit{AAS} und \textit{HttpConnection} erfordert. Zum Aufbau eines AAS-Objekts wird es auf die Datei \textit{components.hpp} verwiesen, wobei eine neue Instanz entweder aus der Klasse \textit{registryServerConnector} über die Methode \textit{fetchAAS(...)} ausgegeben werden kann, oder anhand des ID und URL-Pfades erstellt werden kann. 
 
-% [ ] Beschreibung jedes Capabilities des Projektes
+Ein \textit{HttpConnection}-Objekt kann über eine der Konstruktion einer der Implementierungen der Schnittstelle \textit{httpConnection.hpp} angelegt werden. Diese dient zu dem Tätigen von HTTP-Anfragen, wodurch eine effektive Entkopplung von deren  Ausführung und dem \textit{BasyxConnector} erreicht wird. Momentan wurde nur eine Implementierung (\textit{curlHttpConnection}) über die externe Bibliothek \textit{libcurl} realisiert.
+
+% [X] Übersicht von den Config-Datei und die benötigten APIs-Pfade usw
+Um eine Änderung der fest codierten API-Pfaden leichter vorzunehmen, wurden alle API-Pfaden in einer einzigen Datei (\textit{basyxConfig.hpp}) eingefügt, auf die die sämtlichen Methoden der Bibliothek zugreifen können.
+
+\begin{lstlisting}[caption=Auszug der API-Definitionen in BasyxConfig, label=code: BasyxConfig]
+// BasyxConfig.hpp
+...
+namespace BasyxConfig
+{
+    using std::string;
+    // Registry Server
+    static const string REG_API_PATH = "api/v1/registry";
+    t
+    // AAS Server
+
+    static const string SM_EPP_ = "submodels/"; //+smIdShort
+    static const string SE_EPP_ = "/submodel/submodelElements/"; //+seIdShort
+    static const string VALUE_EPP_ = "/value";
+    
+    static string buildSeEpPath(string smIdShort, string seIdShort) 
+    {
+        string e_smIdShort = escapeStr(smIdShort);
+        string e_seIdShort = escapeStr(seIdShort);
+
+        return SM_EPP_+e_smIdShort+SE_EPP_+e_seIdShort+VALUE_EPP_;
+    }
+};
+\end{lstlisting}
+
+% [X] Übersicht der S-Function Methoden und was im Projekt verwendet wurde
+
+Innerhalb der Datei \textit{PropertySAConnectorBlock.cpp} findet sich die Logik, um eine Verbindung mit beiden \textit{BaSyx} und \textit{Simulink} herzustellen. Die Klasse \textit{CurlHttpConnection} wird als Zeiger instanziiert, und als Argument zur Erstellung von Objekten des Paketes \textit{BasyxConnector} über die Methoden \textit{mdlStart und mdlOutputs} verwendet. 
+
+% [X] Anwendung dieser komischen Vektoren Simulinks, um das Problem von static Parameters umzugehen wird
+
+Um globale Variablen innerhalb der \textit{Simstruc}-Umgebung zu realisieren, werden \textit{Work} Vektoren benötigt. Mit diesen lässt sich Zustand innerhalb einer Block-Instanz speichern und dadurch Initialisierungsparameter wie \textit{aasId, registryUrl, submodelElementId} unter anderen beibehalten werden.
+Dafür werden hauptsächlich zwei \textit{simstruct}-Methoden eingesetzt, nähmlich \textit{ssGetPWork}, \textit{ssGetPWorkValue}. Die erstere dient zur Bearbeitung des \textit{Work} Vektors, während die letztere zum Ablesen eines in diesem gespeicherten Wert.
+
+\begin{lstlisting}
+// PropertySAConnectorBlock.cpp
+...
+std::unique_ptr<CurlHttpConnection> httpCon;
+...
+static void mdlStart(SimStruct *S)
+{
+    ...
+    try{
+        Url urlStr = Url(regUrlStr);
+        httpCon = std::make_unique<CurlHttpConnection>();
+        RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
+        Aas* aas = new Aas(regCon->fetchAAS(aasId));
+        Submodel* sm = new Submodel(*aas,smIdShort);
+        SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
+  
+        void **PWork = ssGetPWork(S);
+        PWork[0] = aas;
+        PWork[1] = sm;
+        PWork[2] = se;
+    ...
+}
+...
+static void mdlOutputs(SimStruct *S, int_T tid)
+{    
+    try{
+      Aas* aas = (Aas*) ssGetPWorkValue(S,0);
+      SubmodelElement* se =(SubmodelElement*) ssGetPWorkValue(S,2);
+      AasServerConnector aasCon = AasServerConnector(*aas, *httpCon);
+      ...
+}
+...
+\end{lstlisting}
+
+% [X] Wie ein Durchlauf aussieht
+
+Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blockes aufgerufen und Objekten wie \textit{AAS, Submodel und SubmodelElement} werden angelegt und im internen Zustand über einen \textit{work} Vektor gespeichert.
+für einzelnen Block individueller Zustand 
+Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheid \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird am \textit{BasyxConnector} Aktualisierungs-, bzw. Leseanfragen übersendet.
+
+\begin{lstlisting}
+    // PropertySAConnectorBlock.cpp
+    ...
+    static void mdlOutputs(SimStruct *S, int_T tid)
+    {    
+        try{
+            ...
+            if (ssGetInputPortConnected(S,0)){
+                double inputValue;
+                const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
+                inputValue = u[0];
+                aasCon.updateSeValue(*se,std::to_string(u[0])); 
+              }
+        
+              if (ssGetOutputPortConnected(S,0)){
+                double outputValue;
+                double       *y = ssGetOutputPortRealSignal(S,0);
+                outputValue = std::stod(aasCon.getSeValue(*se));
+                y[0] = outputValue;
+              }
+            }
+        ...
+    }
+    ...
+\end{lstlisting}
+
+% [ ] Wrap-up
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A1: Ablesen des Wertes aus einem SubmodelElement}
 
-% [ ] Übersicht von dem Diagramm unten
+% [X] Übersicht von dem Diagramm unten
+Für das Ablesenverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
+
+\begin{lstlisting}
+    // PropertySAConnectorBlock.cpp
+    ...
+    static void mdlOutputs(SimStruct *S, int_T tid)
+    {    
+        try{
+            ...
+              if (ssGetOutputPortConnected(S,0)){
+                double outputValue;
+                double       *y = ssGetOutputPortRealSignal(S,0);
+                outputValue = std::stod(aasCon.getSeValue(*se));
+                y[0] = outputValue;
+              }
+            }
+        ...
+    }
+    ...
+
+    // aasServerConnector.cpp
+    ...
+    string AasServerConnector::getSeValue(SubmodelElement &se)
+    {
+        ...
+        HttpResponse resp = httpCon_.get(aas_.aasUrl);
+        
+        if(resp.httpCode != 200 )
+            throw std::runtime_error("Unable to get SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");
+
+        se.updateValue(resp.raw);wird
+
+    // httpConnection.hpp
+    ...
+    struct HttpResponse{
+        HttpResponse() : raw(""), httpCode(0) {}
+        HttpResponse(string raw, long code) : raw(raw), httpCode(code) {};
+        
+        string raw = ""; 
+        long httpCode = 0;
+    };
+    ...
+}
+\end{lstlisting}
+
+Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall eines \textit{Status-Code} gleich 0 ist der Wert des \textit{SubmodelElement} zurückgegeben. Letztendlich setzt der Block den Wert seines Ausganges zu dem erhaltenen Wert. Das Sequenzdiagramm für den erfolgreichen ausgeführten Prozess lässt sich in der Abb. \ref{fig:C20} finden.
 
 \begin{figure}[H]\centering
     \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C20.jpg}
-    \caption{Funktionsbausteine jeder Teilkomponente}
-    \label{fig:LABs}
+    \caption{Sequenzdiagramm für A1}
+    \label{fig:C20}
 \end{figure}
-    
-\subsection{A2: Aktualisieren des Wertes aus einem SubmodelElement}
 
-% [ ] Übersicht von dem Diagramm unten
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A2: Aktualisierung des Wertes aus einem SubmodelElement}
+% [X] Übersicht von dem Diagramm unten
+Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet.
+
+
+\begin{lstlisting}
+    // PropertySAConnectorBlock.cpp
+    ...
+    static void mdlOutputs(SimStruct *S, int_T tid)
+    {    
+        try{
+            ...
+            if (ssGetInputPortConnected(S,0)){
+                double inputValue;
+                const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
+                inputValue = u[0];
+                aasCon.updateSeValue(*se,std::to_string(u[0])); 
+            } 
+            ...
+        }
+        ...
+    }
+    ...
+
+    // aasServerConnector.cpp
+    ...
+    void AasServerConnector::updateSeValue(SubmodelElement &se, const string &value)
+    {
+        ...
+        if(httpCon_.put(aas_.aasUrl,value).httpCode == 200 )
+            se.updateValue(value);
+        else    
+            throw std::runtime_error("Unable to update SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");
+    
+    }
+    ...
+
+}
+\end{lstlisting}
+
+In der Abb. \ref{fig:C10} findet sich das Sequenzdiagramm von dem oben detaillierten Prozess.
 
 \begin{figure}[H]\centering
     \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C10.jpg}
-    \caption{Funktionsbausteine jeder Teilkomponente}
-    \label{fig:LABs}
+    \caption{Sequenzdiagramm für A2}
+    \label{fig:C10}
 \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A3: Abrufen von AAS-Daten aus einem Registry Server}
 
 % [ ] Übersicht von dem Diagramm unten
 
 \begin{figure}[H]\centering
     \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C30.jpg}
-    \caption{Funktionsbausteine jeder Teilkomponente}
-    \label{fig:LABs}
+    \caption{Sequenzdiagramm für A3}
+    \label{fig:C30}
 \end{figure}
-\subsection{A4: Anzeigen von Simulink-konformen Fehlermeldungen}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A4: Anzeigen von Simulink-konformen Fehlermeldungen} \label{ProzessA4}
 
 Wäre ein Status-Code nicht gleich 200 erhalten, löst der BasyxConnector eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an dem entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehldermeldungen direkt im Simulink-Console angezeigt werden können.
 
@@ -47,16 +245,15 @@ Wäre ein Status-Code nicht gleich 200 erhalten, löst der BasyxConnector eine A
 
 Diese ist ein wesentlicher Aspekt der Anwendung, was unnötige Abstürze im Programm vermeidet und den Nutzern ermöglicht, Tippfehler schnell zu erkennen und die Verbindung mit dem BaSyx-Server zu überprüfen.
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A5: Anwendung von mehreren Blöcken in demselben Simulink-Modell}
 
-% [ ] Was passiert wenn mehrere Block im gleichen Modell eingeführt werden? (seitens Matlab)
+
+% [X] Was passiert wenn mehrere Block im gleichen Modell eingeführt werden? (seitens Matlab)
+Aus Sicht Matlab/Simulink ist ein mit S-Functions entwickelter Block eine geteilte Bibliothek. Eine globale Variable ist deshalb mit allen anderen Blocken gleiches Typs geteilt, was ein Problem für das Behalten von Daten unter Simulationsschritten darstellt. Wie oben erwähnt, um diese Herausforderung umzugehen und dadurch den Blocken mit einem internen Zustand zu versehen, werden \textit{work} Vektoren eingesetzt. 
 
 % [ ] Beispieles Modell aufzeigen
 
-% [ ] Anwendung dieser komischen Vektoren Simulinks, um das Problem von static Parameters umzugehen 
-
-\subsection{Entwurf einer Benutzeroberfläche für die Simulink-Blöcke}
 
 Wie in Kapitel \ref{BenutzeroberflaecheSimulink} erklärt, bietet Simulink mehrere Möglichkeiten der Benutzeroberfläche eines Blockes zu personalisieren. 
 
