@@ -121,7 +121,7 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A1: Ablesen des Wertes aus einem SubmodelElement}
 
-% [X] Übersicht von dem Diagramm unten
+% [X] vomÜbersicht von dem Diagramm unten
 Für das Ablesenverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
 
 \begin{lstlisting}
@@ -180,12 +180,7 @@ Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall e
 % [X] Übersicht von dem Diagramm unten
 Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet.
 
-
-\begin{lstlisting}
-    // PropertySAConnectorBlock.cpp
-    ...
-    static void mdlOutputs(SimStruct *S, int_T tid)
-    {    
+vom   
         try{
             ...
             if (ssGetInputPortConnected(S,0)){
@@ -203,10 +198,7 @@ Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem
     // aasServerConnector.cpp
     ...
     void AasServerConnector::updateSeValue(SubmodelElement &se, const string &value)
-    {
-        ...
-        if(httpCon_.put(aas_.aasUrl,value).httpCode == 200 )
-            se.updateValue(value);
+    {vom      se.updateValue(value);
         else    
             throw std::runtime_error("Unable to update SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");
     
@@ -226,13 +218,18 @@ In der Abb. \ref{fig:C10} findet sich das Sequenzdiagramm von dem oben detaillie
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A3: Abrufen von AAS-Daten aus einem Registry Server}
 
-% [ ] Übersicht von dem Diagramm unten
+% [X] Übersicht von dem Diagramm unten
+
+Im Gegensatz zu dem Ablesenverfahren des Wertes eines \textit{SubmodelElement} wird die Logik für das Abrufen eines AAS-Datensatzes in der Methode \textit{mdlStart} ausgeführt und anschiließend wird der formatierte URL über die Methode \textit{fetchAAS} vom \textit{BasyxConnector} erzeugt. Der URL wird am \textit{HttpClient} überreicht, wobei aus der Komponente eine GET-Anfrage an dem textit{BaSyx-Server} gestellt wird. Die davon erhaltene Antwort ist am Ende vom \textit{BasyxConnector} abgewickelt, und einen Object des Typs \textit{AAS} wird am Block zurückgegeben. Der Prozess ist in der Abb. \ref{fig:C30} veranschaulicht.
 
 \begin{figure}[H]\centering
     \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C30.jpg}
     \caption{Sequenzdiagramm für A3}
     \label{fig:C30}
 \end{figure}
+
+
+% [ ] Verbindung vom RegistryBlock mit PropertyBlock 
 
 
 
@@ -252,7 +249,7 @@ Diese ist ein wesentlicher Aspekt der Anwendung, was unnötige Abstürze im Prog
 % [X] Was passiert wenn mehrere Block im gleichen Modell eingeführt werden? (seitens Matlab)
 Aus Sicht Matlab/Simulink ist ein mit S-Functions entwickelter Block eine geteilte Bibliothek. Eine globale Variable ist deshalb mit allen anderen Blocken gleiches Typs geteilt, was ein Problem für das Behalten von Daten unter Simulationsschritten darstellt. Wie oben erwähnt, um diese Herausforderung umzugehen und dadurch den Blocken mit einem internen Zustand zu versehen, werden \textit{work} Vektoren eingesetzt. 
 
-% [ ] Beispieles Modell aufzeigen
+% [ ] Beispieles Modell mit mehreren Blocken aufzeigen
 
 
 Wie in Kapitel \ref{BenutzeroberflaecheSimulink} erklärt, bietet Simulink mehrere Möglichkeiten der Benutzeroberfläche eines Blockes zu personalisieren. 
