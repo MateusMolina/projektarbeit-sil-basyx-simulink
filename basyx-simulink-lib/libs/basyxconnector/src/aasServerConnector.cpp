@@ -31,9 +31,7 @@ void AasServerConnector::updateSeValue(SubmodelElement &se, const string &value)
     string urlUpd = BasyxConfig::buildSeEpPath(smIdShort, seIdShort);
     aas_.aasUrl.setEndPointPath(urlUpd);
 
-    string valueProc = value; // TODO Preprocessing needed?
-    
-    if(httpCon_.put(aas_.aasUrl,valueProc).httpCode == 200 )
+    if(httpCon_.put(aas_.aasUrl,value).httpCode == 200 )
         se.updateValue(value);
     else    
         throw std::runtime_error("Unable to update SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");

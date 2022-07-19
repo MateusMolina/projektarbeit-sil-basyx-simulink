@@ -92,7 +92,6 @@ static void mdlInitializeSampleTimes(SimStruct *S)
   }
 #endif /* MDL_INITIALIZE_CONDITIONS */
 
-std::unique_ptr<RegistryServerConnector> regCon;
 std::unique_ptr<CurlHttpConnection> httpCon;
 
 
@@ -118,7 +117,7 @@ static string getPar(SimStruct *S, int n){
     try{
       Url urlStr = Url(regUrlStr);
       httpCon = std::make_unique<CurlHttpConnection>();
-      regCon = std::make_unique<RegistryServerConnector>(std::move(urlStr), *httpCon);
+      RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
       Aas* aas = new Aas(regCon->fetchAAS(aasId));
       Submodel* sm = new Submodel(*aas,smIdShort);
       SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
