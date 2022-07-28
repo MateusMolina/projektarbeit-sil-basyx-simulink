@@ -243,7 +243,14 @@ Im Gegensatz zu dem Ablesenverfahren des Wertes eines \textit{SubmodelElement} w
 
 Wäre ein Status-Code nicht gleich 200 erhalten, löst der BasyxConnector eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an dem entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehldermeldungen direkt im Simulink-Console angezeigt werden können.
 
-% [ ] Bild vom Console mit irgendwelchem Fehler
+% [/] Bild vom Console mit irgendwelchem Fehler und Verbindung mitm TExt oben
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/consolefehler.jpg}
+    \caption{Beispiel einer Fehlermeldung}
+    \label{fig:consolefehler}
+\end{figure}
+
+
 
 Diese ist ein wesentlicher Aspekt der Anwendung, was unnötige Abstürze im Programm vermeidet und den Nutzern ermöglicht, Tippfehler schnell zu erkennen und die Verbindung mit dem BaSyx-Server zu überprüfen.
 
@@ -254,7 +261,12 @@ Diese ist ein wesentlicher Aspekt der Anwendung, was unnötige Abstürze im Prog
 % [X] Was passiert wenn mehrere Block im gleichen Modell eingeführt werden? (seitens Matlab)
 Aus Sicht Matlab/Simulink ist ein mit S-Functions entwickelter Block eine geteilte Bibliothek. Eine globale Variable ist deshalb mit allen anderen Blocken gleiches Typs geteilt, was ein Problem für das Behalten von Daten unter Simulationsschritten darstellt. Wie oben erwähnt, um diese Herausforderung umzugehen und dadurch den Blocken mit einem internen Zustand zu versehen, werden \textit{work} Vektoren eingesetzt. 
 
-% [ ] Beispieles Modell mit mehreren Blocken aufzeigen
+% [/] Beispieles Modell mit mehreren Blocken aufzeigen und Verbindung mitm Text oben
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/heizungbeispiel.jpg}
+    \caption{Simulink-Modell mit mehreren Blocken}
+    \label{fig:heizungsbispiel}
+\end{figure}
 
 
 Wie in Kapitel \ref{BenutzeroberflaecheSimulink} erklärt, bietet Simulink mehrere Möglichkeiten der Benutzeroberfläche eines Blockes zu personalisieren. 
@@ -263,5 +275,16 @@ Für beiden Blöcke war eine kritische Anforderung, dass alle einzustellenden Pa
 
 % [ ] Beschreibung der Bilder
 
-% [ ] Bilder von Blöckenbenutzeroberflächen
+% [X] Bilder von Blöckenbenutzeroberflächen
 
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/SeSAB_block.jpg}
+    \caption{Instanz eines PropertySAConnector-Blockes}
+    \label{fig:sesab_block}
+\end{figure}
+
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/SeSAB_dialog.jpg}
+    \caption{Dialogfenster des PropertySAConnector-Blockes}
+    \label{fig:sesab_dialog}
+\end{figure}
