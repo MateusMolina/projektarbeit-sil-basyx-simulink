@@ -1,6 +1,16 @@
 .metadata/
 .plugins/
 
+# Docker
+GPUCache/
+# Simulink/Matlab
+slprj/
+*.original
+*.autosave
+*.slxc
+
+#Others
+*.def
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

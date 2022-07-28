@@ -5,7 +5,7 @@
 # set_target_properties(basyxconnector PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/libs/basyxconnector/include)
 
 
-set(BLOCKS RegistryConnectorBlock PropertySAConnectorBlock)
+set(BLOCKS PropertySAConnectorBlock)
 
 foreach(BLOCK ${BLOCKS})
     add_library(${BLOCK} SHARED ${BLOCK}.cpp ${CMAKE_SOURCE_DIR}/Matlabdef.def)
@@ -28,7 +28,7 @@ foreach(BLOCK ${BLOCKS})
 
 endforeach()
 
-add_custom_command ( TARGET RegistryConnectorBlock POST_BUILD
+add_custom_command ( TARGET PropertySAConnectorBlock POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    $<TARGET_FILE:libcurl> $<TARGET_FILE_DIR:RegistryConnectorBlock>
+    $<TARGET_FILE:libcurl> $<TARGET_FILE_DIR:PropertySAConnectorBlock>
 )

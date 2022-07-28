@@ -107,6 +107,9 @@ static string getPar(SimStruct *S, int n){
    *    have states that should be initialized once, this is the place
    *    to do it.
    */
+
+
+  // TODO Make it work when providing directly the URL for the AAS
   static void mdlStart(SimStruct *S)
   {
     string regUrlStr, aasId, smIdShort, seIdShort;
@@ -118,7 +121,7 @@ static string getPar(SimStruct *S, int n){
       Url urlStr = Url(regUrlStr);
       httpCon = std::make_unique<CurlHttpConnection>();
       RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
-      Aas* aas = new Aas(regCon->fetchAAS(aasId));
+      Aas* aas = new Aas(regCon.fetchAAS(aasId));
       Submodel* sm = new Submodel(*aas,smIdShort);
       SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
 
@@ -233,7 +236,6 @@ static void mdlTerminate(SimStruct *S)
     ssSetPWorkValue(S,0,NULL);
   }
 
-  delete regCon.release();
   delete httpCon.release();
 }
 
