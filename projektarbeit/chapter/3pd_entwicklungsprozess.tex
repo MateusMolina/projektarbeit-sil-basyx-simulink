@@ -2,6 +2,30 @@
 
 Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Den funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
 
+\subsection{Anforderungen}
+
+Die Entwicklung der Bibliothek hat vorwiegend zwei Anwendungsfälle berücksichtigt:
+\begin{enumerate}
+    \item AF1: als Schnittstelle zum Testen von einer Hardware/Software über Simulink in nicht-Echtzeit Taktung und Lesen von Parametern einmal am Anfang der Simulation, und Setzen einmal am Ende dieser;
+    \item AF2: als Schnittstelle zum Testen von einer Hardware/Software über Simulink mit verlangsamter Simulationstaktung. Dies ermöglicht das in Echtzeit Lesen und Setzen von Parametern des digitalen Zwillings im Laufe der Simulation. Die Abtast-, bzw. Aktualisierungsrate können im Block eingestellt werden.
+\end{enumerate} 
+
+Aus den Anwendungsfällen lässt es sich zwei Betriebsmodi entnehmen: Betriebsmodus 1: Nicht-Echtzeit (BM1) für den ersten Anwendungsfall und Betriebsmodus 2: Echtzeit (BM2) für den zweiten. 
+
+Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich voraus, dass das System in der Lage sein soll:
+\begin{enumerate}
+    \item A1: den Wert aus einem SubmodelElement abzulesen
+    \item A2: den Wert aus einem SubmodelElement zu aktualisieren
+    \item A3: aus einem Registry Server Daten vom einen AAS abzurufen
+    \item A4: Fehler in Simulink-konformen Fehlermeldungen anzuzeigen
+    \item A5: Parallelität angemessen zu implementieren, indem die Verbindung mit mehreren \textit{SubmodelElements} in einem gleichen Modell möglich ist.
+    \item A6: beide Betriebsmodi (BM1/BM2) zu realisieren.
+    \item A7: eine Bedieneroberfläche im Simulink zu haben, mit der sich Parameter wie Betriebsmodus, ID von \textit{AAS}, \textit{Submodel}, und \textit{SubmodelElement} einstellen lassen.
+\end{enumerate}
+
+In diesem Entwicklungsschritt wurden keine Anforderungen bezüglich Grenzen für die Abtastrate von beiden Lese- und Schreibverfahren und Sicherheit der Datenübertragung festgelegt, stattdessen liegt der Schwerpunkt der Arbeit an der Entwicklung einer ausbaubare Grundlage für die Bibliothek, die eventuell durch feinere Anforderungen permissiv erweitert werden könnte.
+
+
 \subsection{Konzept und Anforderungsdefinition} \label{Konzept}
 
 % [ ] Problemstellung und Motivation NOCHMALS AUFÜHRLICHER
@@ -9,14 +33,6 @@ Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und w
 Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die d Simulink-Umgebung, indem personalisierten Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
 
 
-Für die ordentliche Realisierung dieses Konzeptes setzt sich voraus, dass das System in der Lage sein muss,
-\begin{enumerate}
-    \item A1: den Wert aus einem SubmodelElement abzulesen
-    \item A2: den Wert aus einem SubmodelElement zu aktualisieren
-    \item A3: aus einem Registry Server Daten vom einen AAS abzurufen.
-    \item A4: Fehler in Simulink-konformen Fehlermeldungen anzuzeigen
-    \item A5: Parallelität angemessen zu implementieren, indem die Verbindung mit mehreren Submodel Elements ermöglicht wird.
-\end{enumerate}
 
 \subsection{Funktionale Spezifikation} \label{Funspec}
 
@@ -41,7 +57,7 @@ In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Kom
 \includegraphics[width=15cm,keepaspectratio]{media/diagrams/LAB_Structure.jpg}
 \caption{Funktionsbausteine jeder Teilkomponente}
 \label{fig:LABs}
-\end{figure} einer Bibliothek für Si
+\end{figure} einer Bibliothek für Si % TODO WTF
 
 
 \subsection{Systemarchitektur} \label{SysArch}
