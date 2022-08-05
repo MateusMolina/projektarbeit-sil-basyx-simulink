@@ -4,13 +4,14 @@ Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und w
 
 \subsection{Anforderungen}
 
+% [ ] find out a way to custom enumerate and ref this anforderungen throughout the text
 Die Entwicklung der Bibliothek hat vorwiegend zwei Anwendungsfälle berücksichtigt:
 \begin{enumerate}
-    \item AF1: als Schnittstelle zum Testen von einer Hardware/Software über Simulink in nicht-Echtzeit Taktung und Lesen von Parametern einmal am Anfang der Simulation, und Setzen einmal am Ende dieser;
+    \item AF1: als Schnittstelle zum Testen von einer Hardware/Software über Simulink im Abbild-Modus, wobei die Simulation mit einem am Anfang aufgenommenen Abbild der Parameterwerte arbeitet, indem das Lesen von Parametern einmal am Anfang der Simulation und Setzen einmal am Ende dieser stattfindet;
     \item AF2: als Schnittstelle zum Testen von einer Hardware/Software über Simulink mit verlangsamter Simulationstaktung. Dies ermöglicht das in Echtzeit Lesen und Setzen von Parametern des digitalen Zwillings im Laufe der Simulation. Die Abtast-, bzw. Aktualisierungsrate können im Block eingestellt werden.
 \end{enumerate} 
 
-Aus den Anwendungsfällen lässt es sich zwei Betriebsmodi entnehmen: Betriebsmodus 1: Nicht-Echtzeit (BM1) für den ersten Anwendungsfall und Betriebsmodus 2: Echtzeit (BM2) für den zweiten. 
+Aus den Anwendungsfällen lässt es sich zwei Betriebsmodi entnehmen: Abbildmodus für den ersten Anwendungsfall und Betriebsmodus 2: Echtzeitmodus für den zweiten. 
 
 Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich voraus, dass das System in der Lage sein soll:
 \begin{enumerate}
@@ -19,7 +20,7 @@ Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich
     \item A3: aus einem Registry Server Daten vom einen AAS abzurufen
     \item A4: Fehler in Simulink-konformen Fehlermeldungen anzuzeigen
     \item A5: Parallelität angemessen zu implementieren, indem die Verbindung mit mehreren \textit{SubmodelElements} in einem gleichen Modell möglich ist.
-    \item A6: beide Betriebsmodi (BM1/BM2) zu realisieren.
+    \item A6: beide Betriebsmodi (Abbild- und Echtzeitmodus) zu realisieren.
     \item A7: eine Bedieneroberfläche im Simulink zu haben, mit der sich Parameter wie Betriebsmodus, ID von \textit{AAS}, \textit{Submodel}, und \textit{SubmodelElement} einstellen lassen.
 \end{enumerate}
 

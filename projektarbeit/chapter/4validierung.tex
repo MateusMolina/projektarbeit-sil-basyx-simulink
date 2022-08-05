@@ -1,14 +1,53 @@
 \chapter{Validierung} \label{validierung}
-% [ ] Vorstellung des Kapitels
+% [X] Vorstellung des Kapitels
+
+In diesem Kapitel liegt der Schwerpunkt an der Vorstellung von dem Beispielszenario, genutzt, um die richtige Umsetzung der sämtlichen Anforderungen zu veranschaulichen. Bei dem ersten Teilkapitel wird dessen Aufbau besprochen, während bei dem zweiten und letzten es einen Überblick bezüglich der Erwartungen und der aus dem Beispiel ausgegebenen Ergebenisse gewonnen werden soll. 
 
 \section{Beispielszenario}
 
-\subsection{Aufbau}
-
 Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem alle Fähigkeiten der in der Arbeit entwickelten Bibliothek beobachtet werden können. Dafür wurde ein vereinfachtes Beispiel vom \textit{Condition-Monitoring} realisiert, bei dem die Funktionsweise eines Temperatursensors und des Hauptantriebssystems einer Pressmaschine im Simulink nachgebildet und deren digitale Zwillinge in einem BaSyx-Server gespeichert werden. Die Temperaturdaten werden letztendlich in einem in Simulink realisierten Dashboard dargestellt.
 
+\subsection{Setup vom BaSyx/Docker}
 
-Das Simulink-Modell (Abb. \ref{fig:simupresse}) besteht aus 4 Teilsysteme:
+% [X] Docker-Compose Auszug aufbau  usw
+Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code: docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}.
+
+% [ ] Change listing package to minted to support YAML
+\begin{lstlisting}[label=code: docker-compose]
+    # docker/docker-compose.yml
+    version: '2.1'
+    services:
+    registry:
+        image: eclipsebasyx/aas-registry:1.1.0
+        container_name: registry
+        volumes:
+            - ./conf/reg-config:/usr/share/config:z
+        ports:
+        - 8082:4000
+
+    aas:
+        image: eclipsebasyx/aas-server:1.1.0
+        container_name: aas
+        volumes:
+            - ./conf/aas-config:/usr/share/config:z
+        ports:
+        - 4001:4001
+\end{lstlisting}
+
+Beim Anfahren lädt der AAS-\textit{container} das im Abb. \ref{fig:aasxexplorer} dargestellte AAS. Dieses enthält zwei \textit{Submodels} für vereinfachte Abbildung von beiden Hauptantrieb und Temperatursensor. Diese weisen wiederum je einen \textit{SubmodelElement} auf, die entsprechend zur Darstellung der aktuellen Last am Antriebe und des aktuellen erfassten Temperaturdatenpunktes dienen.  
+
+\begin{figure}[H]\centering
+    \includegraphics[width=15cm,keepaspectratio]{media/presse/aasxexplorer.png}
+    \caption{Bildschirmaufnahme der Verwaltungsschalle auf AASXExplorer}
+    \label{fig:aasxexplorer}
+\end{figure}
+
+% [ ] Ein paar Worte über AASXExplorer?
+
+
+\subsection{Aufbau}
+
+Das Simulink-Modell (Abb. \ref{fig:simupresse}) besteht aus 4 Teilsystemen:
 \begin{enumerate}
     \item Last: aktualisiert den Wert vom \textit{Hauptantrieb/last SubmodelElement} mit dem Wert einer Schiebekomponente.
     \item Hauptantrieb: bildet die Funktionsweise des Hauptantriebes nach und gibt den Augenblickswert der Temperatur am Kontakt zwischen Antriebe und Sensor.
@@ -33,26 +72,15 @@ Im Abbild \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und 
 \end{figure}
 
 
-% [ ] Details über Simulationstaktung
+% [X] Details über Simulationstaktung
 
-Für die Simulation wurde angenommen, dass alle Systeme parallel gelaufen sind, und der PropertySAConnectorBlock wurde in
+Die Simulation wurde im Echtzeitmodus betrieben, bei dem die Simulationszeit der Wanduhrzeit entsprach. Dieser Modus wurde vorgezogen, weil damit sich die Zusammenwirkung BaSyx und Simulink besser vorstellen lässt. Der Abbild-Modus ist prinzipiell sinnvoll, wenn die Simulation asynchron bezüglich der Hardware-, bzw. Software-in-the-loop abläuft.   
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/presse/simupacing.png}
-    \caption{Dialogfenster mit der eingestellten Parameter für die Simulationstaktung}
-    \label{fig:simupacing}
-\end{figure}
-
-
-\subsection{Setup vom BaSyx/Docker}
-
-% [ ] Docker-Compose Auszug aufbau usw
-
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/presse/aasxexplorer.png}
-    \caption{Bildschirmaufnahme der Verwaltungsschalle auf AASXExplorer}
-    \label{fig:aasxexplorer}
-\end{figure}
 
 \section{Ausführung und Prüfen der Anforderungen}
 
+% [ ] Ta muito ruim essa parte
+Bei dem Test hat es sich herausgestellt, dass das System in der Lage war, alle Anforderungen angemessen zu realisieren. Das Beispiel wies vielfache Instanzen des Blockes \textit{PropertySAConnectorBlock} auf, und beide Lese- und Aktualisierungsanfrage erfordert. Darüber hinaus wurden sämtliche Parameter des Blockes direkt im Simulink eingestellt.  
+
+
+Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden mehreree Blöcke mit Abtastraten bis 1KHz im Beispiel erfolgreich verwendet. 

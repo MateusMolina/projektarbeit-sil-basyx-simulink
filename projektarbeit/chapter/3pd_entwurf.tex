@@ -133,7 +133,7 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
 \subsection{A1: Ablesen des Wertes aus einem SubmodelElement}
 
 % [X] Übersicht von dem Diagramm unten
-Für das Ablesenverfahren wird vorausgesetzt, dass eine Verbidung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
+Für das Ableseverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
 
 \begin{lstlisting}
     // PropertySAConnectorBlock.cpp
@@ -281,11 +281,10 @@ Das Abbild \ref{fig:heizungsbispiel} zeigt ein Modell mit mehfach eingefügten I
     \caption{Simulink-Modell mit mehreren Blöcken}
     \label{fig:heizungsbispiel}
 \end{figure}
-
-
 \subsection{A6: Betriebsmodus wechseln}
 
 % [ ] Betriebsmodus wechseln
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A7: Personalisierung der Blockbenutzeroberfläche} \label{Simulationsumgebung}
@@ -311,3 +310,7 @@ Nach Tippen auf einen Block wird dem Benutzer ein Dialogfenster mit Textfelder f
     \caption{Dialogfenster des PropertySAConnector-Block}
     \label{fig:sesab_dialog}
 \end{figure}
+
+Der Benutzer kann über das Fenster den gewünschten Betriebsmodus auswählen, wobei bei Wählen des Echtzeit-Modus das Feld zur Einstellung der Abtastrate sichtbar wird. Es steht außerdem zur Verfügung die Möglichkeit, auszuwählen, ob es das \textit{AAS} über den \textit{RegistryServer} oder direkt über seine Adresse abgerufen werden soll.
+
+
