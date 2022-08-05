@@ -2,6 +2,21 @@
 #define S_FUNCTION_NAME  PropertySAConnectorBlock
 #define S_FUNCTION_LEVEL 2
 
+// List of parameters
+#define PAR_BM          0
+#define PAR_SR          1
+#define PAR_REGURLSTR   2
+#define PAR_AASURLSTR   3
+#define PAR_AASID       4
+#define PAR_SMIDSHORT   5
+#define PAR_SEIDSHORT   6
+#define PAR_COUNT       7       // Number of parameters
+
+// List of PVectors
+#define P_AAS           0
+#define P_SM            1
+#define P_SE            2
+
 #include "simstruc.h"
 
 #include <cstdio>
@@ -12,6 +27,66 @@
 #include <basyxconnector/components.hpp>
 #include <basyxconnector/registryServerConnector.hpp>
 #include <basyxconnector/aasServerConnector.hpp>
+
+
+std::unique_ptr<CurlHttpConnection> httpCon;
+
+// Common Methods
+// Def
+static string getStrPar(SimStruct *S, int n){
+  return std::string(mxArrayToString(ssGetSFcnParam(S,n)));
+}
+
+static double getNumPar(SimStruct *S, int n){
+  return *mxGetPr(ssGetSFcnParam(S,n));
+}
+
+static void updateSE(SimStruct *S, double inputValue){
+  Aas* aas = (Aas*) ssGetPWorkValue(S,P_AAS);
+  SubmodelElement* se =(SubmodelElement*) ssGetPWorkValue(S,P_SE);
+  AasServerConnector aasCon = AasServerConnector(*aas, *httpCon);
+  aasCon.updateSeValue(*se,std::to_string(inputValue)); 
+}
+
+static double readSE(SimStruct *S){
+  Aas* aas = (Aas*) ssGetPWorkValue(S,P_AAS);
+  SubmodelElement* se =(SubmodelElement*) ssGetPWorkValue(S,P_SE);
+  AasServerConnector aasCon = AasServerConnector(*aas, *httpCon);
+  return  std::stod(aasCon.getSeValue(*se));
+}
+
+static void initializePVectors(SimStruct *S){
+  string regUrlStr, aasUrlStr, aasId, smIdShort, seIdShort;
+  regUrlStr = getStrPar(S,PAR_REGURLSTR);
+  aasUrlStr = getStrPar(S,PAR_AASURLSTR);
+  aasId = getStrPar(S,PAR_AASID);
+  smIdShort = getStrPar(S,PAR_SMIDSHORT);
+  seIdShort = getStrPar(S,PAR_SEIDSHORT);
+
+  // Create AAS based on whether user has provided an AasUrlStr or not
+  Aas* aas;
+  if(aasUrlStr == ""){
+    Url urlStr = Url(regUrlStr);
+    RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
+    aas = new Aas(regCon.fetchAAS(aasId));
+  }else{
+    Url urlStr= Url(aasUrlStr);
+    aas = new Aas(urlStr, aasId);
+  }
+
+  Submodel* sm = new Submodel(*aas,smIdShort);
+  SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
+
+  void **PWork = ssGetPWork(S);
+  PWork[P_AAS] = aas;
+  PWork[P_SM] = sm;
+  PWork[P_SE] = se;
+}
+
+static double getLocalSeValue(SimStruct *S){
+  SubmodelElement* se =(SubmodelElement*) ssGetPWorkValue(S,P_SE);
+  return std::stod(se->getValue());
+}
 
 /*====================*
  * S-function methods *
@@ -24,7 +99,7 @@
  */
 static void mdlInitializeSizes(SimStruct *S)
 {
-    ssSetNumSFcnParams(S, 5);  /* Number of expected parameters */
+    ssSetNumSFcnParams(S, PAR_COUNT);  /* Number of expected parameters */
     if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
         /* Return if number of expected != number of actual parameters */
         return;
@@ -70,7 +145,7 @@ static void mdlInitializeSizes(SimStruct *S)
  */
 static void mdlInitializeSampleTimes(SimStruct *S)
 {
-    ssSetSampleTime(S, 0, *mxGetPr(ssGetSFcnParam(S,0)));
+    ssSetSampleTime(S, 0, getNumPar(S, PAR_SR));
     ssSetOffsetTime(S, 0, 0.0);
 }
 
@@ -92,12 +167,6 @@ static void mdlInitializeSampleTimes(SimStruct *S)
   }
 #endif /* MDL_INITIALIZE_CONDITIONS */
 
-std::unique_ptr<CurlHttpConnection> httpCon;
-
-
-static string getPar(SimStruct *S, int n){
-  return std::string(mxArrayToString(ssGetSFcnParam(S,n)));
-}
 
 #define MDL_START  /* Change to #undef to remove function */
 #if defined(MDL_START) 
@@ -112,23 +181,13 @@ static string getPar(SimStruct *S, int n){
   // TODO Make it work when providing directly the URL for the AAS
   static void mdlStart(SimStruct *S)
   {
-    string regUrlStr, aasId, smIdShort, seIdShort;
-    regUrlStr = getPar(S,1);
-    aasId = getPar(S,2);
-    smIdShort = getPar(S,3);
-    seIdShort = getPar(S,4);
     try{
-      Url urlStr = Url(regUrlStr);
       httpCon = std::make_unique<CurlHttpConnection>();
-      RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
-      Aas* aas = new Aas(regCon.fetchAAS(aasId));
-      Submodel* sm = new Submodel(*aas,smIdShort);
-      SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
-
-      void **PWork = ssGetPWork(S);
-      PWork[0] = aas;
-      PWork[1] = sm;
-      PWork[2] = se;
+      initializePVectors(S);
+      // Case snapshot mode
+      if(getNumPar(S,PAR_BM)==0){
+        readSE(S);
+      } 
     }catch (const std::exception& e){
       ssSetErrorStatus(S,e.what());
       return;
@@ -144,32 +203,24 @@ static string getPar(SimStruct *S, int n){
  *    block.
  */
 static void mdlOutputs(SimStruct *S, int_T tid)
-{    
-    try{
-      Aas* aas = (Aas*) ssGetPWorkValue(S,0);
-      SubmodelElement* se =(SubmodelElement*) ssGetPWorkValue(S,2);
-      AasServerConnector aasCon = AasServerConnector(*aas, *httpCon);
-
-      if (ssGetInputPortConnected(S,0)){
-        double inputValue;
-        const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
-        inputValue = u[0];
-        aasCon.updateSeValue(*se,std::to_string(u[0])); 
-      }
-
-      if (ssGetOutputPortConnected(S,0)){
-        double outputValue;
-        double       *y = ssGetOutputPortRealSignal(S,0);
-        outputValue = std::stod(aasCon.getSeValue(*se));
-        y[0] = outputValue;
-      }
-    }catch (const std::exception& e){
+{   
+  
+  const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
+  double       *y = ssGetOutputPortRealSignal(S,0);
+  try{
+    // Case snapshot mode
+    if(getNumPar(S,PAR_BM)==0){
+      y[0] = getLocalSeValue(S);
+    }// case real-time mode
+    else{ 
+      if (ssGetInputPortConnected(S,0)) updateSE(S,u[0]);      
+      if (ssGetOutputPortConnected(S,0)) y[0] = readSE(S);
+    }
+  }catch (const std::exception& e){
       ssSetErrorStatus(S,e.what());
       return;
-    }
+  }
 }
-
-
 
 #undef MDL_UPDATE  /* Change to #undef to remove function */
 #if defined(MDL_UPDATE)
@@ -210,30 +261,37 @@ static void mdlOutputs(SimStruct *S, int_T tid)
  */
 static void mdlTerminate(SimStruct *S)
 {
-
-
+  // Case snapshot mode
+  try{
+    if(getNumPar(S,PAR_BM)==0){
+      const double* u = (const double*)ssGetInputPortRealSignal(S, 0);
+      if (ssGetInputPortConnected(S,0)) updateSE(S,u[0]);
+    }
+  }catch (const std::exception& e){
+      ssSetErrorStatus(S,e.what());
+      return;
+  }
   if (ssGetPWork(S) != NULL) {
-
     SubmodelElement *se;
-    se = (SubmodelElement *) ssGetPWorkValue(S,2);
+    se = (SubmodelElement *) ssGetPWorkValue(S,P_SE);
     if (se != NULL) {
       delete se;
     }
-    ssSetPWorkValue(S,2,NULL);
+    ssSetPWorkValue(S,P_SE,NULL);
 
     Submodel *sm;
-    sm = (Submodel *) ssGetPWorkValue(S,1);
+    sm = (Submodel *) ssGetPWorkValue(S,P_SM);
     if (sm != NULL) {
       delete sm;
     }
-    ssSetPWorkValue(S,1,NULL);
+    ssSetPWorkValue(S,P_SM,NULL);
 
     Aas *aas;
-    aas = (Aas *) ssGetPWorkValue(S,0);
+    aas = (Aas *) ssGetPWorkValue(S,P_AAS);
     if (aas != NULL) {
       delete aas;
     }
-    ssSetPWorkValue(S,0,NULL);
+    ssSetPWorkValue(S,P_AAS,NULL);
   }
 
   delete httpCon.release();

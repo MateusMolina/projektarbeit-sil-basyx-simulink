@@ -41,7 +41,7 @@ struct SubmodelElement{
         SubmodelElement(Submodel &sm, string seIdShort) : submodel(sm), seIdShort(seIdShort) {}
        
         void updateValue(string newValue) {currentValue=newValue;}
-        string getValue(string newValue) {return currentValue;}
+        string getValue() {return currentValue;}
 };
 
 
