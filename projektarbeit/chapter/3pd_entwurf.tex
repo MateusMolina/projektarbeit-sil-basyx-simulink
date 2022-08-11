@@ -306,9 +306,12 @@ Das Abbild \ref{fig:heizungsbispiel} zeigt ein Modell mit mehfach eingefügten I
     \caption{Simulink-Modell mit mehreren Blöcken}
     \label{fig:heizungsbispiel}
 \end{figure}
+
 \subsection{A6: Betriebsmodus wechseln}
 
-% [ ] Betriebsmodus wechseln
+% [X] Betriebsmodus wechseln
+Der Betriebmodus ist als Parameter im Simulink eingegeben, und anschiließend in den \textit{mdlStart, mdlOutputs und mdlTerminate} Methoden in \textit{"PropertySABlockConnector.cpp"} geprüft und implementiert. Beim Einschalten vom Abbild-Modus wird die Daten des \textit{Submodelelement} nur beim Aufruf vom \textit{mdlStart} und \textit{mdlTerminate} abgerufen, während dies im Echtzeitmodus bei jedem Aufruf von \textit{mdlOutput} geschieht.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
