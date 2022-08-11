@@ -10,10 +10,11 @@ Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem alle 
 \subsection{Setup vom BaSyx/Docker}
 
 % [X] Docker-Compose Auszug aufbau  usw
-Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code: docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}.
+Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code:docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}.
 
-% [ ] Change listing package to minted to support YAML
-\begin{lstlisting}[label=code: docker-compose]
+% [X] Change listing package to minted to support YAML
+\begin{listing}[!ht]
+\begin{minted}{YAML}
     # docker/docker-compose.yml
     version: '2.1'
     services:
@@ -23,7 +24,7 @@ Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügb
         volumes:
             - ./conf/reg-config:/usr/share/config:z
         ports:
-        - 8082:4000
+            - 8082:4000
 
     aas:
         image: eclipsebasyx/aas-server:1.1.0
@@ -31,8 +32,11 @@ Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügb
         volumes:
             - ./conf/aas-config:/usr/share/config:z
         ports:
-        - 4001:4001
-\end{lstlisting}
+            - 4001:4001
+\end{minted}
+\caption{docker/docker-compose.yml}
+\label{code:docker-compose}
+\end{listing}
 
 Beim Anfahren lädt der AAS-\textit{container} das im Abb. \ref{fig:aasxexplorer} dargestellte AAS. Dieses enthält zwei \textit{Submodels} für vereinfachte Abbildung von beiden Hauptantrieb und Temperatursensor. Diese weisen wiederum je einen \textit{SubmodelElement} auf, die entsprechend zur Darstellung der aktuellen Last am Antriebe und des aktuellen erfassten Temperaturdatenpunktes dienen.  
 

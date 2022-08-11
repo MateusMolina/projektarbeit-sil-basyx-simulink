@@ -34,7 +34,9 @@ Ein \textit{HttpConnection}-Objekt kann über eine der Konstruktion einer der Im
 % [X] Übersicht von den Config-Datei und die benötigten APIs-Pfade usw
 Um eine Änderung der fest codierten API-Pfaden leichter vorzunehmen, wurden alle API-Pfaden in einer einzigen Datei (\textit{basyxConfig.hpp}) eingefügt, auf die die sämtlichen Methoden der Bibliothek zugreifen können.
 
-\begin{lstlisting}[caption=Auszug der API-Definitionen in BasyxConfig, label=code: BasyxConfig]
+
+\begin{listing}[!ht]
+\begin{minted}{cpp}
 // BasyxConfig.hpp
 ...
 namespace BasyxConfig
@@ -57,7 +59,10 @@ namespace BasyxConfig
         return SM_EPP_+e_smIdShort+SE_EPP_+e_seIdShort+VALUE_EPP_;
     }
 };
-\end{lstlisting}
+\end{minted}
+\caption{Auszug der API-Definitionen in BasyxConfig}
+\label{label=code:BasyxConfig}
+\end{listing}
 
 % [X] Übersicht der S-Function Methoden und was im Projekt verwendet wurde
 
@@ -68,7 +73,8 @@ Innerhalb der Datei \textit{PropertySAConnectorBlock.cpp} findet sich die Logik,
 Um globale Variablen innerhalb der \textit{Simstruc}-Umgebung zu realisieren, werden \textit{Work} Vektoren benötigt. Mit diesen lässt sich Zustand innerhalb einer Block-Instanz speichern und dadurch Initialisierungsparameter wie \textit{aasId, registryUrl, submodelElementId} unter anderen beibehalten werden.
 Dafür werden hauptsächlich zwei \textit{simstruct}-Methoden eingesetzt, nähmlich \textit{ssGetPWork}, \textit{ssGetPWorkValue}. Die erstere dient zur Bearbeitung des \textit{Work} Vektors, während die letztere zum Ablesen eines in diesem gespeicherten Wert.
 
-\begin{lstlisting}
+\begin{listing}[!ht]
+\begin{minted}{cpp}
 // PropertySAConnectorBlock.cpp
 ...
 std::unique_ptr<CurlHttpConnection> httpCon;
@@ -100,7 +106,9 @@ static void mdlOutputs(SimStruct *S, int_T tid)
       ...
 }
 ...
-\end{lstlisting}
+\end{minted}
+\label{label=code:propertysaconnectorblock}
+\end{listing}
 
 % [X] Wie ein Durchlauf aussieht
 
@@ -108,7 +116,8 @@ Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blöckes auf
 für einzelnen Block individueller Zustand 
 Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheid \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird am \textit{BasyxConnector} Aktualisierungs-, bzw. Leseanfragen übersendet.
 
-\begin{lstlisting}
+\begin{listing}[!ht]
+\begin{minted}{cpp}
     // PropertySAConnectorBlock.cpp
     ...
     static void mdlOutputs(SimStruct *S, int_T tid)
@@ -132,7 +141,9 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
         ...
     }
     ...
-\end{lstlisting}
+\end{minted}
+\label{label=code:propertysaconnectorblock2}
+\end{listing}
 
 % [ ] Wrap-up
 
@@ -143,7 +154,8 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
 % [X] Übersicht von dem Diagramm unten
 Für das Ableseverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
 
-\begin{lstlisting}
+\begin{listing}[!ht]
+\begin{minted}{cpp}
     // PropertySAConnectorBlock.cpp
     ...
     static void mdlOutputs(SimStruct *S, int_T tid)
@@ -184,7 +196,9 @@ Für das Ableseverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockau
     };
     ...
 }
-\end{lstlisting}
+\end{minted}
+\label{label=code:propertysaconnectorblock3}
+\end{listing}
 
 Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall eines \textit{Status-Code} gleich 0 ist der Wert des \textit{SubmodelElement} zurückgegeben. Letztendlich setzt der Block den Wert seines Ausganges zu dem erhaltenen Wert. Das Sequenzdiagramm für den erfolgreichen ausgeführten Prozess lässt sich in der Abb. \ref{fig:C20} finden.
 
@@ -200,7 +214,8 @@ Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall e
 Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem Blöckeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet.
 
 
-\begin{lstlisting}
+\begin{listing}[!ht]
+\begin{minted}{cpp}
     // PropertySAConnectorBlock.cpp
     ...
     static void mdlOutputs(SimStruct *S, int_T tid)
@@ -230,7 +245,9 @@ Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem
     ...
 
 }
-\end{lstlisting}
+\end{minted}
+\label{label=code:propertysaconnectorblock4}
+\end{listing}
 
 In der Abb. \ref{fig:C10} findet sich das Sequenzdiagramm von dem oben detaillierten Prozess.
 
