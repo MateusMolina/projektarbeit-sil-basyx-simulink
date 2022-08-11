@@ -1,17 +1,25 @@
 \section{Entwurf} \label{Entwurf}
 
+% [ ] Change all old code blocks 
+
+
 % [X] Übersicht von was hier besprochen wird
 Dieser Kapitel fängt mit einer Erläuterung davon an, was für Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschiließend wird es auf die Einkapsulung von BaSyx in einer S-Function und jede im System implementierte Fähigkeit eingegegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt wird. Zum letzen Thema ist einen Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschittstelle eines mit S-Function erstellten Blockes.
 
 
-% [ ] Entwicklungsumgebung
+% [X] Entwicklungsumgebung
 \subsection{Entwicklungsumgebung}
-% [ ] C++, CMAKE
 
-% [ ] Docker
+% [X] C++, CMAKE
+Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsumgebung entwickelt. Zusätzlich war CMake durchaus eingesetzt, um das \textit{Packaging} der sämtlichen Modulen durchzuführen.
 
-% [ ] Simulink für testing
+% [X] Testbasierte Entwicklung
 
+Für alle Modulen wurde testgetriebene Entwicklung eingesetzt, um sicherzustellen, dass alle funktionelle  und nicht-funktionelle Anforderungen abgedecket werden. Darüber hinaus wurden beide \textit{google-test} und \textit{google-mock }für die Realisierung von Testfällen angewendet.
+
+% [X] Docker
+
+Für die Ausführung der Testszenerien sind eine Kombination aus Docker und Simulink verwendet worden, wobei die von BaSyx veröffentlichen Docker-Containers für den Registry- und AAS-Server für die Bereistellung der BaSyx-Architektur eingesetzt wurden.  
 
 \subsection{Wrappen des BaSyx als S-Function}
 
