@@ -55,6 +55,18 @@ static double readSE(SimStruct *S){
   return  std::stod(aasCon.getSeValue(*se));
 }
 
+static Aas createAas(string aasUrlStr, string regUrlStr, string aasId){
+  // Create AAS based on whether user has provided an AasUrlStr or not
+  if(aasUrlStr == ""){
+    Url urlStr = Url(regUrlStr);
+    RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
+    return Aas(regCon.fetchAAS(aasId));
+  }else{
+    Url urlStr= Url(aasUrlStr);
+    return Aas(urlStr, aasId);
+  }
+}
+
 static void initializePVectors(SimStruct *S){
   string regUrlStr, aasUrlStr, aasId, smIdShort, seIdShort;
   regUrlStr = getStrPar(S,PAR_REGURLSTR);
@@ -63,16 +75,7 @@ static void initializePVectors(SimStruct *S){
   smIdShort = getStrPar(S,PAR_SMIDSHORT);
   seIdShort = getStrPar(S,PAR_SEIDSHORT);
 
-  // Create AAS based on whether user has provided an AasUrlStr or not
-  Aas* aas;
-  if(aasUrlStr == ""){
-    Url urlStr = Url(regUrlStr);
-    RegistryServerConnector regCon = RegistryServerConnector(std::move(urlStr), *httpCon);
-    aas = new Aas(regCon.fetchAAS(aasId));
-  }else{
-    Url urlStr= Url(aasUrlStr);
-    aas = new Aas(urlStr, aasId);
-  }
+  Aas* aas = createAas(aasUrlStr, regUrlstr, aasId);
 
   Submodel* sm = new Submodel(*aas,smIdShort);
   SubmodelElement* se = new SubmodelElement(*sm,seIdShort);
