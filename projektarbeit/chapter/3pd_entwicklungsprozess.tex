@@ -2,7 +2,11 @@
 
 Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Den funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
 
-\subsection{Anforderungen}
+\subsection{Konzept und Anforderungsdefinition} \label{Konzept}
+
+Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Funktionen zugegriffen. S-Funktionen ergänzen die Simulink-Umgebung, indem personalisierten Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
+
+Mit der Bibliothek wäre der Benutzer Simulink in der Lage, unkompliziert seinem Modell BaSyx-Blöcken hinzuzufügen und daher mit bestehenden \textit{SubmodelElements} interagieren. 
 
 % [ ] find out a way to custom enumerate and ref this anforderungen throughout the text
 Die Entwicklung der Bibliothek hat vorwiegend zwei Anwendungsfälle berücksichtigt:
@@ -25,15 +29,6 @@ Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich
 \end{enumerate}
 
 In diesem Entwicklungsschritt wurden keine Anforderungen bezüglich Grenzen für die Abtastrate von beiden Lese- und Schreibverfahren und Sicherheit der Datenübertragung festgelegt, stattdessen liegt der Schwerpunkt der Arbeit an der Entwicklung einer ausbaubare Grundlage für die Bibliothek, die eventuell durch feinere Anforderungen permissiv erweitert werden könnte.
-
-
-\subsection{Konzept und Anforderungsdefinition} \label{Konzept}
-
-% [ ] Problemstellung und Motivation NOCHMALS AUFÜHRLICHER
-
-Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die d Simulink-Umgebung, indem personalisierten Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
-
-
 
 \subsection{Funktionale Spezifikation} \label{Funspec}
 
@@ -62,7 +57,8 @@ In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Kom
 
 \emph{Logische Architektur für das Erfüllen vom A1, A2 und A4}
 
-% [ ] Erklärung über das Diagramm unten (landscape)
+% [X] Erklärung über das Diagramm unten (landscape)
+Im Diagramm \ref{fig:LAB_ALL} werden alle Kommunikationsflüsse dargestellt, die über eine Verbindung mit dem \textit{AAS}-Server verfügen. Jede Linienfarbe entspricht einem Kommunikationsfluss und daher einer realisierten Fähigkeit.  
 
 \imgls{media/diagrams/LAB_C10C20C40.jpg}{LAB_ALL}{Darstellung des Kommunikationsflusses vom A1, A2 und A4}
 

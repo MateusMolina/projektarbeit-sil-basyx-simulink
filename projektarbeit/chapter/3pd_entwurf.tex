@@ -106,7 +106,7 @@ static double readSE(SimStruct *S){
 
 Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blöckes aufgerufen und Objekten wie \textit{AAS, Submodel und SubmodelElement} werden angelegt und im internen Zustand über einen \textit{work} Vektor gespeichert.
 für einzelnen Block individueller Zustand 
-Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheid \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird an den \textit{BasyxConnector} eine Aktualisierungs-, bzw. Leseanfrage übersendet (s. \ref{code:propertysaconnectorblock2}).
+Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheidet \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird an den \textit{BasyxConnector} eine Aktualisierungs-, bzw. Leseanfrage übersendet. (s. \ref{code:propertysaconnectorblock2})
 
 \begin{codeblock}{cpp}{propertysaconnectorblock2}{Auszug der PropertySAConnectorBlock.cpp Datei}
 
@@ -133,8 +133,6 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
     ...
 \end{codeblock}
 
-
-% [ ] Wrap-up
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -252,11 +250,6 @@ static Aas createAas(string aasUrlStr, string regUrlStr, string aasId){
 
 
 \img{10cm}{media/diagrams/ES_C30.jpg}{C30}{Sequenzdiagramm für A3}
-
-
-
-% [ ] Verbindung vom RegistryBlock mit PropertyBlock 
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
