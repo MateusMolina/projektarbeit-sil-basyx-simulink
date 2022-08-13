@@ -1,7 +1,5 @@
 \section{Entwurf} \label{Entwurf}
 
-% [ ] Change all old code blocks 
-
 
 % [X] Übersicht von was hier besprochen wird
 Dieser Kapitel fängt mit einer Erläuterung davon an, was für Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschiließend wird es auf die Einkapsulung von BaSyx in einer S-Function und jede im System implementierte Fähigkeit eingegegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt wird. Zum letzen Thema ist einen Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschittstelle eines mit S-Function erstellten Blockes.
@@ -11,15 +9,12 @@ Dieser Kapitel fängt mit einer Erläuterung davon an, was für Werkzeuge für d
 \subsection{Entwicklungsumgebung}
 
 % [X] C++, CMAKE
-Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsumgebung entwickelt. Zusätzlich war CMake durchaus eingesetzt, um das \textit{Packaging} der sämtlichen Modulen durchzuführen.
-
 % [X] Testbasierte Entwicklung
-
-Für alle Modulen wurde testgetriebene Entwicklung eingesetzt, um sicherzustellen, dass alle funktionelle  und nicht-funktionelle Anforderungen abgedecket werden. Darüber hinaus wurden beide \textit{google-test} und \textit{google-mock }für die Realisierung von Testfällen angewendet.
+Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsumgebung entwickelt. Zusätzlich war CMake durchaus eingesetzt, um das \textit{Packaging} der sämtlichen Modulen durchzuführen. Für alle Modulen wurde testgetriebene Entwicklung eingesetzt, um sicherzustellen, dass alle funktionelle  und nicht-funktionelle Anforderungen abgedecket werden. Darüber hinaus wurden beide \textit{google-test} und \textit{google-mock }für die Realisierung von Testfällen angewendet.
 
 % [X] Docker
 
-Für die Ausführung der Testszenerien sind eine Kombination aus Docker und Simulink verwendet worden, wobei die von BaSyx veröffentlichen Docker-Containers für den Registry- und AAS-Server für die Bereistellung der BaSyx-Architektur eingesetzt wurden.  
+Für die Ausführung der Testszenerien sind eine Kombination aus Docker und Simulink verwendet worden, wobei die von BaSyx veröffentlichen Docker-Containers für den Registry- und AAS-Server für die Bereistellung der BaSyx-Architektur eingesetzt wurden. Außerdem wurden die Verwaltungsschallen mittels AASX Package Explorer erstellt, eine open-source Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
 
 \subsection{Wrappen des BaSyx als S-Function}
 
@@ -35,8 +30,7 @@ Ein \textit{HttpConnection}-Objekt kann über eine der Konstruktion einer der Im
 Um eine Änderung der fest codierten API-Pfaden leichter vorzunehmen, wurden alle API-Pfaden in einer einzigen Datei (\textit{basyxConfig.hpp}) eingefügt, auf die die sämtlichen Methoden der Bibliothek zugreifen können.
 
 
-\begin{listing}[!ht]
-\begin{minted}{cpp}
+\begin{codeblock}{cpp}{BasyxConfig}{Auszug der API-Definitionen in BasyxConfig}
 // BasyxConfig.hpp
 ...
 namespace BasyxConfig
@@ -44,7 +38,7 @@ namespace BasyxConfig
     using std::string;
     // Registry Server
     static const string REG_API_PATH = "api/v1/registry";
-    t
+    
     // AAS Server
 
     static const string SM_EPP_ = "submodels/"; //+smIdShort
@@ -59,10 +53,7 @@ namespace BasyxConfig
         return SM_EPP_+e_smIdShort+SE_EPP_+e_seIdShort+VALUE_EPP_;
     }
 };
-\end{minted}
-\caption{Auszug der API-Definitionen in BasyxConfig}
-\label{label=code:BasyxConfig}
-\end{listing}
+\end{codeblock}
 
 % [X] Übersicht der S-Function Methoden und was im Projekt verwendet wurde
 
@@ -73,8 +64,7 @@ Innerhalb der Datei \textit{PropertySAConnectorBlock.cpp} findet sich die Logik,
 Um globale Variablen innerhalb der \textit{Simstruc}-Umgebung zu realisieren, werden \textit{Work} Vektoren benötigt. Mit diesen lässt sich Zustand innerhalb einer Block-Instanz speichern und dadurch Initialisierungsparameter wie \textit{aasId, registryUrl, submodelElementId} unter anderen beibehalten werden.
 Dafür werden hauptsächlich zwei \textit{simstruct}-Methoden eingesetzt, nähmlich \textit{ssGetPWork}, \textit{ssGetPWorkValue}. Die erstere dient zur Bearbeitung des \textit{Work} Vektors, während die letztere zum Ablesen eines in diesem gespeicherten Wert.
 
-\begin{listing}[!ht]
-\begin{minted}{cpp}
+\begin{codeblock}{cpp}{propertysaconnectorblock}{Auszug der PropertySAConnectorBlock.cpp Datei}
 // PropertySAConnectorBlock.cpp
 ...
 std::unique_ptr<CurlHttpConnection> httpCon;
@@ -106,9 +96,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
       ...
 }
 ...
-\end{minted}
-\label{label=code:propertysaconnectorblock}
-\end{listing}
+\end{codeblock}
 
 % [X] Wie ein Durchlauf aussieht
 
@@ -116,8 +104,8 @@ Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blöckes auf
 für einzelnen Block individueller Zustand 
 Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheid \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird am \textit{BasyxConnector} Aktualisierungs-, bzw. Leseanfragen übersendet.
 
-\begin{listing}[!ht]
-\begin{minted}{cpp}
+\begin{codeblock}{cpp}{propertysaconnectorblock2}{Auszug der PropertySAConnectorBlock.cpp Datei}
+
     // PropertySAConnectorBlock.cpp
     ...
     static void mdlOutputs(SimStruct *S, int_T tid)
@@ -141,9 +129,8 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
         ...
     }
     ...
-\end{minted}
-\label{label=code:propertysaconnectorblock2}
-\end{listing}
+\end{codeblock}
+
 
 % [ ] Wrap-up
 
@@ -154,8 +141,7 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
 % [X] Übersicht von dem Diagramm unten
 Für das Ableseverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird.
 
-\begin{listing}[!ht]
-\begin{minted}{cpp}
+\begin{codeblock}{cpp}{propertysaconnectorblock3}{Auszug der PropertySAConnectorBlock.cpp Datei}
     // PropertySAConnectorBlock.cpp
     ...
     static void mdlOutputs(SimStruct *S, int_T tid)
@@ -183,7 +169,10 @@ Für das Ableseverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockau
         if(resp.httpCode != 200 )
             throw std::runtime_error("Unable to get SubmodelElement value at '"+aas_.aasUrl.getStr()+"'");
 
-        se.updateValue(resp.raw);wird
+        se.updateValue(resp.raw);
+        ...
+    }
+    ...
 
     // httpConnection.hpp
     ...
@@ -196,17 +185,12 @@ Für das Ableseverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockau
     };
     ...
 }
-\end{minted}
-\label{label=code:propertysaconnectorblock3}
-\end{listing}
+\end{codeblock}
+
 
 Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall eines \textit{Status-Code} gleich 0 ist der Wert des \textit{SubmodelElement} zurückgegeben. Letztendlich setzt der Block den Wert seines Ausganges zu dem erhaltenen Wert. Das Sequenzdiagramm für den erfolgreichen ausgeführten Prozess lässt sich in der Abb. \ref{fig:C20} finden.
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C20.jpg}
-    \caption{Sequenzdiagramm für A1}
-    \label{fig:C20}
-\end{figure}
+\img{10cm}{media/diagrams/ES_C20.jpg}{C20}{Sequenzdiagramm für A1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A2: Aktualisierung des Wertes aus einem SubmodelElement}
@@ -214,8 +198,7 @@ Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall e
 Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem Blöckeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum einen formatierten URL für den \textit{HttpClient}. Anschiließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet.
 
 
-\begin{listing}[!ht]
-\begin{minted}{cpp}
+\begin{codeblock}{cpp}{propertysaconnectorblock4}{Auszug der PropertySAConnectorBlock.cpp Datei}
     // PropertySAConnectorBlock.cpp
     ...
     static void mdlOutputs(SimStruct *S, int_T tid)
@@ -245,17 +228,13 @@ Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbidung an dem
     ...
 
 }
-\end{minted}
-\label{label=code:propertysaconnectorblock4}
-\end{listing}
+\end{codeblock}
 
 In der Abb. \ref{fig:C10} findet sich das Sequenzdiagramm von dem oben detaillierten Prozess.
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C10.jpg}
-    \caption{Sequenzdiagramm für A2}
-    \label{fig:C10}
-\end{figure}
+\img{10cm}{media/diagrams/ES_C10.jpg}{C10}{Sequenzdiagramm für A2}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A3: Abrufen von AAS-Daten aus einem Registry Server}
 
@@ -263,11 +242,9 @@ In der Abb. \ref{fig:C10} findet sich das Sequenzdiagramm von dem oben detaillie
 
 Im Gegensatz zu dem Ablesenverfahren des Wertes eines \textit{SubmodelElement} wird die Logik für das Abrufen eines AAS-Datensatzes in der Methode \textit{mdlStart} ausgeführt und anschiließend wird der formatierte URL über die Methode \textit{fetchAAS} vom \textit{BasyxConnector} erzeugt. Der URL wird am \textit{HttpClient} überreicht, wobei aus der Komponente eine GET-Anfrage an dem textit{BaSyx-Server} gestellt wird. Die davon erhaltene Antwort ist am Ende vom \textit{BasyxConnector} abgewickelt, und einen Object des Typs \textit{AAS} wird am Block zurückgegeben. Der Prozess ist in der Abb. \ref{fig:C30} veranschaulicht.
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ES_C30.jpg}
-    \caption{Sequenzdiagramm für A3}
-    \label{fig:C30}
-\end{figure}
+
+\img{10cm}{media/diagrams/ES_C30.jpg}{C30}{Sequenzdiagramm für A3}
+
 
 
 % [ ] Verbindung vom RegistryBlock mit PropertyBlock 
@@ -281,11 +258,8 @@ Wäre ein Status-Code nicht gleich 200 erhalten, löst der BasyxConnector eine A
 
 
 % [X] Bild vom Console mit irgendwelchem Fehler und Verbindung mitm TExt oben
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/consolefehler.jpg}
-    \caption{Beispiel einer Fehlermeldung}
-    \label{fig:consolefehler}
-\end{figure}
+
+\img{10cm}{media/consolefehler.jpg}{consolefehler}{Beispiel einer Fehlermeldung}
 
 
 
@@ -301,11 +275,9 @@ Aus Sicht Matlab/Simulink ist ein mit S-Functions entwickelter Block eine geteil
 Das Abbild \ref{fig:heizungsbispiel} zeigt ein Modell mit mehfach eingefügten Instanzen des Blockes \textit{PropertySAConnectorBlock}. Jede Instanz funktioniert unabhängig voneinandern, trotz unterschiedlichen Abtasterate und auf \textit{SubmodelElement} bezogenen Parametern. 
 
 % [X] Beispieles Modell mit mehreren Blöcken aufzeigen und Verbindung mitm Text oben
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/heizungbeispiel.jpg}
-    \caption{Simulink-Modell mit mehreren Blöcken}
-    \label{fig:heizungsbispiel}
-\end{figure}
+\img{15cm}{media/heizungbeispiel.jpg}{heizungsbispiel}{Simulink-Modell mit mehreren Blöcken}
+
+
 
 \subsection{A6: Betriebsmodus wechseln}
 
@@ -325,19 +297,17 @@ Bei beiden Blöcken war es eine kritische Anforderung, dass alle einzustellenden
 % [X] Beschreibung der Bilder
 Das Block-Symbol wurde personalisiert, um schnell einen Überblick der eingestellten Parameter zu bekommen. Dazu sind Informationen wie die Abtastrate und das verbundene \textit{SubmodelElement} und desses \textit{Submodel}, bzw. \textit{AAS} immer sichtbar, wie im Bild \ref{fig:sesab_block} dargestellt ist. Das ermöglicht die schnelle Erkennung und Unterscheidung von mehrfach eingefügten Blöcken in einem Modell.
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/SeSAB_block.jpg}
-    \caption{Instanz eines PropertySAConnector-Block}
-    \label{fig:sesab_block}
-\end{figure}
+
+\img{5cm}{media/SeSAB_block.jpg}{sesab_block}{Instanz eines PropertySAConnector-Block}
+
+
 
 Nach Tippen auf einen Block wird dem Benutzer ein Dialogfenster mit Textfelder für alle einzustellende Parameter angezeigt. Das wurde erst durch die Erstellung einer Maske für die S-Function, eine im Simulink eingebettete Funktionalität. Das Abbild \ref{fig:sesab_dialog} zeigt ein Beispiel einer Instanz des Blockes \textit{PropertySAConnectorBlock}.
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/SeSAB_dialog.jpg}
-    \caption{Dialogfenster des PropertySAConnector-Block}
-    \label{fig:sesab_dialog}
-\end{figure}
+
+\img{10cm}{media/SeSAB_dialog.jpg}{sesab_dialog}{Dialogfenster des PropertySAConnector-Block}
+
+
 
 Der Benutzer kann über das Fenster den gewünschten Betriebsmodus auswählen, wobei bei Wählen des Echtzeit-Modus das Feld zur Einstellung der Abtastrate sichtbar wird. Es steht außerdem zur Verfügung die Möglichkeit, auszuwählen, ob es das \textit{AAS} über den \textit{RegistryServer} oder direkt über seine Adresse abgerufen werden soll.
 

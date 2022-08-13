@@ -1,11 +1,49 @@
 \documentclass[german, pt]{MTSreport}
+\usepackage{microtype}
 \usepackage{minted}
 \usepackage{pdflscape}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{xifthen}
 
-% \setminted{linenos=true} 
-\setminted{frame=lines,framesep=2mm}
+\setminted{frame=lines,framesep=2mm,breaklines,tabsize=2}
+
+
+
+% CUSTOM ENVIRONMENTS
+\newenvironment{codeblock}[3]
+{%
+ \VerbatimEnvironment
+ \begin{listing}[!ht]
+ \caption{#3} \label{code:#2}%
+ \begin{minted}{#1}%
+}
+{\end{minted}\end{listing}}
+
+\newcommand{\img}[5][]{%
+\begin{figure}[tph]
+\centering
+\includegraphics[width=12cm,height=#2,keepaspectratio]{#3}%
+\ifthenelse{\isempty{#1}}%
+{\caption{#5}}%
+{\caption{#5 \cite{#1}}}%
+\label{fig:#4}%
+\end{figure}%
+}
+
+\newcommand{\imgls}[4][]{%
+\begin{landscape}%
+\begin{figure}[H]
+\centering
+\makebox[\textwidth]{\includegraphics[width=.9\paperwidth]{#2}}%
+\ifthenelse{\isempty{#1}}%
+{\caption{#4}}%
+{\caption{#4 \cite{#1}}}%
+\label{fig:#3}%
+\end{figure}%
+\end{landscape}%
+}
+
 
 % TODO change listing index to code or something like that
  

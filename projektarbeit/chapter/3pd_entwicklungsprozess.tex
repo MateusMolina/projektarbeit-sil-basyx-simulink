@@ -54,26 +54,20 @@ Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event 
 
 In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Komponenten sich veranschaulichen. 
 
-\begin{figure}[H]\centering
-\includegraphics[width=15cm,keepaspectratio]{media/diagrams/LAB_Structure.jpg}
-\caption{Funktionsbausteine jeder Teilkomponente}
-\label{fig:LABs}
-\end{figure} einer Bibliothek für Si % TODO WTF
+
+
+\img{10cm}{media/diagrams/LAB_Structure.jpg}{LABs}{Funktionsbausteine jeder Teilkomponente}
 
 
 \subsection{Systemarchitektur} \label{SysArch}
 
 \emph{Logische Architektur für das Erfüllen vom A1, A2 und A4}
 
-\begin{landscape}
-    \begin{figure}[hbtp] 
-        \centering
-         \makebox[\textwidth]{\includegraphics[width=.9\paperwidth]{media/diagrams/LAB_C10C20C40.jpg}}
-        \caption{Darstellung des Kommunikationsflusses vom A1, A2 und A4}
-        \label{fig:LAB_ALL}
-    \end{figure}    
-\end{landscape}
-    
+% [ ] Erklärung über das Diagramm unten (landscape)
+
+\imgls{media/diagrams/LAB_C10C20C40.jpg}{LAB_ALL}{Darstellung des Kommunikationsflusses vom A1, A2 und A4}
+
+
 \emph{Klassendiagramm}
 
 
@@ -84,11 +78,4 @@ Im Diagramm \ref{fig:uml} lässt sich ein Überblick der Architektur der Bibliot
 Wie in den vorherigen Kapiteln erklärt wurde, wird \textit{curlcpp} für das Tätigen HTTP-Anfragen und \textit{jsoncpp} für die Dekodierung dieser verwendet. Außerdem legt \textit{simstruc} die Datenstruktur für Simulink fest und kapselt die auf das Modell, bzw. \textit{S-Function} bezogenen Parameter und Ausgaben ein. 
 
 % [X] UML DIAGRAMM
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ClassDiagram.png}
-    \caption{Klassendiagramm}
-    \label{fig:uml}
-\end{figure}
-
-
-    
+\img{10cm}{media/diagrams/ClassDiagram.png}{uml}{Klassendiagramm}

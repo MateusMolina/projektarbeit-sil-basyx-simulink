@@ -3,7 +3,6 @@ MATLAB ist ein leistungsfähiges Programm, um numerische Berechnungen in Ingenie
 
 MATLAB setzt sich aus mehreren \emph{toolboxes} zusammen, die jeweils bestimmte Bereiche der Ingenieurwissenschaften abdecken. Eine der bekanntesten \emph{toolboxes} ist Simulink, die eine Blockdiagramm-Umgebung für Multi-Domäne-Simulationen und modellbasierten Entwurf bietet. Diese \emph{toolbox} und der obere Begriff \emph{Model-Based Systems Engineering} werden in dem nächsten Unterkapitel besser erläutert.
 
-% TODO #13 MBSE in [2grundlagen_simulink]
 \subsection{Model-Based Systems Engineering (MBSE)}
 Modellbasiertes Systems Engineering (engl.: \emph{Model-Based Systems Engineering}, MBSE) ist die \textquote[\cite{eignerModellbasierteVirtuelleProduktentwicklung2014}]{formalisierte Anwendung von Modellbildung, um die Aktivitäten der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines Systems, beginnend von der Konzeptphase, über die Entwicklungsphase bis zu späteren Lebenszyklusphasen zu unterstützen}.
 
@@ -16,11 +15,7 @@ Simulink bietet einen grafischen Editor, anpassbare Blockbibliotheken und Solver
 
 Der fundamentale Baustein des Simulink ist der Block (Abb. \ref{fig:SimulinkBlock}), der aus einem Satz von Eingaben, Ausgaben, Zuständen und Parametern besteht. 
 
-\begin{figure}[H]\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{media/2022-04-03-12-48-03.png}
-\caption{Struktur eines Simulink-Blockes \cite{themathworksinc.WhatSFunctionMATLAB}}
-\label{fig:SimulinkBlock}
-\end{figure}
+\img[themathworksinc.WhatSFunctionMATLAB]{10cm}{media/2022-04-03-12-48-03.png}{SimulinkBlock}{Struktur eines Simulink-Blockes}
 
 Blocks können miteinander verbunden und verschachteln werden, wobei das Abbild eines Systems sofort sichtbar wird und sein Verhalten sich direkt in der Software in jedem Moment durch Testen validieren lässt.
 
@@ -38,7 +33,7 @@ Unter dem Begriff „Model-Based Systems Engineering (MBSE)“ versteht man die 
 \end{comment}
 
 
-% TODO #16 Schreiben S-Functions in Grundlagen
+% TODO #31 Verbesserung der Funktionsweise von S-Funktion (sieh @lesmanaIntegrationForcefeedbackLenkradesCarMaker)
 \subsection{MATLAB S-Functions}
 \emph{S-Functions} (System-Funktionen) sind ein leistungsfähiger Mechanismus zur Erweiterung der Fähigkeiten der Simulink-Umgebung. Eine \emph{S-Function} ist eine in einer der unterstützten Programmiersprachen von MATLAB (MATLAB, C, C++ oder Fortran) geschriebene Beschreibung eines Simulink-Blocks in Computersprache  \cite{themathworksinc.WhatSFunctionMATLAB}.
 
@@ -71,11 +66,8 @@ An S-function comprises a set of S-function callback methods that perform tasks 
     Integration — This applies to models with continuous states and/or nonsampled zero crossings. If your S-function has continuous states, the engine calls the output and derivative portions of your S-function at minor time steps. This is so the solvers can compute the states for your S-function. If your S-function has nonsampled zero crossings, the engine also calls the output and zero-crossings portions of your S-function at minor time steps so that it can locate the zero crossings.
 \end{comment}
 
-% TODO #14 Schreiben MatLab Production Server in [2grundlagen_simulink]
-% \subsection{MATLAB Production Server}
-
-% TODO Grundlagen->Simulink->Personalisierung der Benutzeroberfläche eines Simulink-Blockes
-\subsection{Personalisierung der Benutzeroberfläche eines Simulink-Blockes} /label{BenutzeroberflaecheSimulink}
+% TODO #32 Grundlagen->Simulink->Personalisierung der Benutzeroberfläche eines Simulink-Blockes
+\subsection{Personalisierung der Benutzeroberfläche eines Simulink-Blockes} \label{BenutzeroberflaecheSimulink}
 
 
 % % RESEARCH

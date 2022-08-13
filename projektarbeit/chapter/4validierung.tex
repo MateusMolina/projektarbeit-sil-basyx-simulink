@@ -13,8 +13,7 @@ Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem alle 
 Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code:docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}.
 
 % [X] Change listing package to minted to support YAML
-\begin{listing}[!ht]
-\begin{minted}{YAML}
+\begin{codeblock}{YAML}{docker-compose}{Auszug aus der Datei docker/docker-compose.yml}
     # docker/docker-compose.yml
     version: '2.1'
     services:
@@ -33,20 +32,12 @@ Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügb
             - ./conf/aas-config:/usr/share/config:z
         ports:
             - 4001:4001
-\end{minted}
-\caption{docker/docker-compose.yml}
-\label{code:docker-compose}
-\end{listing}
+\end{codeblock}
 
-Beim Anfahren lädt der AAS-\textit{container} das im Abb. \ref{fig:aasxexplorer} dargestellte AAS. Dieses enthält zwei \textit{Submodels} für vereinfachte Abbildung von beiden Hauptantrieb und Temperatursensor. Diese weisen wiederum je einen \textit{SubmodelElement} auf, die entsprechend zur Darstellung der aktuellen Last am Antriebe und des aktuellen erfassten Temperaturdatenpunktes dienen.  
+Beim Anfahren lädt der AAS-\textit{container} das im Abb. \ref{fig:aasxexplorer} dargestellte AAS. Dieses enthält zwei \textit{Submodels} für vereinfachte Abbildung von beiden Hauptantrieb und Temperatursensor. Diese weisen wiederum je ein \textit{SubmodelElement} auf, die entsprechend zur Darstellung der aktuellen Last am Antriebe und des aktuellen erfassten Temperaturdatenpunktes dienen.  
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/presse/aasxexplorer.png}
-    \caption{Bildschirmaufnahme der Verwaltungsschalle auf AASXExplorer}
-    \label{fig:aasxexplorer}
-\end{figure}
+\img{10cm}{media/presse/aasxexplorer.png}{aasxexplorer}{Bildschirmaufnahme der Verwaltungsschalle auf AASX Package Explorer}
 
-% [ ] Ein paar Worte über AASXExplorer?
 
 
 \subsection{Aufbau}
@@ -59,32 +50,27 @@ Das Simulink-Modell (Abb. \ref{fig:simupresse}) besteht aus 4 Teilsystemen:
     \item Dashboard: erhält und verarbeitet die Daten aus dem  \textit{TempSensor/temperatur SubmodelElement} und ermöglicht \textit{Monitoring} über einen Graf
 \end{enumerate}  
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/presse/simulink_presse.png}
-    \caption{Simulink-Modell des Beispielszenarios}
-    \label{fig:simupresse}
-\end{figure}
+
+\img{10cm}{media/presse/simulink_presse.png}{simupresse}{Simulink-Modell des Beispielszenarios}
+
+
 
 Beim Einstellen des Schiebers im Last-Teilsystem ändert sich die Temperatur vom Hauptantriebe. Dieser Effekt wird sich auf das Temperatursensor-Teilsystem fortgepflanzt, wobei den Temperaturdaten erfassen und an den \textit{TempSensor/temperatur SubmodelElement} übertragen werden. Anschließend werden die Daten im Dashboard-Teilsystem über einen zusätzlichen \textit{PropertySAConnectorBlock} angefragt, in einem späteren Block verarbeitet und im einen Graf dargestellt. Der Graf ist in 3 Bereichen aufgeteilt: in grünen Bereich wird die Temperaturen vom normalen Betrieb dargestellt, wobei in gelben und roten sind entsprechend der Warnzustand und der Notzustand erkennbar. 
 
+
+\section{Ausführung und Prüfen der Anforderungen}
+
+Bei dem Test hat es sich herausgestellt, dass das System in der Lage war, alle Anforderungen angemessen zu realisieren. Das Beispiel wies vielfache Instanzen des Blockes \textit{PropertySAConnectorBlock} auf, und beide Lese- und Aktualisierungsanfrage erfordert hat. Darüber hinaus wurden alle für seine Funktionsweise relevanten Parameter direkt im Simulink eingestellt.
+
 Im Abbild \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle bei variiertem Lastfaktor angezeigt.
 
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/presse/lauf.png}
-    \caption{Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle}
-    \label{fig:plotpresse}
-\end{figure}
+
+\img{10cm}{media/presse/lauf.png}{plotpresse}{Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle}
+
 
 
 % [X] Details über Simulationstaktung
 
 Die Simulation wurde im Echtzeitmodus betrieben, bei dem die Simulationszeit der Wanduhrzeit entsprach. Dieser Modus wurde vorgezogen, weil damit sich die Zusammenwirkung BaSyx und Simulink besser vorstellen lässt. Der Abbild-Modus ist prinzipiell sinnvoll, wenn die Simulation asynchron bezüglich der Hardware-, bzw. Software-in-the-loop abläuft.   
-
-
-\section{Ausführung und Prüfen der Anforderungen}
-
-% [ ] Ta muito ruim essa parte
-Bei dem Test hat es sich herausgestellt, dass das System in der Lage war, alle Anforderungen angemessen zu realisieren. Das Beispiel wies vielfache Instanzen des Blockes \textit{PropertySAConnectorBlock} auf, und beide Lese- und Aktualisierungsanfrage erfordert. Darüber hinaus wurden sämtliche Parameter des Blockes direkt im Simulink eingestellt.  
-
 
 Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden mehreree Blöcke mit Abtastraten bis 1KHz im Beispiel erfolgreich verwendet. 
