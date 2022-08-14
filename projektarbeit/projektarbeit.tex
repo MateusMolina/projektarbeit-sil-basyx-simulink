@@ -6,13 +6,20 @@
 \usepackage{color}
 \usepackage{xifthen}
 \usepackage{tabularx,ragged2e,booktabs}
+\usepackage{comment}
+% \usepackage{draftwatermark}
+% \SetWatermarkText{DRAFT}
+% \SetWatermarkScale{0.5}
+\bibliography{listings/bibliography}
+
+% BEGIN CUSTOM CONFIG
 \newcolumntype{C}{>{\Centering\arraybackslash}X}
 \setminted{frame=lines,framesep=2mm,breaklines,tabsize=2}
-
-\renewcommand{\listingscaption}{Code}
+\renewcommand{\listingscaption}{Codeausschnitt}
 \renewcommand{\listoflistingscaption}{Codeausschnitte}
+% END   CUSTOM CONFIG
 
-% CUSTOM ENVIRONMENTS
+% BEGIN CUSTOM ENVIRONMENTS/METHODS
 \newenvironment{codeblock}[3]
 {%
  \VerbatimEnvironment
@@ -25,7 +32,7 @@
 \newcommand{\img}[5][]{%
 \begin{figure}[tph]
 \centering
-\includegraphics[width=12cm,height=#2,keepaspectratio]{#3}%
+\includegraphics[width=14cm,height=#2,keepaspectratio]{#3}%
 \ifthenelse{\isempty{#1}}%
 {\caption{#5}}%
 {\caption{#5 \cite{#1}}}%
@@ -46,26 +53,15 @@
 \end{landscape}%
 }
 
-
-% TODO change listing index to code or something like that
- 
-
-\usepackage{comment}
-% \usepackage{draftwatermark}
-% \SetWatermarkText{DRAFT}
-% \SetWatermarkScale{0.5}
-\bibliography{listings/bibliography}
-
-
-
-% Custom methods
 \makeatletter
 \newcommand{\setword}[2]{%
   \phantomsection
   #1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
 }
 \makeatother
-% End 
+
+% END   CUSTOM ENVIRONMENTS/METHODS
+
 
 \title{Ermöglichung des Hardware- und Software-in-the-Loop durch die Einbindung von BaSyx und MATLAB/Simulink}
 % \subtitle{Untertitel wenn nötig} % Just delete it if you don't have a subtitle
@@ -78,7 +74,8 @@
 \keywords{Simulink, BaSyx, Digitaler Zwilling}
 
 \begin{abstract}
-Fill this area with your abstract
+% [ ] Fill this area with your abstract
+
 \end{abstract}
 
 % \begin{preface}
@@ -98,6 +95,7 @@ Fill this area with your abstract
 \input{chapter/3pd.tex}
 \input{chapter/4validierung.tex}
 \input{chapter/5zusammenfassung.tex}
+
 \appendix
 
 \end{document}
