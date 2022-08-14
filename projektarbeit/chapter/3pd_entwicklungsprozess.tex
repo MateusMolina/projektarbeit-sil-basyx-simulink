@@ -8,25 +8,34 @@ Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen
 
 Mit der Bibliothek wäre der Benutzer Simulink in der Lage, unkompliziert seinem Modell BaSyx-Blöcken hinzuzufügen und daher mit bestehenden \textit{SubmodelElements} interagieren. 
 
-% [ ] find out a way to custom enumerate and ref this anforderungen throughout the text
 Die Entwicklung der Bibliothek hat vorwiegend zwei Anwendungsfälle berücksichtigt:
 \begin{enumerate}
-    \item AF1: als Schnittstelle zum Testen von einer Hardware/Software über Simulink im Abbild-Modus, wobei die Simulation mit einem am Anfang aufgenommenen Abbild der Parameterwerte arbeitet, indem das Lesen von Parametern einmal am Anfang der Simulation und Setzen einmal am Ende dieser stattfindet;
-    \item AF2: als Schnittstelle zum Testen von einer Hardware/Software über Simulink mit verlangsamter Simulationstaktung. Dies ermöglicht das in Echtzeit Lesen und Setzen von Parametern des digitalen Zwillings im Laufe der Simulation. Die Abtast-, bzw. Aktualisierungsrate können im Block eingestellt werden.
+    \item als Schnittstelle zum Testen von einer Hardware/Software über Simulink im Abbild-Modus, wobei die Simulation mit einem am Anfang aufgenommenen Abbild der Parameterwerte arbeitet, indem das Lesen von Parametern einmal am Anfang der Simulation und Setzen einmal am Ende dieser stattfindet;
+    \item als Schnittstelle zum Testen von einer Hardware/Software über Simulink mit verlangsamter Simulationstaktung. Dies ermöglicht das in Echtzeit Lesen und Setzen von Parametern des digitalen Zwillings im Laufe der Simulation. Die Abtast-, bzw. Aktualisierungsrate können im Block eingestellt werden.
 \end{enumerate} 
 
 Aus den Anwendungsfällen lässt es sich zwei Betriebsmodi entnehmen: Abbild-Modus für den ersten Anwendungsfall und Betriebsmodus 2: Echtzeitmodus für den zweiten. 
 
-Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich voraus, dass das System in der Lage sein soll:
-\begin{enumerate}
-    \item A1: den Wert aus einem SubmodelElement abzulesen
-    \item A2: den Wert aus einem SubmodelElement zu aktualisieren
-    \item A3: aus einem Registry Server Daten vom einen AAS abzurufen
-    \item A4: Fehler in Simulink-konformen Fehlermeldungen anzuzeigen
-    \item A5: Parallelität angemessen zu implementieren, indem die Verbindung mit mehreren \textit{SubmodelElements} in einem gleichen Modell möglich ist.
-    \item A6: beide Betriebsmodi (Abbild- und Echtzeitmodus) zu realisieren.
-    \item A7: eine Bedieneroberfläche im Simulink zu haben, mit der sich Parameter wie Betriebsmodus, ID von \textit{AAS}, \textit{Submodel}, und \textit{SubmodelElement} einstellen lassen.
-\end{enumerate}
+Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich voraus, dass das System die sämtlichen in der Tabelle \ref{table:Anforderungstabelle} enthaltenen Anforderungen erfüllen soll.
+
+\begin{table}
+\caption{Anforderungstabelle}
+\label{table:Anforderungstabelle}
+\begin{tabularx}{\textwidth}{@{}cX@{}}
+\toprule
+id & Anforderung \\ 
+\midrule
+    \setword{A10}{req:A10} & Das System soll den Wert aus einem SubmodelElement ablesen können \\
+    \setword{A20}{req:A20} & Das System soll den Wert aus einem SubmodelElement aktualisieren können \\
+    \setword{A30}{req:A30} & Das System soll aus einem Registry Server Daten vom einen AAS abrufen können \\
+    \setword{A40}{req:A40} & Das System soll Fehler in Simulink-konformen Fehlermeldungen anzeigen können \\
+    \setword{A50}{req:A50} & Das System soll Parallelität angemessen implementieren, indem die Verbindung mit mehreren \textit{SubmodelElements} in einem gleichen Modell möglich ist. \\
+    \setword{A60}{req:A60} & Das System soll beide Betriebsmodi (Abbild- und Echtzeitmodus) realisieren. \\
+    \setword{A70}{req:A70} & Das System soll eine Bedieneroberfläche im Simulink haben, mit der sich Parameter wie Betriebsmodus, ID von \textit{AAS}, \textit{Submodel}, und \textit{SubmodelElement} einstellen lassen. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 
 In diesem Entwicklungsschritt wurden keine Anforderungen bezüglich Grenzen für die Abtastrate von beiden Lese- und Schreibverfahren und Sicherheit der Datenübertragung festgelegt, stattdessen liegt der Schwerpunkt der Arbeit an der Entwicklung einer ausbaubare Grundlage für die Bibliothek, die eventuell durch feinere Anforderungen permissiv erweitert werden könnte.
 
@@ -49,18 +58,18 @@ Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event 
 In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Komponenten sich veranschaulichen. 
 
 
-
-\img{10cm}{media/diagrams/LAB_Structure.jpg}{LABs}{Funktionsbausteine jeder Teilkomponente}
+% [ ] Remove Registryblock from this image
+\img{15cm}{media/diagrams/LAB_Structure.jpg}{LABs}{Funktionsbausteine jeder Teilkomponente}
 
 
 \subsection{Systemarchitektur} \label{SysArch}
 
-\emph{Logische Architektur für das Erfüllen vom A1, A2 und A4}
+\emph{Logische Architektur für das Erfüllen vom \ref{req:A10}, \ref{req:A20} und \ref{req:A40}}
 
 % [X] Erklärung über das Diagramm unten (landscape)
 Im Diagramm \ref{fig:LAB_ALL} werden alle Kommunikationsflüsse dargestellt, die über eine Verbindung mit dem \textit{AAS}-Server verfügen. Jede Linienfarbe entspricht einem Kommunikationsfluss und daher einer realisierten Fähigkeit.  
 
-\imgls{media/diagrams/LAB_C10C20C40.jpg}{LAB_ALL}{Darstellung des Kommunikationsflusses vom A1, A2 und A4}
+\imgls{media/diagrams/LAB_C10C20C40.jpg}{LAB_ALL}{Darstellung des Kommunikationsflusses vom A10, A20 und A40}
 
 
 \emph{Klassendiagramm}

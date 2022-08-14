@@ -5,10 +5,12 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{xifthen}
-
+\usepackage{tabularx,ragged2e,booktabs}
+\newcolumntype{C}{>{\Centering\arraybackslash}X}
 \setminted{frame=lines,framesep=2mm,breaklines,tabsize=2}
 
-
+\renewcommand{\listingscaption}{Code}
+\renewcommand{\listoflistingscaption}{Codeausschnitte}
 
 % CUSTOM ENVIRONMENTS
 \newenvironment{codeblock}[3]
