@@ -32,13 +32,106 @@ Modellbasiertes Systems Engineering (engl.: Model-Based Systems Engineering) ist
 Unter dem Begriff „Model-Based Systems Engineering (MBSE)“ versteht man die Anwendung von Modellen zur Unterstützung des gesamten Systemlebenszyklus. Simulink schlägt dabei eine Brücke von den Anforderungen und der Architekturwahl zum detaillierten Entwurf, der Implementierung und dem Testen aller Komponenten. \cite{themathworksinc.SimulinkGettingStarted}
 \end{comment}
 
+\subsection{Funktionsweise von Simulink}
+
+% [X] Compilation and Simulation
+Bei Ausführung eines Simulink Modells werden zwei Prozessen hintereinander durchgeführt: die Kompillierung und die Simulation. Bei dem Ersteren wird die Logik der Blöcke in eine interne Darstellung umgesetzt, die mit dem \textit{Simulink-Engine} interagieren kann. Bei der Simulation werden Zustände und Ausgabe über aufeinanderfolgende Zeitschritte berechnet.  \cite{SimulinkSimulationMATLAB}
+
+Bei jedem Zeitschritt berechnet die Simulink-Engine:
+
+\begin{enumerate}
+    \item \textbf{Berechnet die Modellausgaben}: die Modell-Outputs-Methode wird aufgeruft. Die Modell-Outputs-Methode ruft wiederum die System-Outputs-Methode des Modells auf, die die Outputs-Methoden der Blöcke aufruft. Die System-Outputs-Methode übergibt jeder Block-Outputs-Methode die folgenden Argumente: einen Zeiger auf die Datenstruktur des Blocks und auf seine SimBlock-Struktur. Die SimBlock-Datenstrukturen verweisen auf Informationen, die die Outputs-Methode benötigt, um die Ausgaben des Blocks zu berechnen, einschließlich der Position seiner Eingabepuffer und seiner Ausgabepuffer.
+    \item \textbf{Berechnet die Zustände des Modells} Die Simulink-Engine berechnet die Zustände eines Modells, indem sie einen Solver aufruft. Welcher Solver aufgerufen wird, hängt davon ab, ob das Modell keine Zustände, nur diskrete Zustände, nur kontinuierliche Zustände oder sowohl kontinuierliche als auch diskrete Zustände hat. Wenn das Modell nur diskrete Zustände hat, ruft die Simulink-Engine den vom Benutzer ausgewählten diskreten Solver auf. Der Solver berechnet die Größe des Zeitschritts, der erforderlich ist, um die Abtastzeiten des Modells zu erreichen. Anschließend ruft er die Update-Methode des Modells auf. Die Update-Methode des Modells ruft die Update-Methode seines Systems auf, die die Update-Methoden der einzelnen Blöcke, die das System enthält, in der Reihenfolge aufruft, die durch die in der Link-Phase erstellten Update-Methodenlisten festgelegt ist. Wenn das Modell nur kontinuierliche Zustände hat, ruft die Simulink-Engine den vom Modell angegebenen kontinuierlichen Solver auf. Je nach Solver ruft der Solver entweder einmalig die Methode Derivatives des Modells auf oder tritt in einen Unterzyklus \textit{Minor}-Zeitschritte ein, in dem der Solver wiederholt die Outputs-Methoden und die Derivatives-Methoden des Modells aufruft, um die Outputs und Derivatives des Modells in aufeinander folgenden Intervallen innerhalb des \textit{Major}Zeitschritts zu berechnen. Dies geschieht, um die Genauigkeit der Zustandsberechnung zu erhöhen. Die Outputs-Methode und die Derivative-Methode des Modells rufen ihrerseits die entsprechenden Systemmethoden auf, die die Outputs und Derivate des Blocks aufrufen.
+    \item Optional wird auf Unstetigkeiten in den kontinuierlichen Zuständen der Blöcke geprüft.
+    \item \textbf{Berechnet die Zeit für den nächsten Zeitschritt} im Laufe jedes Simulationsschittes berechnet \textit{Simulink} einen neuen Zeitschritt durch Aufsummierung mit einem dynamischen Zeitdifferenzial basiert auf den eingeschätzten Fehler zwischen der simulierten Lösung und der aktuellen. Am Ende der Simulation ist ein Vektor mit Ergebnisse von Zeit, Zustand und Ausgabe ausgegeben. \cite{SimulationPhasesDynamic}
+\end{enumerate}
+
+Die Schritte 1 bis 4 werden so lange wiederholt, bis die Stoppzeit der Simulation erreicht ist. Im Abbild \ref{fig:SimulinkFlowchart} wird diese allgemeine Struktur grafisch dargestellt. 
+
+\img{15cm}{media/2022-08-15-16-40-54.png}{SimulinkFlowchart}{Struktur eines Simulationssdurchlaufes in Simulink, wobei k als Zähler für den \textit{Major}-Zeitschritt dient}
 
 % TODO #31 Verbesserung der Funktionsweise von S-Funktion (sieh @lesmanaIntegrationForcefeedbackLenkradesCarMaker)
 \subsection{MATLAB S-Functions}
 \emph{S-Functions} (System-Funktionen) sind ein leistungsfähiger Mechanismus zur Erweiterung der Fähigkeiten der Simulink-Umgebung. Eine \emph{S-Function} ist eine in einer der unterstützten Programmiersprachen von MATLAB (MATLAB, C, C++ oder Fortran) geschriebene Beschreibung eines Simulink-Blocks in Computersprache  \cite{themathworksinc.WhatSFunctionMATLAB}.
 
-Sie werden in jedem Simulationsschritt ausgeführt und können in unterschiedlichen Momenten angewandt werden, z.B. an der Initialisierung, Aktualisierung und Terminierung, sowie bei Eingeben- und Ausgeben-Event eines Blockes. Damit lässt sich in Simulink personalisierte Verhalten einbetten, wie z.B. die Verbindung mit anderen Plattformen, wodurch der Austausch vom Parametersatz ermöglicht wird.  
+Sie werden in jedem Simulationsschritt ausgeführt und können in unterschiedlichen Momenten angewandt werden, z.B. an der Initialisierung, Aktualisierung und Terminierung, sowie bei Eingeben- und Ausgeben-Event eines Blockes. Damit lässt sich personalisiertes Verhalten in Simulink einbetten, wie z.B. die Verbindung mit anderen Plattformen, wodurch der Austausch vom Parametersatz ermöglicht wird.
 
+Für den Entwurf von \textit{S-Functions} werden Benutzern zwei \textit{API} zur Verfügung gestellt: \textit{Level-1 und Level-2 MATLAB APIs} und \textit{C MEX S-functions}, wobei das Erstere zwei unterschiedliche Varianten anbietet, eine (Level-1) mit eingeschränkten Funktionalitäten und für einfache Anwendung geignet, und andere (Level-2) für ein umfangreicheres Set. Die C MEX API entsptricht großteils dem Umfang der Level-2 API, jedoch mit dem Hauptunterschied, dass sie für den Entwurf \textit{S-functions} mit C/C++ als Programmiersprache geignet ist. Mithilfe dieser APIs gibt es mehrere Möglichkeiten eine \textit{S-Function}, auszulegen:
+
+\begin{itemize}
+    \item Direkt im \textit{MATLAB}-Editor, durch die Anwendung der \textit{MATLAB}-Programmiersprache
+    \item Der Einsatz von einer der unterstützten Programmiersprachen (z.B. C/C++) über MEX API
+    \item Die Benutzung von \textit{S-Function builder}, welches eine grafische Benutzeroberfläche für die Programmierung \textit{S-functions} bietet.
+\end{itemize}
+
+\subsection{Funktionsweise einer C MEX S-function}
+
+% [ ] Erklärung von wichtigen Modulen
+
+\img[SimulinkEngineInteractiona]{10cm}{media/2022-08-15-17-31-07.png}{cmexstart}{Ablaufreihenfolge, wenn das Modell initialisiert ist}
+
+\img[SimulinkEngineInteractiona]{10cm}{media/2022-08-15-17-28-29.png}{cmexloop}{Simulationsschleife einer mit C MEX erstellten S-function}
+
+\subsection{MEX-Dateien}
+% [ ] Was sind MEX-Dateien
+
+% [ ] Dynamisch Ausführung von Bibliotheken
+
+\subsection{Struktur einer S-function in C++}
+% [ ] Auszug eines Beispielcode und Erklärung einzeilner Bereichen
+\begin{codeblock}{cpp}{timestwosfun}{Beispiel einer C MEX S-function \cite{CreateBasicMEX}}
+#define S_FUNCTION_NAME timestwo /* Defines and Includes */
+#define S_FUNCTION_LEVEL 2
+
+#include "simstruc.h"
+
+static void mdlInitializeSizes(SimStruct *S)
+{
+    ssSetNumSFcnParams(S, 0);
+    if (ssGetNumSFcnParams(S) != ssGetSFcnParamsCount(S)) {
+        return; /* Parameter mismatch reported by the Simulink engine*/
+    }
+
+    if (!ssSetNumInputPorts(S, 1)) return;
+    ssSetInputPortWidth(S, 0, DYNAMICALLY_SIZED);
+    ssSetInputPortDirectFeedThrough(S, 0, 1);
+
+    if (!ssSetNumOutputPorts(S,1)) return;
+    ssSetOutputPortWidth(S, 0, DYNAMICALLY_SIZED);
+
+    ssSetNumSampleTimes(S, 1);
+
+    /* Take care when specifying exception free code - see sfuntmpl.doc */
+    ssSetOptions(S, SS_OPTION_EXCEPTION_FREE_CODE);
+    }
+
+static void mdlInitializeSampleTimes(SimStruct *S)
+{
+    ssSetSampleTime(S, 0, INHERITED_SAMPLE_TIME);
+    ssSetOffsetTime(S, 0, 0.0);
+}
+
+static void mdlOutputs(SimStruct *S, int_T tid)
+{
+    int_T i;
+    InputRealPtrsType uPtrs = ssGetInputPortRealSignalPtrs(S,0);
+    real_T *y = ssGetOutputPortRealSignal(S,0);
+    int_T width = ssGetOutputPortWidth(S,0);
+
+    for (i=0; i<width; i++) {
+        *y++ = 2.0 *(*uPtrs[i]);
+    }
+}
+
+static void mdlTerminate(SimStruct *S){}
+
+#ifdef MATLAB_MEX_FILE /* Is this file being compiled as a MEX-file? */
+#include "simulink.c" /* MEX-file interface mechanism */
+#else
+#include "cg_sfun.h" /* Code generation registration function */
+#endif
+
+\end{codeblock}
 
 
 % RESEARCH
@@ -65,11 +158,6 @@ An S-function comprises a set of S-function callback methods that perform tasks 
 
     Integration — This applies to models with continuous states and/or nonsampled zero crossings. If your S-function has continuous states, the engine calls the output and derivative portions of your S-function at minor time steps. This is so the solvers can compute the states for your S-function. If your S-function has nonsampled zero crossings, the engine also calls the output and zero-crossings portions of your S-function at minor time steps so that it can locate the zero crossings.
 \end{comment}
-
-% TODO #32 Grundlagen->Simulink->Personalisierung der Benutzeroberfläche eines Simulink-Blockes
-\subsection{Personalisierung der Benutzeroberfläche eines Simulink-Blockes} \label{BenutzeroberflaecheSimulink}
-
-
 % % RESEARCH
 % \begin{comment}
 % \end{comment}
