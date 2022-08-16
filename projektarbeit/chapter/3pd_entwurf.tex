@@ -15,7 +15,7 @@ Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsu
 
 % [X] Docker
 
-Für die Ausführung der Testszenerien sind eine Kombination aus Docker und Simulink verwendet worden, wobei die von BaSyx veröffentlichen Docker-Containers für den Registry- und AAS-Server für die Bereitstellung der BaSyx-Architektur eingesetzt wurden. Außerdem wurden die Verwaltungsschalle mittels \textit{AASX Package Explorer} erstellt, eine Open-Source Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
+Für die Ausführung der Testszenerien sind eine Kombination aus Docker und Simulink verwendet worden, wobei die von BaSyx veröffentlichen Docker-Containers für den Registry- und AAS-Server für die Bereitstellung der BaSyx-Architektur eingesetzt wurden. Außerdem wurden die Verwaltungsschalle mittels \textit{AASX Package Explorer} erstellt, eine Open-Source-Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
 \subsection{Wrappen des BaSyx als S-Funktion}
 
 % [X] Funktionweise des BasyxConnectors und wie es mit dem Block verbunden ist
@@ -64,7 +64,7 @@ Innerhalb der Datei \textit{PropertySAConnectorBlock.cpp} findet sich die Logik,
 Um globale Variablen innerhalb der \textit{Simstruc}-Umgebung zu realisieren, werden \textit{Work} Vektoren benötigt. Mit diesen lässt sich Zustand innerhalb einer Block-Instanz speichern und dadurch Initialisierungsparameter wie \textit{aasId, registryUrl, submodelElementId} unter anderen beibehalten werden.
 Dafür werden hauptsächlich zwei \textit{simstruct}-Methoden eingesetzt, nämlich \textit{ssGetPWork}, \textit{ssGetPWorkValue}. Die erstere dient zur Bearbeitung des \textit{Work} Vektors, während die letztere zum Ablesen eines in diesem gespeicherten Wert.
 
-Im Codeauszug \ref{code:propertysaconnectorblock} lässt sich Beispiele für die Anwendung von \textit{Work} Vektors entnehmen, in dem diese erst über die Methode \textit{initializePVectors} initialisier werden, und später bei jedem Lesevorgang verwendet, um die \textit{AAS}, \textit{Submodel} und \textit{SubmodelElement} Objekten abzurufen. 
+Im Codeauszug \ref{code:propertysaconnectorblock} lassen sich Beispiele für die Anwendung von \textit{Work} Vektors entnehmen, in dem diese erst über die Methode \textit{initializePVectors} initialisiert und später bei jedem Lesevorgang verwendet werden, um die \textit{AAS}, \textit{Submodel} und \textit{SubmodelElement} Objekten abzurufen. 
 
 \begin{codeblock}{cpp}{propertysaconnectorblock}{Auszug der PropertySAConnectorBlock.cpp Datei}
 // PropertySAConnectorBlock.cpp
@@ -104,9 +104,8 @@ static double readSE(SimStruct *S){
 
 % [X] Wie ein Durchlauf aussieht
 
-Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blöckes aufgerufen und Objekten wie \textit{AAS, Submodel und SubmodelElement} werden angelegt und im internen Zustand über einen \textit{work} Vektor gespeichert.
-für einzelnen Block individueller Zustand 
-Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheidet \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird an den \textit{BasyxConnector} eine Aktualisierungs-, bzw. Leseanfrage übersendet. (s. Code \ref{code:propertysaconnectorblock2})
+Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blockes aufgerufen und Objekten wie \textit{AAS, Submodel und SubmodelElement} werden angelegt und im internen Zustand über einen \textit{work} Vektor gespeichert.
+In jedem Simulationsschritt wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheidet \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird an den \textit{BasyxConnector} eine Aktualisierungs-, bzw. Leseanfrage übersendet. (s. Code \ref{code:propertysaconnectorblock2})
 
 \begin{codeblock}{cpp}{propertysaconnectorblock2}{Auszug der PropertySAConnectorBlock.cpp Datei}
 
@@ -136,7 +135,7 @@ Bei jedem Simulationsschritt, wird die Ausgabe über \textit{mdlOutputs} berechn
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\ref{req:A10} Ablesen des Wertes aus einem SubmodelElement}
+\subsection{\ref{req:A10} Ablesen des Wertes aus einem \textit{SubmodelElement}}
 
 % [X] Übersicht von dem Diagramm unten
 Für das Ableseverfahren wird es vorausgesetzt, dass eine Verbindung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird (s. Code \ref{code:propertysaconnectorblock3})
@@ -187,7 +186,7 @@ Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall e
 \img{15cm}{media/diagrams/ES_C20.jpg}{C20}{Sequenzdiagramm für A10}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\ref{req:A20} Aktualisierung des Wertes aus einem SubmodelElement}
+\subsection{\ref{req:A20} Aktualisierung des Wertes aus einem \textit{SubmodelElement}}
 % [X] Übersicht von dem Diagramm unten
 Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet. (s. Code \ref{code:propertysaconnectorblock4})
 
@@ -229,7 +228,7 @@ In der Abb. \ref{fig:C10} findet sich das Sequenzdiagramm von dem oben detaillie
 
 % [X] Übersicht von dem Diagramm unten
 
-Im Gegensatz zu dem Ableseverfahren des Wertes eines \textit{SubmodelElement} wird die Logik für das Abrufen eines AAS-Datensatzes in der Methode \textit{mdlStart} (über die Methode \textit{initializePVectors}) ausgeführt und anschließend wird die formatierte URL über die Methode \textit{fetchAAS} vom \textit{BasyxConnector} erzeugt. Der URL wird am \textit{HttpClient} überreicht, wobei aus der Komponente eine GET-Anfrage an dem textit{BaSyx-Server} gestellt wird. Die davon erhaltene Antwort ist am Ende vom \textit{BasyxConnector} abgewickelt, und ein Objekt des Typs \textit{AAS} wird am Block zurückgegeben. Der Prozess ist in der Abb. \ref{fig:C30} veranschaulicht und einen Auszug der Implementierung kann im Codeauszug \ref{code:createaas} gefunden werden. 
+Im Gegensatz zu dem Ableseverfahren des Wertes eines \textit{SubmodelElement} wird die Logik für das Abrufen eines AAS-Datensatzes in der Methode \textit{mdlStart} (über die Methode \textit{initializePVectors}) ausgeführt und anschließend wird die formatierte URL über die Methode \textit{fetchAAS} vom \textit{BasyxConnector} erzeugt. Der URL wird am \textit{HttpClient} überreicht, wobei aus der Komponente eine GET-Anfrage an dem \textit{BaSyx}-Server gestellt wird. Die davon erhaltene Antwort ist am Ende vom \textit{BasyxConnector} abgewickelt, und ein Objekt des Typs \textit{AAS} wird am Block zurückgegeben. Der Prozess ist in der Abb. \ref{fig:C30} veranschaulicht und einen Auszug der Implementierung kann im Codeauszug \ref{code:createaas} gefunden werden. 
 
 \begin{codeblock}{cpp}{createaas}{Auszug der PropertySAConnectorBlock.cpp Datei}
 // PropertySAConnectorBlock.cpp

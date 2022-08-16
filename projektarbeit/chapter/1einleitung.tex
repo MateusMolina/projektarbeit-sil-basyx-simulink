@@ -5,33 +5,33 @@
 % MATLAB/Simulink könnte eine sinnvolle Simulationsumgebung für die Ausführung von \emph{Hardware}- und \emph{Software-In-the-Loop} unter Verwendung von BaSyx zur Verwaltung von AAS (digitalen Zwillingen).
 
 % [X] Industrie 4.0
-Die Anforderungen der neuen Industrie 4.0 erfordern besondere Werkzeuge und Plattformen, die für eine wandelbare und flexible Produktion ausgedacht sind. BaSys und die Referenzimplementierung seiner Konzepten, BaSyx, legen Bausteine fest, auf die für diese Anwendung konforme Systeme ihrer Struktur basieren können. BaSys 4.0 ist ein vom BMBF gefördertes Forschungsprojekt, das von Fraunhofer IESE gemeinsam mit 14 weiteren Partnern aus dem Bereich der Produktionstechnik entwickelt wird, um digitale Zwillinge als digitale Repräsentanzen für die Produktion zu realisieren \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}. 
+Die Anforderungen der neuen Industrie 4.0 erfordern besondere Werkzeuge und Plattformen, die für eine wandelbare und flexible Produktion ausgedacht sind. \textit{BaSys} und die Referenzimplementierung seiner Konzepte, \textit{BaSyx}, legen Bausteine fest, auf die für diese Anwendung konforme Systeme ihrer Struktur basieren können. \textit{BaSys 4.0} ist ein vom \textit{BMBF} gefördertes Forschungsprojekt, das von \textit{Fraunhofer IESE} gemeinsam mit 14 weiteren Partnern aus dem Bereich der Produktionstechnik entwickelt wird, um digitale Zwillinge als digitale Repräsentanzen für die Produktion zu realisieren \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}. 
 
-Eine Open-Source Implementierung der von BaSys festgelegten Konzepten ist Eclipse BaSyx, ein von BaSys finanziertes Middleware, das wiederverwendbaren Industrie 4.0 Komponenten und SDK in verschiedenen Programmiersprachen bereitstellt, wobei die schnelle Entwicklung neuer Software-Komponenten ermöglicht wird \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
+Eine Open-Source Implementierung der von \textit{BaSys} festgelegten Konzepten ist \textit{Eclipse BaSyx}, ein von \textit{BaSys} finanziertes \textit{Middleware}, das wiederverwendbaren Industrie 4.0 Komponenten und SDK in verschiedenen Programmiersprachen bereitstellt, wobei die schnelle Entwicklung neuer Software-Komponenten ermöglicht wird \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 
-Der von BaSyx bereitgestellte SDK ist in verschiedenen Kontexten der Digitalisierung anwendbar, sei es für die Erstellung digitaler Zwillinge oder Vernetzung von mehreren unabhängigen Plattformen, die herkömmlich mit unterschiedlichen Datenformaten arbeiten. Eine Schnittstelle von Interesse mancher Ingenieure wäre die direkt Verbindung mit MATLAB/Simulink, wobei mit diesen erstellten Modellen über eine Kommunikationsschnittstelle mit bestehenden BaSyx-Infrastrukturen verfügen können. 
+Der von \textit{BaSyx} bereitgestellte SDK ist in verschiedenen Kontexten der Digitalisierung anwendbar, sei es für die Erstellung digitaler Zwillinge oder Vernetzung von mehreren unabhängigen Plattformen, die herkömmlich mit unterschiedlichen Datenformaten arbeiten. Eine Schnittstelle von Interesse mancher Ingenieure wäre die direkte Verbindung mit \textit{MATLAB/Simulink}, wobei mit diesen erstellten Modellen über eine Kommunikationsschnittstelle mit bestehenden \textit{BaSyx}-Infrastrukturen verfügen können. 
 
 % Details über Anwendung von Simulink im Markt
-MATLAB/Simulink wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}. Simulink zusammen mit BaSyx könntet eingesetzt werden, um \emph{Hardware-In-The-Loop}, bzw. \emph{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde. 
+\textit{MATLAB/Simulink} wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}. Simulink zusammen mit BaSyx könntet eingesetzt werden, um \textit{Hardware-In-The-Loop}, bzw. \textit{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde. 
 
 Nach Prüfung von verschiedenen Alternativen, um Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und in der inneren Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine unkomplizierte und erfolgreiche Verbindung der beiden Plattformen würde dem Stand der Technik folgende Vorteile bringen:
 
 \begin{itemize}
-    \item Mehr Anreiz, früher im Projekt nach BaSys strukturierten digitalen Zwillingen einzusetzen
-    \item vereinfachte und schnellere Anbindung eines zu testen Hardware/Software an ein MATLAB/Simulink-Modell;
+    \item Mehr Anreiz, früher im Projekt nach \textit{BaSys} strukturierten digitalen Zwillingen einzusetzen
+    \item vereinfachte und schnellere Anbindung eines zu testen Hardware und Software an ein MATLAB/Simulink-Modell;
     \item Reduzieren der Lernkurve, Ingenieure in Simulink mit BaSyx verträglichen Modellen herstellen zu können;
     \item wirksame Einsetzung realer Daten in MATLAB/Simulink Modellen.  
 \end{itemize}
 
 \section{Zielstellung}
 
-Eine mögliche Lösung für die oben besprochene Problemstellung besteht in einer Simulink-Bibliothek, die in der Lage ist, Verbindungen mit BaSyx-Servern zu realisieren und das Abrufen und Aktualisieren von AAS-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
+Eine mögliche Lösung für die oben besprochene Problemstellung besteht in einer \textit{Simulink}-Bibliothek, die in der Lage ist, Verbindungen mit \textit{BaSyx}-Servern zu realisieren und das Abrufen und Aktualisieren von \textit{AAS}-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
 
-Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek und eines Anwendungsbeispieles, das im Wesentlichen aus einem Simulink-Modell besteht, das die entwickelte Bibliothek in Zusammenhang mit einem AAS nutzt. Unten wird der vorgesehene Umfang zusammengefasst:
+Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek und eines Anwendungsbeispieles, das im Wesentlichen aus einem Simulink-Modell besteht, das die entwickelte Bibliothek in Zusammenhang mit einer \textit{AAS} nutzt. Unten wird der vorgesehene Umfang zusammengefasst:
 
 % Zusammengefasster Umfang
 \begin{enumerate}
-    \item Entwicklung einer Bibliothek für MATLAB/Simulink, um die Verbindung mit BaSyx AAS zu vereinfachen.
+    \item Entwicklung einer Bibliothek für \textit{MATLAB/Simulink}, um die Verbindung mit \textit{BaSyx AAS} zu vereinfachen.
     \item Einsetzung der Bibliothek in einem Anwendungsbeispiel, das alle Anforderungen aus der Tabelle \ref{table:Anforderungstabelle} erfüllt.
 \end{enumerate}
 
