@@ -2,24 +2,23 @@
 
 Industrie 4.0 (I4.0) ist die bevorstehende vierte große Veränderung in der Fertigung. Sie wurde durch die fortschreitende Digitalisierung ausgelöst und befasst sich mit den Erfordernissen einer wandelbaren Produktion in einer sich immer schneller verändernden Welt \cite{kuhnServicebasedArchitecturesProduction2020}.
 
-Industrie 4.0 ermöglicht sowohl eine effizientere als auch eine flexiblere Produktion. Die Automatisierung aktueller Produktionssysteme wird häufig mit speicherprogrammierbaren Steuerungen (SPS) realisiert. Diese automatisieren sich wiederholende Aufgaben, die in zyklischen Programmen ausgeführt werden. Sie führen eine Reihe von Fertigungsschritten für jedes Werkstück aus, z. B. eine Abfolge von Fräs- oder Bohrvorgängen. Später kamen weitere Systeme hinzu, z. B. Roboter mit eigenen Betriebssystemen, aber auch ERP-Systeme (\emph{Enterprise Resource Planning}) und MES (\emph{Manufacturing Execution Systems}), um das Ressourcenmanagement zu verbessern und eine flexiblere Produktion von Produktvarianten zu ermöglichen \cite{kuhnServicebasedArchitecturesProduction2020}.
-
-Die vierte industrielle Revolution ist die durchgängige Digitalisierung der Produktion. Dabei geht es nicht um die Substitution von SPS oder die Einführung neuer Geräte, sondern um neue Systemarchitekturen, die eine Peer-to-Peer-Kommunikation ermöglichen, um beispielsweise eine vorausschauende Wartung, eine KI-basierte Anomalieanalyse in der Produktion und eine effiziente Produktion kleiner Losgrößen zu unterstützen. Bei Industrie 4.0 geht es also nicht um die Integration einer einzigen neuen Technologie. Vielmehr geht es um die Einführung neuer Architekturparadigmen, die eine flexiblere und wandelbarere Produktion ermöglichen, die künftige Wettbewerbsvorteile bringen wird \cite{kuhnServicebasedArchitecturesProduction2020}.
-
-% TODO LINK zwischen beiden Paragraphen
-
-Der \emph{Industrie 4.0 Maturity Index} (Abb. \ref{fig:industrie40stages}) ist ein Werkzeug, um der Entwicklungsgrad eines Unternehmens einzuschätzen. Dieser besteht aus 6 Entwicklungsstufen, wobei jede Stufe auf der vorhergehenden aufbaut und die Fähigkeiten beschreibt, die zur Erreichung dieser Stufe erforderlich sind, sowie die daraus resultierenden Vorteile für das Unternehmen \cite{schuhIndustrieMaturityIndex}.
+Industrie 4.0 ermöglicht sowohl eine effizientere als auch eine flexiblere Produktion. Die Automatisierung aktueller Produktionssysteme wird häufig mit speicherprogrammierbaren Steuerungen (SPS) realisiert. Diese automatisieren sich wiederholende Aufgaben, die in zyklischen Programmen ausgeführt werden. Sie führen eine Reihe von Fertigungsschritten für jedes Werkstück aus, z. B. eine Abfolge von Fräs- oder Bohrvorgängen. Später kamen weitere Systeme hinzu, z. B. Roboter mit eigenen Betriebssystemen, aber auch ERP-Systeme (\textit{Enterprise Resource Planning}) und \textit{MES} (\textit{Manufacturing Execution Systems}), um das Ressourcenmanagement zu verbessern und eine flexiblere Produktion von Produktvarianten zu ermöglichen \cite{kuhnServicebasedArchitecturesProduction2020}.
 
 
-\img[schuhIndustrieMaturityIndex]{10cm}{media/2022-04-02-12-31-55.png}{industrie40stages}{Stufen des Industrie 4.0-Entwicklungspfades (FIR e. V., RWTH Aachen University}
+Die vierte industrielle Revolution ist die durchgängige Digitalisierung der Produktion. Dabei geht es nicht um die Substitution von SPS oder die Einführung neuer Geräte, sondern um neue Systemarchitekturen, die eine \textit{Peer-to-Peer}-Kommunikation ermöglichen, um beispielsweise eine vorausschauende Wartung, eine KI-basierte Anomalie-Analyse in der Produktion und eine effiziente Produktion kleiner Losgrößen zu unterstützen. Bei Industrie 4.0 geht es also nicht um die Integration einer einzigen neuen Technologie. Vielmehr geht es um die Einführung neuer Architekturparadigmen, die eine flexiblere und wandelbarere Produktion ermöglichen, die künftige Wettbewerbsvorteile bringen wird \cite{kuhnServicebasedArchitecturesProduction2020}.
+
+% Der \textit{Industrie 4.0 Maturity Index} (Abb. \ref{fig:industrie40stages}) ist ein Werkzeug, um der Entwicklungsgrad eines Unternehmens einzuschätzen. Dieser besteht aus 6 Entwicklungsstufen, wobei jede Stufe auf der vorhergehenden aufbaut und die Fähigkeiten beschreibt, die zur Erreichung dieser Stufe erforderlich sind, sowie die daraus resultierenden Vorteile für das Unternehmen \cite{schuhIndustrieMaturityIndex}.
+
+
+% \img[schuhIndustrieMaturityIndex]{10cm}{media/2022-04-02-12-31-55.png}{industrie40stages}{Stufen des Industrie 4.0-Entwicklungspfades (FIR e. V., RWTH Aachen University}
 
 
 % Research
 
 
-\subsection{BaSys}
+\subsection{\textit{BaSys}}
 
-BaSys 4.0 ist ein Plattform-unabhängiges modulares System basiert auf die Struktur der Referenzarchitektur RAMI4.0. Damit wird die Realisierung eines Grundlagersystems für die Produktionsanlagen angestrebt und die folgenden Vorteile abgezielt: 
+\textit{BaSys 4.0} ist ein Plattform-unabhängiges modulares System basiert auf die Struktur der Referenzarchitektur \textit{RAMI4.0}. Damit wird die Realisierung eines Grundlagersystems für die Produktionsanlagen angestrebt und die folgenden Vorteile abgezielt: 
 \begin{itemize}
     \item  Bereitstellung und Umsetzung der primären Industrie 4.0-Konzepte;
     \item einfache dynamische Produktionsänderungen;
@@ -27,42 +26,39 @@ BaSys 4.0 ist ein Plattform-unabhängiges modulares System basiert auf die Struk
     \item vorausschauende Wartung - Online-Zugriff auf die Prozessdaten;
     \item einfache Integration bestehender und neuer Geräte \cite{chourtsidisScopingIndustryReconfigurability2020}.
 \end{itemize}
-Die Realisierung von BaSys 4.0 basiert auf drei Haupttechnologien, die als zentrale Säulen der Industrie 4.0-konformen Produktionsarchitektur bezeichnet werden: der virtuelle Automatisierungsbus (VAB), die Verwaltungsschale (AAS), und die Steuerungskomponenten (SPS) \cite{chourtsidisScopingIndustryReconfigurability2020}.
+Die Realisierung von \textit{BaSys 4.0} basiert auf drei Haupttechnologien, die als zentrale Säulen der Industrie 4.0-konformen Produktionsarchitektur bezeichnet werden: der virtuelle Automatisierungsbus (\textit{VAB}), die Verwaltungsschale (\textit{AAS}), und die Steuerungskomponenten (\textit{SPS}) \cite{chourtsidisScopingIndustryReconfigurability2020}.
 
-Im Abb. \ref{fig:basysarchitektur} werden die Hauptkomponenten eines BaSys4.0-Projektes dargestellt.
+Im Abb. \ref{fig:basysarchitektur} werden die Hauptkomponenten eines \textit{BaSys 4.0}-Projektes dargestellt.
 
 
 \img[eclipsefoundationinc.BaSyxEclipsepedia]{10cm}{media/2022-04-02-12-03-03.png}{basysarchitektur}{Beispiel einer einfachen BaSys-Architektur}
 
 
-%%%%%%%%%%%%%%% TODO AUTOMATISIERUNGSPYRAMID
+% [ ] Automatisierungspyramid
 
 % Research
 
-% TODO #18 Add more sources and info on Digital Twins
+% [ ] Add more sources and info on Digital Twins
 \paragraph{Verwaltungsschalle (AAS) / digitaler Zwilling}
 
-Die Verwaltungsschale (in Englisch \emph{Asset Administration Shell}, AAS) oder digitaler Zwilling  stellt das digitale Abbild eines physischen Gegenstands dar und stellt die Schnittstelle für die Kommunikation in der digitalen Umgebung zur Verfügung \cite{plattformindustrie4.0DiskussionspapierVerwaltungsschalePraxis}.
+Die Verwaltungsschale (in Englisch \textit{Asset Administration Shell}, oder \textit{AAS}) oder digitaler Zwilling stellt das digitale Abbild eines physischen Gegenstands dar und stellt die Schnittstelle für die Kommunikation in der digitalen Umgebung zur Verfügung. \cite{plattformindustrie4.0DiskussionspapierVerwaltungsschalePraxis}
 
-Jedes relevante Gut, z. B. Geräte, Arbeitskräfte, Produkte, aber auch der Herstellungsprozess, enthält genau einen AAS. Das AAS wird durch einen eindeutigen Bezeichner identifiziert, der genau dieses Asset repräsentiert. Aufgrund dieser Vielfalt an repräsentierten Objekten enthält jedes AAS einen unterschiedlichen Satz von \emph{submodels}. \emph{Submodels} sind Datenmodelle, die bestimmte Aspekte einer Anlage beschreiben, z. B. ihr digitales Typenschild, die angebotenen Dienstleistungen oder die Anlagentopologie. Ein AAS und seine \emph{submodels} sind eine einheitliche Darstellung einer realen Anlage \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
+Jedes relevante Gut, z. B. Geräte, Arbeitskräfte, Produkte, aber auch der Herstellungsprozess, enthält genau eine \textit{AAS}. Die \textit{AAS} wird durch einen eindeutigen Bezeichner identifiziert, der genau dieses Asset repräsentiert. Aufgrund dieser Vielfalt an dargestellten Objekten enthält jede \textit{AAS} einen unterschiedlichen Satz von \textit{submodels}. \textit{Submodels} sind Datenmodelle, die bestimmte Aspekte einer Anlage beschreiben, z. B. ihr digitales Typenschild, die angebotenen Dienstleistungen oder die Anlagentopologie. Eine \textit{AAS} und ihre \textit{submodels} sind eine einheitliche Darstellung einer realen Anlage. \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 
-Im Abb. \ref{fig:AAS-Abbild} werden den Hauptelementen eines AAS dargestellt, bzw. das Asset, die \emph{submodels} und ihre Eigenschaften (\emph{properties}), und das Ganze in derselben einheitlichen Umgebung eines AAS repräsentiert.
-
-
-\img[eclipsefoundationinc.BaSyxEclipsepedia]{10cm}{media/2022-04-02-13-46-33.png}{AAS-Abbild}{Abbild eines AAS}
+Im Abb. \ref{fig:AAS-Abbild} werden den Hauptelementen eines AAS dargestellt, bzw. das Asset, die \textit{submodels} und ihre Eigenschaften (\textit{properties}), und das Ganze in derselben einheitlichen Umgebung eines AAS repräsentiert.
 
 
-
+\img[eclipsefoundationinc.BaSyxEclipsepedia]{10cm}{media/2022-04-02-13-46-33.png}{AAS-Abbild}{Abbild einer \textit{AAS}}
 
 % Research
 
 
 \paragraph{Automatisierungsbus (VAB)}
-Der BaSys 4.0 \emph{virtual automation bus} (VAB) ermöglicht die direkte Kommunikation über die verschiedenen Schichten der Automatisierungsstruktur. Geräte in der Fertigung können mit ERP-Systemen (\emph{enterprise resource planning}) interagieren, selbst wenn die anderen Protokollen anwenden \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}.
+Der \textit{BaSys 4.0} \textit{virtual automation bus (VAB)} ermöglicht die direkte Kommunikation über die verschiedenen Schichten der Automatisierungsstruktur. Geräte in der Fertigung können mit ERP-Systemen (\textit{enterprise resource planning}) interagieren, selbst wenn die anderen Protokollen anwenden \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}.
 
 Der Vorteil dieses Ansatzes ist ein reduzierter Aufwand bei der Realisierung unterschiedlicher Kommunikationstechnologien. Anstatt von einer Übersetzung jedes einzelnen Protokolls wird es dadurch möglich die Verwendung von Primitiven, um diesen Prozess zu schlichten und die Komplexität zu reduzieren \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 
-Im Abb. \ref{fig:vabbeispiel} wird es ein Beispiel-Einsatz von einem VAB dargestellt.
+Im Abb. \ref{fig:vabbeispiel} wird es ein Beispiel-Einsatz von einem \textit{VAB} dargestellt.
 
  
 \img[eclipsefoundationinc.BaSyxEclipsepedia]{10cm}{media/2022-04-02-12-13-55.png}{vabbeispiel}{VAB-Beispiel mit verbundenen Entitäten}
@@ -72,12 +68,12 @@ Im Abb. \ref{fig:vabbeispiel} wird es ein Beispiel-Einsatz von einem VAB dargest
 
 \subsection{Eclipse BaSyx}
 
-Eclipse BaSyx ist eine Open-Source-Referenzimplementierung von BaSys 4.0-Konzepten, die gängige Industrie 4.0-Komponenten und ein Software Development Kit (SDK) enthält, das die Entwicklung neuer Komponenten unterstützt. Eclipse BaSyx ist aus dem BaSys 4.0 Projekt hervorgegangen, das vom Bundesministerium für Forschung und Bildung gefördert wird. Mit seiner Anwendung lassen sich folgende Punkte realisieren:
+\textit{Eclipse BaSyx} ist eine Open-Source-Referenzimplementierung von \textit{BaSys 4.0}-Konzepten, die gängige Industrie 4.0-Komponenten und ein Software Development Kit (SDK) enthält, das die Entwicklung neuer Komponenten unterstützt. \textit{Eclipse BaSyx} ist aus dem \textit{BaSys 4.0} Projekt hervorgegangen, das vom Bundesministerium für Forschung und Bildung gefördert wird. Mit seiner Anwendung lassen sich folgende Punkte realisieren:
 
 \begin{itemize}
-    \item End-to-End-Digitalisierung der Produktion;
-    \item End-to-End-Konnektivität zwischen Werkstatt und IT;
-    \item Peer-to-Peer-Kommunikation zwischen Geräten und der IT;
+    \item \textit{End-to-End}-Digitalisierung der Produktion;
+    \item \textit{End-to-End}-Konnektivität zwischen Werkstatt und IT;
+    \item \textit{Peer-to-Peer}-Kommunikation zwischen Geräten und der IT;
     \item digitale Prozessmodelle, Wertströme und Produktverfolgung;
     \item veränderbare Produktionsprozesse bis hin zur Losgröße-Eins-Produktion;
     \item Zwillinge für Prozesse, Produkte, Geräte und mehr;
@@ -86,19 +82,18 @@ Eclipse BaSyx ist eine Open-Source-Referenzimplementierung von BaSys 4.0-Konzept
     \item automatisierte Rückverfolgung und Dokumentation von Produktionsprozessen  \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 \end{itemize}
 
-% TODO Add link between BaSyx and 4 Ebenen
-    
-Diese Implementierung wird in 4 Ebenen umgesetzt:
+Diese \textit{Middleware} kann in der Produktion in mehreren Ebenen eingesetzt werden:
 
 \begin{enumerate}
-    \item Feldebene: Die Feldebene besteht aus Automatisierungsgeräten, Sensoren und Aktoren ohne eine spezifische BaSys-konforme Schnittstelle;
-    \item Geräteebene: Die Geräteebene besteht aus Automatisierungsgeräten, die eine BaSys 4.0-konforme Schnittstelle anbieten;
+    \item Feldebene: Die Feldebene besteht aus Automatisierungsgeräten, Sensoren und Aktoren ohne eine spezifische \textit{BaSys}-konforme Schnittstelle;
+    \item Geräteebene: Die Geräteebene besteht aus Automatisierungsgeräten, die eine \textit{BaSys 4.0}-konforme Schnittstelle anbieten;
     \item Middleware-Ebene: Die Middleware-Ebene besteht aus wiederverwendbaren Industrie 4.0-Komponenten, die notwendige generische und anlagen-unabhängige Fähigkeiten für Industrie 4.0-Produktionslinien implementieren;
     \item Anlagenebene: Die Anlagenebene besteht aus High-Level-Anlagenkomponenten, die die Produktion verwalten, optimieren und überwachen \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 \end{enumerate}
     
+Zusammenfassend ermöglicht \textit{BaSyx} den Aufbau und Einrichten von unternehmensübergreifenden Lösungen, die in der Lage sind, über die ganze Struktur der Fabrik Daten zuverlässig auszutauschen.
 
-Im Abb. \ref{fig:basyxstruktur} wird eine vereinfachte Struktur, um der Einsatz von den durch BaSyx implementierten Komponenten, e.g. AAS, Registry-Komponente und \emph{submodels}, zu veranschaulichen \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
+Im Abb. \ref{fig:basyxstruktur} wird eine vereinfachte Struktur, um der Einsatz von den durch \textit{BaSyx} implementierten Komponenten, e.g. \textit{AAS}, \textit{registry}-Komponente und \textit{submodels}, zu veranschaulichen \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 
 
 \img[eclipsefoundationinc.BaSyxEclipsepedia]{10cm}{media/2022-04-02-11-50-56.png}{basyxstruktur}{Diagramm einer Eclipse BaSyx-Systemstruktur}
@@ -108,12 +103,12 @@ Im Abb. \ref{fig:basyxstruktur} wird eine vereinfachte Struktur, um der Einsatz 
 
 \paragraph{Registry-Komponente}
 
-Die BaSys 4.0 \emph{registry}-Komponente ermöglicht die Registrierung und Suche von AAS innerhalb definierter Systemgrenzen. Entitäten, die AAS einschließlich ihrer Submodelle anbieten, können sich registrieren und damit anderen Teilnehmern ermöglichen, sie zu finden. Die für die Registrierung erforderlichen Informationen sind u.a. eindeutige Identifikatoren für AAS und ihr jeweiliges Asset, Endpunktinformationen zur API der AAS und deren \emph{submodel}-Dienstleister \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
+Die \textit{BaSys 4.0-registry}-Komponente ermöglicht die Registrierung und Suche von AAS innerhalb definierter Systemgrenzen. Entitäten, die AAS einschließlich ihrer Submodelle anbieten, können sich registrieren und damit anderen Teilnehmern ermöglichen, sie zu finden. Die für die Registrierung erforderlichen Informationen sind u.a. eindeutige Identifikatoren für AAS und ihr jeweiliges Asset, Endpunktinformationen zur API der AAS und deren \textit{submodel}-Dienstleister \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 
 % Research
 
 \paragraph{AAS-Server-Komponente}
 
-Die AAS-Server-Komponente stellt einen leeren AAS-Server zur Verfügung, auf dem mehrere AAS und \emph{submodels} gehostet werden können \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
+Die AAS-Server-Komponente stellt einen leeren AAS-Server zur Verfügung, auf dem mehrere AAS und \textit{submodels} gehostet werden können \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
 
 % Research
