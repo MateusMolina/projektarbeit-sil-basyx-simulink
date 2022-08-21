@@ -1,12 +1,12 @@
 \section{MATLAB/Simulink}
-MATLAB ist ein leistungsfähiges Programm, um numerische Berechnungen in Ingenieurbereich. Diese Software findet Anwendung in der Berechnung, Modellierung und Simulation technischer Systeme und wird sowohl in unterschiedlichen Branchen der Industrie, als auch in der Universität eingesetzt. MATLAB bietet die Grundlage, um mathematische Berechnungen, Datenanalyse, Modellbildung und die Entwicklung von interaktiven Anwendungen zu realisieren \cite{boslEinfuhrungMATLABSimulink2020}.
+MATLAB ist ein leistungsfähiges Programm, um numerische Berechnungen in Ingenieurbereich durchzuführen. Diese Software findet Anwendung in der Berechnung, Modellierung und Simulation technischer Systeme und wird sowohl in unterschiedlichen Branchen der Industrie, als auch in der Universität eingesetzt. MATLAB bietet die Grundlage, um mathematische Berechnungen, Datenanalyse, Modellbildung und die Entwicklung von interaktiven Anwendungen zu realisieren \cite{boslEinfuhrungMATLABSimulink2020}.
 
-MATLAB setzt sich aus mehreren \textit{toolboxes} zusammen, die jeweils bestimmte Bereiche der Ingenieurwissenschaften abdecken. Eine der bekanntesten \textit{toolboxes} ist Simulink, die eine Blockdiagramm-Umgebung für Multi-Domäne-Simulationen und modellbasierten Entwurf bietet. Diese \textit{toolbox} und der obere Begriff \textit{Model-Based Systems Engineering} werden in dem nächsten Unterkapitel besser erläutert.
+Dies setzt sich aus mehreren \textit{toolboxes} zusammen, die jeweils bestimmte Bereiche der Ingenieurwissenschaften abdecken. Eine der bekanntesten \textit{toolboxes} ist Simulink, die eine Blockdiagramm-Umgebung für Multi-Domäne-Simulationen und modellbasierten Entwurf bietet. Diese \textit{toolbox} und der obere Begriff \textit{Model-Based Systems Engineering} werden in dem nächsten Unterkapitel besser erläutert.
 
 \subsection{\textit{Model-Based Systems Engineering (MBSE)}}
 Modellbasiertes Systems Engineering (engl.: \textit{Model-Based Systems Engineering}, \textit{MBSE}) ist die \textquote[\cite{eignerModellbasierteVirtuelleProduktentwicklung2014}]{formalisierte Anwendung von Modellbildung, um die Aktivitäten der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines Systems, beginnend von der Konzeptphase, über die Entwicklungsphase bis zu späteren Lebenszyklusphasen zu unterstützen}.
 
-Modellen dienen zur vereinfachten Darstellung von komplexen Szenarien und können in Lauf des Entwicklungsprozesses eingesetzt werden, wobei oftmals der reine Einsatz von Dokumenten zur Undeutlichkeit und Verkomplizierung eines Systems führen kann. Sie finden häufig Anwendung bei der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines technischen Projektes \cite{eignerModellbasierteVirtuelleProduktentwicklung2014}.
+Modellen dienen zur vereinfachten Darstellung von komplexen Szenarien und können in Lauf des Entwicklungsprozesses eingesetzt werden. Dies steht im Gegensatz zu dem reinen Einsatz von textuellen Dokumenten, die oftmals zur Undeutlichkeit und Verkomplizierung eines Systems führen kann. Modelle finden häufig Anwendung bei der Anforderungserfassung, Entwicklung, Verifikation und Validierung eines technischen Projektes \cite{eignerModellbasierteVirtuelleProduktentwicklung2014}.
 
 \subsection{Simulink}
 Simulink ist eine Blockdiagramm-Umgebung für die Auslegung von Systemen mit Mehrdomänenmodellen, Simulationen vor der Umstellung auf Hardware und Bereitstellung des Systems. Mit diesem Werkzeug werden der Entwurf auf Systemebene, die Simulation, die automatische Codegenerierung sowie den kontinuierlichen Test und die Verifikation eingebetteter Systeme unterstützt \cite{themathworksinc.SimulinkGettingStarted}. Daher lassen sich \textit{MBSE} und wichtige Aufgaben des Produktentstehungsprozesses wie Architekturwahl, detaillierter Entwurf, die Implementierung und das Testen durch dieses Werkzeuges realisieren \cite{themathworksinc.SimulinkGettingStarted}.
@@ -17,7 +17,7 @@ Der fundamentale Baustein des Simulink ist der Block (Abb. \ref{fig:SimulinkBloc
 
 \img[themathworksinc.WhatSFunctionMATLAB]{10cm}{media/2022-04-03-12-48-03.png}{SimulinkBlock}{Struktur eines Simulink-Blockes}
 
-Blocks können miteinander verbunden und verschachteln werden, wobei das Abbild eines Systems sofort sichtbar wird und sein Verhalten sich direkt in der Software in jedem Moment durch Testen validieren lässt.
+Blocks können miteinander verbunden und verschachteln werden, wobei das Abbild eines Systems sofort sichtbar wird und das daraus resultierende Verhalten sich direkt in der Software validieren lässt.
 
 % RESEARCH
 \begin{comment}
@@ -31,20 +31,20 @@ Unter dem Begriff „Model-Based Systems Engineering (MBSE)“ versteht man die 
 \subsection{Funktionsweise von Simulink}
 
 % [X] Compilation and Simulation
-Wird ein Simulink Modells ausgeführt, laufen zwei Prozessen nacheinander durch: die Kompilierung und die Simulation. Bei dem Ersteren wird die Logik der Blöcke in eine interne Darstellung umgesetzt, die mit dem \textit{Simulink-Engine} interagieren kann. Andererseits werden in der Simulationsphase Zustände und Ausgabe über aufeinanderfolgende Zeitschritte berechnet.  \cite{SimulinkSimulationMATLAB}
+Wird ein Simulink Modells ausgeführt, laufen zwei Prozessen nacheinander durch: die Kompilierung und die Simulation. Bei dem ersteren wird die Logik der Blöcke in eine interne Darstellung umgesetzt, die mit dem \textit{Simulink-Engine} interagieren kann. Andererseits werden in der Simulationsphase Zustände und Ausgabe berechnet.  \cite{SimulinkSimulationMATLAB}
 
-Bei jedem Zeitschritt berechnet die Simulink-Engine:
+Bei jedem Zeitschritt führt die Simulink-Engine folgende Schritte durch:
 
 \begin{enumerate}
-    \item \textbf{Berechnet die Modellausgaben}: Die Modell-Outputs-Methode wird aufgerufen. Die Modell-Outputs-Methode ruft wiederum die System-Outputs-Methode des Modells auf, die die Outputs-Methoden der Blöcke aufruft. Die System-Outputs-Methode übergibt jeder Block-Outputs-Methode die folgenden Argumente: einen Zeiger auf die Datenstruktur des Blocks und auf seine \textit{SimBlock}-Struktur. Die \textit{SimBlock}-Datenstrukturen verweisen auf Informationen, die die Outputs-Methode benötigt, um die Ausgaben des Blocks zu berechnen, einschließlich der Position seiner Eingabepuffer und seiner Ausgabepuffer.
-    \item \textbf{Berechnet die Zustände des Modells}: Die Simulink-Engine berechnet die Zustände eines Modells, indem sie einen \textit{Solver} aufruft. Welcher \textit{Solver} aufgerufen wird, hängt davon ab, ob das Modell keine Zustände, nur diskrete Zustände, nur kontinuierliche Zustände oder sowohl kontinuierliche als auch diskrete Zustände hat. Dadurch können zwei Anwendungsfälle unterschieden werden:
+    \item \textbf{Berechnet die Modellausgaben}: Die Modell-Outputs-Methode wird aufgerufen. Die Modell-Outputs-Methode ruft wiederum die System-Outputs-Methode des Modells auf, die die Outputs-Methoden der Blöcke aufruft. Diese übergibt jeder Block-Outputs-Methode die folgenden Argumente: einen Zeiger auf die Datenstruktur des Blocks und auf seine \textit{SimBlock}-Struktur. Die \textit{SimBlock}-Datenstrukturen verweisen auf Informationen, die die Outputs-Methode benötigt, um die Ausgaben des Blocks zu berechnen, einschließlich der Position seiner Eingabepuffer und seiner Ausgabepuffer.
+    \item \textbf{Berechnet die Zustände des Modells}: Die Simulink-Engine berechnet die Zustände eines Modells, indem sie einen \textit{Solver} aufruft. Welcher \textit{Solver} aufgerufen wird, hängt davon ab, ob das Modell keine, diskrete und/oder kontinuierliche Zustände hat. Dadurch können zwei Anwendungsfälle unterschieden werden:
     \begin{itemize}
-        \item Wenn das Modell nur diskrete Zustände hat, ruft die Simulink-Engine den vom Benutzer ausgewählten diskreten \textit{Solver} auf. Dieser berechnet die Größe des Zeitschritts, der erforderlich ist, um die Abtastzeiten des Modells zu erreichen. Anschließend ruft er die Update-Methode des Modells auf. Die Update-Methode des Modells ruft die Update-Methode seines Systems auf, die die Update-Methoden der einzelnen Blöcke, die das System enthält, in der Reihenfolge aufruft, die durch die in der Link-Phase erstellten Update-Methodenlisten festgelegt ist.
+        \item Wenn das Modell nur diskrete Zustände hat, ruft die Simulink-Engine den vom Benutzer ausgewählten diskreten \textit{Solver} auf. Dieser berechnet die Größe des Zeitschritts, der erforderlich ist, um die Abtastzeiten des Modells zu erreichen. Anschließend ruft er die Update-Methode des Modells auf. Diese ruft hingegen die Update-Methode seines Systems auf, die die Update-Methoden der einzelnen Blöcke, die das System enthält, in der Reihenfolge aufruft, die durch die in der Link-Phase erstellten Update-Methodenlisten festgelegt ist.
         \item Wenn das Modell nur kontinuierliche Zustände hat, ruft die Simulink-Engine den vom Modell angegebenen kontinuierlichen \textit{Solver} auf. Je nach \textit{Solver} wird entweder einmalig die Methode Derivatives des Modells oder tritt in einen Unterzyklus \textit{Minor}-Zeitschritte aufgerufen, in dem dieser wiederholt die Outputs-Methoden und die Derivatives-Methoden des Modells aufruft, um die Outputs und Derivatives des Modells in aufeinander folgenden Intervallen innerhalb des \textit{Major}Zeitschritts zu berechnen. Dies geschieht, um die Genauigkeit der Zustandsberechnung zu erhöhen. 
     \end{itemize}
 
-    \item Optional wird auf Unstetigkeiten in den kontinuierlichen Zuständen der Blöcke geprüft.
-    \item \textbf{Berechnet die Zeit für den nächsten Zeitschritt} im Laufe jedes Simulationsschrittes berechnet \textit{Simulink} einen neuen Zeitschritt durch Aufsummierung mit einem dynamischen Zeitdifferenzial basiert auf den eingeschätzten Fehler zwischen der simulierten Lösung und der aktuellen. Am Ende der Simulation ist ein Vektor mit Ergebnisse von Zeit, Zustand und Ausgabe ausgegeben. \cite{SimulationPhasesDynamic}
+    \item \textbf{Optional wird auf Unstetigkeiten in den kontinuierlichen Zuständen der Blöcke geprüft.}
+    \item \textbf{Berechnet die Zeit für den nächsten Zeitschritt} im Laufe jedes Simulationsschrittes berechnet \textit{Simulink} einen neuen Zeitschritt durch Aufsummierung mit einem dynamischen Zeitdifferenzial basiert auf den eingeschätzten Fehler zwischen der simulierten Lösung und der aktuellen. Am Ende der Simulation ist ein Vektor mit aus dem Vorgang resultierenden Zeit, Zustand und Ausgabe ausgegeben. \cite{SimulationPhasesDynamic}
 \end{enumerate}
 
 Die Schritte 1 bis 4 werden so lange wiederholt, bis die Stoppzeit der Simulation erreicht ist. Im Abbild \ref{fig:SimulinkFlowchart} wird diese allgemeine Struktur grafisch dargestellt. 
@@ -56,14 +56,12 @@ Die Schritte 1 bis 4 werden so lange wiederholt, bis die Stoppzeit der Simulatio
 
 Sie werden in jedem Simulationsschritt ausgeführt und können in unterschiedlichen Momenten angewandt werden, z.B. an der Initialisierung, Aktualisierung und Terminierung, sowie bei Eingeben- und Ausgeben-Event eines Blockes. Damit lässt sich personalisiertes Verhalten in Simulink einbetten, wie z.B. die Verbindung mit anderen Plattformen, wodurch der Austausch vom Parametersatz ermöglicht wird.
 
-Für den Entwurf von \textit{S-functions} werden Benutzern zwei \textit{API} zur Verfügung gestellt: \textit{Level-1 und Level-2 MATLAB APIs} und \textit{C MEX S-functions}, wobei das Erstere zwei unterschiedliche Varianten anbietet, eine (Level-1) mit eingeschränkten Funktionalitäten und für einfache Anwendung geeignet, und andere (Level-2) für ein umfangreicheres Set. Die \textit{C MEX API} entspricht großteils dem Umfang der Level-2 API, jedoch mit dem Hauptunterschied, dass sie für den Entwurf \textit{S-functions} mit C/C++ als Programmiersprache geeignet ist. Mithilfe dieser APIs gibt es mehrere Möglichkeiten eine \textit{S-Function}, auszulegen:
+Für den Entwurf von \textit{S-functions} werden Benutzern zwei \textit{API} zur Verfügung gestellt: \textit{Level-1 und Level-2 MATLAB APIs} und \textit{C MEX S-functions}, wobei das Erstere zwei unterschiedliche Varianten anbietet, eine (Level-1) mit eingeschränkten Funktionalitäten und für einfache Anwendung geeignet, und andere (Level-2) für ein umfangreicheres Set. Die \textit{C MEX API} entspricht großteils dem Umfang der Level-2 API, jedoch mit dem Hauptunterschied, dass sie für den Entwurf \textit{S-functions} mit C/C++ als Programmiersprache geeignet ist. Mithilfe dieser APIs gibt es mehrere Möglichkeiten eine \textit{S-Function} auszulegen, wie zum Beispiel:
 \begin{itemize}
     \item direkt im \textit{MATLAB}-Editor, durch die Anwendung der \textit{MATLAB}-Programmiersprache
     \item der Einsatz von einer der unterstützten Programmiersprachen (z.B. C/C++) über \textit{MEX API}
     \item die Benutzung von \textit{S-Function builder}, welches eine grafische Benutzeroberfläche für die Programmierung \textit{S-functions} bietet.
 \end{itemize}
-
-\emph{\textit{MEX-Dateien}}
 
 Mit der zweiten Methode erstellten \textit{S-functions} werden für jeden Block eine \textit{MEX}-Datei erzeugt, die sich wie ein normales \textit{MATLAB}-Script verhalten, allerdings eine Anbindung mit \textit{C/C++}-Methoden aufweisen. Diese sind grundsätzlich dynamisch gelinkte Subroutinen, welche innerhalb von \textit{MATLAB} geladen und ausgeführt werden können. Ein dynamisches gelinktes Programm sucht nach den \textit{runtime libraries}, sobald die Datei ausgeführt wird.
 
@@ -71,9 +69,9 @@ Mit der zweiten Methode erstellten \textit{S-functions} werden für jeden Block 
 
 % [X] Erklärung von wichtigen Modulen
 
-Eine mit \textit{C MEX} erstellte \textit{S-function} ist von der \textit{Simulink-Engine} als eine Reihenfolge von \textit{Callback}-Methoden verstanden. Die Logik für die Initialisierung, Terminierung, als auch die Handhabung beider diskreten und kontinuierlichen Arbeitsschritte ist in diesen enthalten. Zwei wichtige Prozesse finden bei jeder Simulation statt, nämlich die Initialisierung des Modells und die Simulationsschleife. \cite{SimulinkEngineInteractiona}
+Eine mit \textit{C MEX} erstellte \textit{S-function} ist von der \textit{Simulink-Engine} als eine Reihenfolge von \textit{Callback}-Methoden verstanden. Die Logik für die Initialisierung, Terminierung, als auch die Handhabung beider diskreten und kontinuierlichen Arbeitsschritte ist innerhalb dieser beschrieben. Zwei wichtige Prozesse finden bei jeder Simulation unter Anwendung von \textit{C MEX S-functions} statt, nämlich die Initialisierung des Modells und die Simulationsschleife. \cite{SimulinkEngineInteractiona}
 
-In Abb. \ref{fig:cmexstart}, bzw. \ref{fig:cmexloop} wird ein Überblick der \textit{Callback}-Methoden in der Reihenfolge gezeigt, mit der diese bei der Engine aufgerufen werden.  Ausgefüllte Rechtecke kennzeichnen Rückrufe, die immer während der Modellinitialisierung oder bei jedem Zeitschritt auftreten. Gestrichelte Rechtecke zeigen Rückrufe an, die während der Initialisierung und/oder bei einigen oder allen Zeitschritten während der Simulationsschleife auftreten können.
+In Abb. \ref{fig:cmexstart}, bzw. \ref{fig:cmexloop} wird ein Überblick der \textit{Callback}-Methoden in der Reihenfolge gezeigt, mit der diese bei der Engine aufgerufen werden.  Ausgefüllte Rechtecke kennzeichnen \textit{callbacks}, die immer während der Modellinitialisierung oder bei jedem Zeitschritt auftreten. Gestrichelte Rechtecke zeigen \textit{callbacks} an, die während der Initialisierung und/oder bei einigen oder allen Zeitschritten während der Simulationsschleife auftreten können.
 
 Bei der Initialisierung konfiguriert die Engine die \textit{S-function} für eine bevorstehende Simulation. Die Engine führt immer die erforderlichen Aufrufe an \textit{mdlInitializeSizes} und \textit{mdlInitializeSampleTime} aus, um die grundlegenden Attribute der \textit{S-function} einzurichten, einschließlich Eingangs- und Ausgangsports, Dialogparameter der \textit{S-function}, Arbeitsvektoren, Abtastzeiten usw.
 
@@ -100,7 +98,7 @@ Nach diesem Schritt führt die Simulink-Engine die Simulationsschleife aus. Wenn
 
 \subsection{Struktur einer \textit{S-function} in C++}
 % [X] Auszug eines Beispielcode und Erklärung einzeilner Bereichen
-Im Quellcode \ref{code:timestwosfun} wird ein Beispiel einer \textit{C MEX S-function} gezeigt. Der Veranschaulichung halber gibt diese den gedoppelten Wert der Eingabe aus. Am Anfang des Codes lässt sich die \textit{define}-Anweisungen erkennen, wobei dort der Name der Funktion und danach das \textit{API-Level} (Level-1, bzw. Level-2) festgelegt werden. Auch wichtig ist die Anweisung \lstinline[language=C,basicstyle=\ttfamily\footnotesize]{#include "simstruc.h"}, die zur Importierung der \textit{header}-Datei dient, welche Zugriff auf die \textit{SimStruct}-Datenstruktur, sowohl die \textit{MATLAB-API} gibt.
+Im Quellcode \ref{code:timestwosfun} wird ein Beispiel einer \textit{C MEX S-function} gezeigt. Der Veranschaulichung halber gibt diese den gedoppelten Wert der Eingabe aus. Am Anfang des Codes lassen sich die \textit{define}-Anweisungen erkennen, wobei dort der Name der Funktion und danach das \textit{API-Level} (Level-1, bzw. Level-2) festgelegt werden. Auch wichtig ist die Anweisung \lstinline[language=C,basicstyle=\ttfamily\footnotesize]{#include "simstruc.h"}, die zur Importierung der \textit{header}-Datei dient, welche Zugriff auf die \textit{SimStruct}-Datenstruktur, sowohl die \textit{MATLAB-API} gibt.
 
 Darüber hinaus lässt sich im Beispiel 4 \textit{MEX}-Methoden finden, die immer definiert werden müssen:
 \begin{itemize}
@@ -205,7 +203,8 @@ An S-function comprises a set of S-function callback methods that perform tasks 
     \item die Initialisierung von Parametern mit \textit{MATLAB}-Code
 \end{itemize}
 
-Im Abbild \ref{fig:simulinkmaskdialog} ist die Bedieneroberfläche zur Einstellung der \textit{Mask} gezeigt.
+% [ ] Erweiterung? Wie lässt sich eine Mask aufbauen? Grafisch? Drag and drop? 
+In der Abb. \ref{fig:simulinkmaskdialog} ist die Bedieneroberfläche zur Einstellung der \textit{Mask} gezeigt.
 
 \img[MaskingFundamentalsMATLAB]{10cm}{media/2022-08-16-11-36-22.png}{simulinkmaskdialog}{Dialog zur Einstellung der Blockbezutzeroberfläche}
 

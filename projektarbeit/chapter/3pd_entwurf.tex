@@ -3,7 +3,7 @@
 
 % [X] Update all code blocks
 % [X] Übersicht von was hier besprochen wird
-Dieser Teilkapitel fängt mit einer Erläuterung davon an, was für Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschließend wird es auf die Einkapselung von BaSyx in einer S-Funktion und jede im System implementierte Fähigkeit eingegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt wird. Zum letzten Thema ist einen Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschnittstelle eines mit S-Funktion erstellten Blockes.
+Dieser Teilkapitel fängt mit einer Erläuterung davon an, welche Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschließend wird es auf die Einkapselung von BaSyx in einer \textit{S-function} und auf jede im System implementierte Fähigkeit eingegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt wird. Zum letzten Thema ist ein Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschnittstelle eines mit S-Funktion erstellten Blockes.
 
 
 % [X] Entwicklungsumgebung
@@ -15,16 +15,16 @@ Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsu
 
 % [X] Docker
 
-Für die Ausführung der Testszenerien sind eine Kombination aus Docker und Simulink verwendet worden, wobei die von BaSyx veröffentlichen Docker-Containers für den Registry- und AAS-Server für die Bereitstellung der BaSyx-Architektur eingesetzt wurden. Außerdem wurden die Verwaltungsschalle mittels \textit{AASX Package Explorer} erstellt, eine Open-Source-Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
+Für die Ausführung der Testszenarien sind eine Kombination aus Docker und Simulink verwendet worden, unter Verwendung der von BaSyx veröffentlichen \textit{Docker-Containers} für den \textit{Registry}- und \textit{AAS}-Server für die Bereitstellung der BaSyx-Architektur eingesetzt wurden. Außerdem wurden die Verwaltungsschalen mittels \textit{AASX Package Explorer} erstellt, eine Open-Source-Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
 \subsection{Wrappen des BaSyx als S-Funktion}
 
 % [X] Funktionweise des BasyxConnectors und wie es mit dem Block verbunden ist
 
 Der \textit{BasyxConnector} wird innerhalb eines Blockes direkt aufgerufen, um Operationen wie einen AAS aus dem Registry-Server abzurufen und den Wert eines \textit{SubmodelElements} anzufragen, bzw. aktualisieren.
 
-Ein Öffner der Klasse \textit{aasServerConnector} zeigt auf, dass diese im Konstruktor beide ein Objekt des Typs \textit{AAS} und \textit{HttpConnection} erfordert. Zum Aufbau eines AAS-Objekts wird es auf die Datei \textit{components.hpp} verwiesen, wobei eine neue Instanz entweder aus der Klasse \textit{registryServerConnector} über die Methode \textit{fetchAAS(...)} ausgegeben werden kann, oder anhand der ID und URL-Pfades erstellt werden kann. 
+Eine Öffnung der Klasse \textit{aasServerConnector} zeigt auf, dass diese im Konstruktor beide ein Objekt des Typs \textit{AAS} und \textit{HttpConnection} erfordert. Zum Aufbau eines AAS-Objekts wird es auf die Datei \textit{components.hpp} verwiesen, wobei eine neue Instanz entweder aus der Klasse \textit{registryServerConnector} über die Methode \textit{fetchAAS(...)} ausgegeben oder anhand der ID und URL-Pfades erstellt werden kann. 
 
-Ein \textit{HttpConnection}-Objekt kann über eine der Konstruktion einer der Implementierungen der Schnittstelle \textit{httpConnection.hpp} angelegt werden. Diese dient zu dem Tätigen von HTTP-Anfragen, wodurch eine effektive Entkopplung von deren  Ausführung und dem \textit{BasyxConnector} erreicht wird. Momentan wurde nur eine Implementierung (\textit{curlHttpConnection}) über die externe Bibliothek \textit{libcurl} realisiert.
+Ein \textit{HttpConnection}-Objekt kann über eine der Implementierungen der Schnittstelle \textit{httpConnection.hpp} angelegt werden. Diese dient zu dem Tätigen von HTTP-Anfragen, wodurch eine effektive Entkopplung von deren  Ausführung und dem \textit{BasyxConnector} erreicht wird. Momentan wurde nur eine Implementierung (\textit{curlHttpConnection}) über die externe Bibliothek \textit{libcurl} realisiert.
 
 % [X] Übersicht von den Config-Datei und die benötigten APIs-Pfade usw
 Um eine Änderung der fest codierten API-Pfaden leichter vorzunehmen, wurden alle API-Pfaden in einer einzigen Datei (Code \ref{code:BasyxConfig}) eingefügt, auf die die sämtlichen Methoden der Bibliothek zugreifen können.
@@ -57,14 +57,14 @@ namespace BasyxConfig
 
 % [X] Übersicht der S-Function Methoden und was im Projekt verwendet wurde
 
-Innerhalb der Datei \textit{PropertySAConnectorBlock.cpp} findet sich die Logik, um eine Verbindung mit beiden \textit{BaSyx} und \textit{Simulink} herzustellen. Die Klasse \textit{CurlHttpConnection} wird als Zeiger instanziiert, und als Argument zur Erstellung von Objekten des Paketes \textit{BasyxConnector} über die Methoden \textit{mdlStart und mdlOutputs} verwendet. 
+Innerhalb der Datei \textit{PropertySAConnectorBlock.cpp} findet sich die Logik, eine Verbindung mit beiden \textit{BaSyx} und \textit{Simulink} herzustellen. Die Klasse \textit{CurlHttpConnection} wird als Zeiger instanziiert, und als Argument zur Erstellung von Objekten des Paketes \textit{BasyxConnector} über die Methoden \textit{mdlStart und mdlOutputs} verwendet. 
 
 % [X] Anwendung dieser komischen Vektoren Simulinks, um das Problem von static Parameters umzugehen wird
 
 Um globale Variablen innerhalb der \textit{Simstruc}-Umgebung zu realisieren, werden \textit{Work} Vektoren benötigt. Mit diesen lässt sich Zustand innerhalb einer Block-Instanz speichern und dadurch Initialisierungsparameter wie \textit{aasId, registryUrl, submodelElementId} unter anderen beibehalten werden.
 Dafür werden hauptsächlich zwei \textit{simstruct}-Methoden eingesetzt, nämlich \textit{ssGetPWork}, \textit{ssGetPWorkValue}. Die erstere dient zur Bearbeitung des \textit{Work} Vektors, während die letztere zum Ablesen eines in diesem gespeicherten Wert.
 
-Im Codeauszug \ref{code:propertysaconnectorblock} lassen sich Beispiele für die Anwendung von \textit{Work} Vektors entnehmen, in dem diese erst über die Methode \textit{initializePVectors} initialisiert und später bei jedem Lesevorgang verwendet werden, um die \textit{AAS}, \textit{Submodel} und \textit{SubmodelElement} Objekten abzurufen. 
+Im Codeauszug \ref{code:propertysaconnectorblock} lassen sich Beispiele für die Anwendung von \textit{Work} Vektors entnehmen, in dem diese zunächst über die Methode \textit{initializePVectors} initialisiert und später bei jedem Lesevorgang verwendet werden, mit dem Ziel die \textit{AAS}, \textit{Submodel} und \textit{SubmodelElement} Objekten abzurufen. 
 
 \begin{codeblock}{cpp}{propertysaconnectorblock}{Auszug der PropertySAConnectorBlock.cpp Datei}
 // PropertySAConnectorBlock.cpp
@@ -104,7 +104,7 @@ static double readSE(SimStruct *S){
 
 % [X] Wie ein Durchlauf aussieht
 
-Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blockes aufgerufen und Objekten wie \textit{AAS, Submodel und SubmodelElement} werden angelegt und im internen Zustand über einen \textit{work} Vektor gespeichert.
+Die Methode \textit{mdlStart} wird am Moment der Instantiierung des Blockes aufgerufen. Somit werden Objekten wie \textit{AAS, Submodel und SubmodelElement} angelegt und im internen Zustand über einen \textit{work} Vektor gespeichert.
 In jedem Simulationsschritt wird die Ausgabe über \textit{mdlOutputs} berechnet. An dem Moment unterscheidet \textit{PropertySAConnectorBlock}, ob eine Verbindung am Eingang, am Ausgang oder an beiden Ports liegt. Je nach Fall wird an den \textit{BasyxConnector} eine Aktualisierungs-, bzw. Leseanfrage übersendet. (s. Code \ref{code:propertysaconnectorblock2})
 
 \begin{codeblock}{cpp}{propertysaconnectorblock2}{Auszug der PropertySAConnectorBlock.cpp Datei}
@@ -138,7 +138,7 @@ In jedem Simulationsschritt wird die Ausgabe über \textit{mdlOutputs} berechnet
 \subsection{\ref{req:A10} Ablesen des Wertes aus einem \textit{SubmodelElement}}
 
 % [X] Übersicht von dem Diagramm unten
-Für das Ableseverfahren wird es vorausgesetzt, dass eine Verbindung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, wohingegen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, wobei dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird (s. Code \ref{code:propertysaconnectorblock3})
+Für das Ableseverfahren wird es vorausgesetzt, dass eine Verbindung an dem Blockausgang vorliegt. Die Methode \textit{mdlOutputs} wird ausgeführt, und infolgedessen die Methode \textit{getSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine GET-Anfrage an dem \textit{BaSyx-Server}, und somit dessen Antwort vom \textit{HttpClient} in einem \textit{Struct} mit expliziten Parametern für die rohe Antwort und den \textit{Status-Code} umgewandelt wird (s. Code \ref{code:propertysaconnectorblock3})
 
 \begin{codeblock}{cpp}{propertysaconnectorblock3}{Auszug der PropertySAConnectorBlock.cpp Datei}
     // PropertySAConnectorBlock.cpp
@@ -188,7 +188,7 @@ Dieses \textit{Struct} wird im \textit{HttpConnection} verarbeitet und im Fall e
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\ref{req:A20} Aktualisierung des Wertes aus einem \textit{SubmodelElement}}
 % [X] Übersicht von dem Diagramm unten
-Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL für den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} und falls einen Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} wird gestartet. (s. Code \ref{code:propertysaconnectorblock4})
+Für das Aktualisierungsverfahren wird vorausgesetzt, dass eine Verbindung an dem Blockeingang vorliegt. Wie bei dem davor beschriebenen Prozess wird die Methode \textit{mdlOutputs} ausgeführt, wobei die Methode \textit{updateSeValue} des \textit{BasyxConnector} aufgerufen wird. Dieser erzeugt wiederum eine formatierte URL an den \textit{HttpClient}. Anschließend stellt der \textit{HttpClient} eine PUT-Anfrage an dem \textit{BaSyx-Server}. Die Antwort wird letztendlich vom \textit{BasyxConnector} verarbeitet und falls ein Fehler aufgetreten ist, wird eine Ausnahme ausgelöst und der Prozess im \ref{ProzessA4} beschrieben wird gestartet. (s. Code \ref{code:propertysaconnectorblock4})
 
 
 \begin{codeblock}{cpp}{propertysaconnectorblock4}{Auszug der PropertySAConnectorBlock.cpp Datei}
@@ -254,7 +254,7 @@ static Aas createAas(string aasUrlStr, string regUrlStr, string aasId){
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\ref{req:A40} Anzeigen von Simulink-konformen Fehlermeldungen} \label{ProzessA4}
 
-Wäre ein Status-Code nicht gleich 200 erhalten, löst der \textit{BasyxConnector} eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an dem entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehlermeldungen direkt im Simulink-Konsole angezeigt werden können. Das Abbild \ref{fig:consolefehler} stellt ein Beispiel einer Fehlermeldung, bei der der Server nicht in der Lage war, mit dem Registry-Server eine Verbindung herzustellen.
+Wäre ein Status-Code nicht gleich 200 erhalten, löst der \textit{BasyxConnector} eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an den entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehlermeldungen direkt im Simulink-Konsole angezeigt werden können. Das Abbild \ref{fig:consolefehler} stellt ein Beispiel einer Fehlermeldung, bei der der Server nicht in der Lage war, mit dem Registry-Server eine Verbindung herzustellen.
 
 % [X] Bild vom Console mit irgendwelchem Fehler und Verbindung mitm TExt oben
 
@@ -266,7 +266,7 @@ Diese ist ein wesentlicher Aspekt der Anwendung, was unnötige Abstürze im Prog
 \subsection{\ref{req:A50} Anwendung von mehreren Blöcken in demselben Simulink-Modell}
 
 % [X] Was passiert wenn mehrere Block im gleichen Modell eingeführt werden? (seitens Matlab)
-Aus Sicht Matlab/Simulink ist ein mit S-Funktion entwickelter Block eine geteilte Bibliothek. Eine globale Variable ist deshalb mit allen anderen Blöcken gleiches Typs geteilt, was ein Problem für die Beibehaltung der Daten unter Simulationsschritten darstellt. Wie bereits erwähnt, können zur Umgehung dieses Problems und um den Blöcken einen internen Zustand zu verleihen, \textit{work}-Vektoren verwendet werden.
+Aus Sicht Matlab/Simulink ist ein mit \textit{S-function} entwickelter Block eine dynamische geteilte Bibliothek. Eine globale Variable ist deshalb mit allen anderen Blöcken gleiches Typs geteilt, was ein Problem für die Beibehaltung der Daten unter Simulationsschritten darstellt. Wie bereits erwähnt, können zur Umgehung dieses Problems und um den Blöcken einen internen Zustand zu verleihen, \textit{work}-Vektoren verwendet werden.
 
 Das Abbild \ref{fig:Heizungsbeispiel} zeigt ein Modell mit mehrfach eingefügten Instanzen des Blockes \textit{PropertySAConnectorBlock}. Jede Instanz funktioniert unabhängig voneinander, trotz unterschiedlichen Abtastrate und auf \textit{SubmodelElement} bezogenen Parametern. 
 
@@ -294,13 +294,13 @@ Das Block-Symbol wurde personalisiert, um schnell einen Überblick der eingestel
 
 
 
-Nach Tippen auf einen Block wird dem Benutzer ein Dialogfenster mit Textfelder für alle einzustellende Parameter angezeigt. Das wurde erst durch die Erstellung einer Maske für die S-Funktion, eine im Simulink eingebettete Funktionalität. Das Abbild \ref{fig:sesab_dialog} zeigt ein Beispiel einer Instanz des Blockes \textit{PropertySAConnectorBlock}.
+Nach Tippen auf einen Block wird dem Benutzer ein Dialogfenster mit Textfelder für alle einzustellende Parameter angezeigt. Das wurde erst durch die Erstellung einer Maske für die \textit{S-function}, eine im Simulink eingebettete Funktionalität. Die Abb. \ref{fig:sesab_dialog} zeigt ein Beispiel einer Instanz des Blockes \textit{PropertySAConnectorBlock}.
 
 
 \img{10cm}{media/SeSAB_dialog.jpg}{sesab_dialog}{Dialogfenster des PropertySAConnector-Block}
 
 
 
-Der Benutzer kann über das Fenster den gewünschten Betriebsmodus auswählen, wobei bei Wählen des Echtzeitmodus das Feld zur Einstellung der Abtastrate sichtbar wird. Es steht außerdem zur Verfügung die Möglichkeit, auszuwählen, ob es das \textit{AAS} über den \textit{RegistryServer} oder direkt über seine Adresse abgerufen werden soll.
+Der Benutzer kann über das Fenster den gewünschten Betriebsmodus auswählen, wobei bei Wählen des Echtzeitmodus das Feld zur Einstellung der Abtastrate sichtbar wird. Es steht jedoch zur Verfügung, die Option auszuwählen, ob es die \textit{AAS} über den \textit{RegistryServer} oder direkt über seine Adresse abgerufen werden soll.
 
 

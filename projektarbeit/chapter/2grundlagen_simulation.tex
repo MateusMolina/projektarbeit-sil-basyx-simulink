@@ -6,7 +6,7 @@ Unter Simulation wird die Nachahmung der Funktionsweise eines realen Systems ver
 
 Sie finden Anwendung in unterschiedliche Bereiche der Technik und nehmen eine wichtige Rolle bei der Lösung dynamischen und komplexen Problemen, die mittels analytischer Vorgehensweise nicht ohne weiteres gelöst werden können. Durch ihren Einsatz gewinnt der Nutzer Klarheit und Verständnis an dem Entwicklungsprozess \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. 
 
-In den folgenden Unterkapiteln werden \textit{Hardware-in-the-loop} und \textit{Software-in-the-loop} vorgestellt, zwei Prozessabläufe der Simulationstechnik, die im Produktentstehungsprozess häufig verwendet werden. Der Begriff \textit{x-in-the-loop} deutet darauf hin, dass Abstraktionen eines Systems im Laufe des Entwicklungsprozesses eingesetzt werden, bzw. die Anbindung einer Hardware, sowie eine Software-Darstellung des Systems an die Simulationsumgebung.
+In den folgenden Unterkapiteln werden \textit{Hardware-in-the-loop} und \textit{Software-in-the-loop} vorgestellt, zwei Prozesse der Simulationstechnik, die im Produktentstehungsprozess häufig verwendet werden. Der Begriff \textit{x-in-the-loop} deutet darauf hin, dass Abstraktionen eines Systems im Laufe des Entwicklungsprozesses eingesetzt werden, bzw. die Anbindung einer Hardware, sowie eine Software-Darstellung des Systems an die Simulationsumgebung.
 
 % RESEARCH
 \begin{comment}
@@ -30,11 +30,10 @@ In Abbildung 30 sind die drei Eckpfeiler einer durchgängigen Simulationskette d
 
 \end{comment}
 
+% [ ] Ergänzung Hardware-in-the-loop
 \subsection{\textit{Hardware-in-the-Loop (HiL)}}
 
-\emph{\textit{Hardware-in-the-Loop (HIL)}}
-
-Ein reales System durch Einsatz von physischen Prototypen ist oftmals wegen den mehreren Konfigurationsmöglichkeiten nicht möglich. Eine Alternative dazu stellt die Anbindung der Hardware an die Simulationsumgebung durch eine elektrische Schnittstelle \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Dieser Prozess wird als \textit{Hardware-in-the-Loop} (\textit{HiL}) genannt. \textquote[\cite{zimmerDurchgaengigerSimulationsprozessZur2015}]{\textit{Hardware-in-the-Loop (HiL)} Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.}
+Ein reales System durch Einsatz von physischen Prototypen ist oftmals wegen der mehreren Konfigurationsmöglichkeiten nicht möglich. Eine Alternative dazu stellt die Anbindung der Hardware an die Simulationsumgebung durch eine elektrische Schnittstelle \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Dieser Prozess wird als \textit{Hardware-in-the-Loop} (\textit{HiL}) genannt. \textquote[\cite{zimmerDurchgaengigerSimulationsprozessZur2015}]{\textit{Hardware-in-the-Loop (HiL)} Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.}
 
 
 
@@ -44,8 +43,9 @@ Durch die zunehmende Anzahl an vernetzten Steuergeräten in Fahrzeugen nimmt die
 Im Fokus sind bei diesem Ansatz vor allem Steuergeräte wie Fahrwerksregelsysteme, Antriebssteuergeräte und Komfortsteuergeräte sowie Bauteile von Motor, Getriebe, etc. des Fahrzeugs. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
 \end{comment}
 
+% [ ] Ergänzung Software-in-the-loop
 \subsection{\textit{Software-in-the-Loop}}
-Ein Nachteil des \textit{Hardware-in-the-Loop} wäre die relative Verzögerung, bis im Projekt die Hardware verfügbar wird \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Eine Alternative für das Testen in früheren Phasen ist die Erstellung einer Software-Darstellung des Systems, die, die für die Phase notwendigen Anforderungen abdeckt. Damit lässt sich eine reine Software-Schnittstelle zwischen den Testkomponenten verwenden, im Gegensatz zu einer aufwendigeren elektrischen Schnittstelle, was für den \textit{Hardware-in-the-Loop} der Fall ist \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. 
+Ein Nachteil des \textit{Hardware-in-the-Loop} wäre die relative Verzögerung, bis im Projekt die Hardware verfügbar wird \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Eine Alternative für das Testen in früheren Phasen ist die Erstellung einer Software-Darstellung des Systems, die die für die Phase notwendigen Anforderungen abdeckt. Damit lässt sich eine reine Software-Schnittstelle zwischen den Testkomponenten verwenden, im Gegensatz zu einer aufwendigeren elektrischen Schnittstelle, was für den \textit{Hardware-in-the-Loop} der Fall ist \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. 
 
 
 % RESEARCH

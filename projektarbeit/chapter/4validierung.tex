@@ -55,12 +55,12 @@ Das Simulink-Modell (Abb. \ref{fig:simupresse}) besteht aus 4 Teilsystemen:
 
 
 
-Beim Einstellen des Schiebers im Last-Teilsystem ändert sich die Temperatur vom Hauptantriebe. Dieser Effekt wird sich auf das Temperatursensor-Teilsystem fortgepflanzt, wobei den Temperaturdaten erfassen und an den \textit{TempSensor/temperatur SubmodelElement} übertragen werden. Anschließend werden die Daten im Dashboard-Teilsystem über einen zusätzlichen \textit{PropertySAConnectorBlock} angefragt, in einem späteren Block verarbeitet und im einen Graf dargestellt. Der Graf ist in 3 Bereichen aufgeteilt: in grünen Bereich wird die Temperaturen vom normalen Betrieb dargestellt, wobei in gelben und roten sind entsprechend der Warnzustand und der Notzustand erkennbar. 
+Beim Einstellen des Schiebers im Last-Teilsystem ändert sich die Temperatur vom Hauptantriebe. Dieser Effekt wird sich auf das Temperatursensor-Teilsystem fortgepflanzt, bei dem die Temperaturdaten erfassen und an den \textit{TempSensor/temperatur SubmodelElement} übertragen werden. Anschließend werden die Daten im Dashboard-Teilsystem über einen zusätzlichen \textit{PropertySAConnectorBlock} angefragt, in einem späteren Block verarbeitet und im einen Graf dargestellt. Der Graf ist in 3 Bereichen aufgeteilt: in grünen Bereich wird die Temperaturen vom normalen Betrieb dargestellt, während in gelben und roten sind entsprechend der Warnzustand und der Notzustand erkennbar. 
 
 
 \section{Ausführung und Prüfen der Anforderungen}
 
-Bei dem Test hat es sich herausgestellt, dass das System in der Lage war, alle Anforderungen angemessen zu realisieren. Das Beispiel wies vielfache Instanzen des Blockes \textit{PropertySAConnectorBlock} auf, und beide Lese- und Aktualisierungsanfrage erfordert hat. Darüber hinaus wurden alle für seine Funktionsweise relevanten Parameter direkt im Simulink eingestellt.
+Im Laufe des Tests hat es sich herausgestellt, dass das System in der Lage war, alle Anforderungen angemessen zu realisieren. Das Beispiel wies vielfache Instanzen des Blockes \textit{PropertySAConnectorBlock} auf, und beide Lese- und Aktualisierungsanfrage erfordert hat. Darüber hinaus wurden alle für seine Funktionsweise relevanten Parameter direkt im Simulink eingestellt.
 
 Im Abbild \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle bei variiertem Lastfaktor angezeigt.
 
@@ -73,4 +73,4 @@ Im Abbild \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und 
 
 Die Simulation wurde im Echtzeitmodus betrieben, bei dem die Simulationszeit der Wanduhrzeit entsprach. Dieser Modus wurde vorgezogen, weil damit sich die Zusammenwirkung BaSyx und Simulink besser vorstellen lässt. Der Abbild-Modus ist prinzipiell sinnvoll, wenn die Simulation asynchron bezüglich der Hardware-, bzw. Software-in-the-loop abläuft.   
 
-Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden mehreree Blöcke mit Abtastraten bis 1KHz im Beispiel erfolgreich verwendet. 
+Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden mehrere Blöcke mit Abtastraten bis 1KHz im Beispiel erfolgreich verwendet. 
