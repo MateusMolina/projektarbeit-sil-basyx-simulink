@@ -5,16 +5,18 @@ In diesem Kapitel liegt der Schwerpunkt an der Vorstellung von dem Beispielszena
 
 \section{Beispielszenario}
 
-Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem alle Fähigkeiten der in der Arbeit entwickelten Bibliothek beobachtet werden können. Dafür wurde ein vereinfachtes Beispiel vom \textit{Condition-Monitoring} realisiert, bei dem die Funktionsweise eines Temperatursensors und des Hauptantriebssystems einer Pressmaschine im Simulink nachgebildet und deren digitale Zwillinge in einem BaSyx-Server gespeichert werden. Die Temperaturdaten werden letztendlich in einem in Simulink realisierten Dashboard dargestellt.
+Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem die Fähigkeiten der in der Arbeit entwickelten Bibliothek beobachtet werden können. Dafür wurde ein vereinfachtes Beispiel vom \textit{Condition-Monitoring} realisiert, bei dem die Funktionsweise eines Temperatursensors und des Hauptantriebssystems einer Pressmaschine im Simulink nachgebildet und deren digitale Zwillinge in einem \textit{BaSyx}-Server gespeichert werden. Die Temperaturdaten werden letztendlich in einem in Simulink realisierten Dashboard dargestellt.
 
-% [ ] @tagline use-case besser beschreiben
+% [X] @tagline use-case besser beschreiben
+Dies bezieht sich auf einen häufigen Anwendungsfall in der Industrie, in dem der Zustand der Machine überwacht werden soll, um möglich Ausfälle und Fehler zu erkennen. Im ausgewählten Szenario wirken die Daten aus dem Temperatursensor als Metrik für die Entscheidungsfindung, ob die Stanze sich in normalen Betriebzustände befindet, wobei eine Überschreittung eines voreingestellten Schwellenwerts zu einer Warnung auf dem Dashboard führt. 
+
 
 \subsection{Setup der \textit{BaSyx}-Infrastruktur mit \textit{Docker}}
 
 % [X] Docker-Compose Auszug aufbau  usw
-Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code:docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}.
+Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code:docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}. Bei Nutzung \textit{Docker-Containers} wird vermieden, dass erst eine komplexere Anwendung in der Form eines \textit{Java}-, bzw. \textit{C}-App erstellt werden muss. 
 
-% [ ] @tagline instead of running a complex java app the user can essentially start the basyx cont in order to have basyx running as a service in the machine
+% [X] @tagline instead of running a complex java app the user can essentially start the basyx cont in order to have basyx running as a service in the machine
 
 % [X] Change listing package to minted to support YAML
 \begin{codeblock}{YAML}{docker-compose}{Auszug aus der Datei docker/docker-compose.yml}
