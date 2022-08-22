@@ -3,7 +3,7 @@
 
 % [X] Update all code blocks
 % [X] Übersicht von was hier besprochen wird
-Dieser Teilkapitel fängt mit einer Erläuterung davon an, welche Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschließend wird es auf die Einkapselung von BaSyx in einer \textit{S-function} und auf jede im System implementierte Fähigkeit eingegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt wird. Zum letzten Thema ist ein Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschnittstelle eines mit S-Funktion erstellten Blockes.
+Dieser Teilkapitel fängt mit einer Erläuterung davon an, welche Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschließend wird es auf die Einkapselung von BaSyx in einer \textit{S-function} und auf jede im System implementierte Fähigkeit eingegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt werden. Zum letzten Thema ist ein Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschnittstelle eines mit \textit{S-function} erstellten Blockes.
 
 
 % [X] Entwicklungsumgebung
@@ -254,7 +254,7 @@ static Aas createAas(string aasUrlStr, string regUrlStr, string aasId){
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\ref{req:A40} Anzeigen von Simulink-konformen Fehlermeldungen} \label{ProzessA4}
 
-Wäre ein Status-Code nicht gleich 200 erhalten, löst der \textit{BasyxConnector} eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an den entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehlermeldungen direkt im Simulink-Konsole angezeigt werden können. Das Abbild \ref{fig:consolefehler} stellt ein Beispiel einer Fehlermeldung, bei der der Server nicht in der Lage war, mit dem Registry-Server eine Verbindung herzustellen.
+Wäre ein Status-Code nicht gleich 200 erhalten, löst der \textit{BasyxConnector} eine Ausnahme mit Details des empfangenen Paketes aus, die weiterhin an den entsprechenden Block zugeleitet wird. Für das Wrappen der Ausnahme wird eine Simulink-konforme Methode angewandt, durch die Fehlermeldungen direkt im Simulink-Konsole angezeigt werden können. Die Abb. \ref{fig:consolefehler} stellt ein Beispiel einer Fehlermeldung, bei der der Server nicht in der Lage war, mit dem Registry-Server eine Verbindung herzustellen.
 
 % [X] Bild vom Console mit irgendwelchem Fehler und Verbindung mitm TExt oben
 

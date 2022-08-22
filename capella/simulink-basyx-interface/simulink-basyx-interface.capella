@@ -983,14 +983,14 @@
                 sourceElement="#89ce7b0d-b487-456e-a5f3-459b0235dc27"/>
           </ownedFunctions>
           <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction"
-              id="6383d4f3-2cd3-4dee-8388-ceef58acceb9" name="[F300] PUT-Abfrage ausführen">
+              id="6383d4f3-2cd3-4dee-8388-ceef58acceb9" name="[F300] PUT-Anfrage ausführen">
             <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort"
                 id="3bb152c2-5028-4355-b2b1-60e59c1898ef" name="FIP 1"/>
             <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort"
                 id="f2cdbb43-f8ae-4b02-a2e3-0e767ea7bc3e" name="FOP 1"/>
           </ownedFunctions>
           <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction"
-              id="b1cd69f7-f088-445d-8bb7-b400237b0e24" name="[F310] GET-Abfrage ausführen">
+              id="b1cd69f7-f088-445d-8bb7-b400237b0e24" name="[F310] GET-Anfrage ausführen">
             <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort"
                 id="284fc47b-468f-4460-8833-37a10512fdaf" name="FIP 1"/>
             <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort"
@@ -1201,7 +1201,7 @@
                 id="127ecb61-b7f1-4e29-b558-aba9b474bb44" name="FOP 1"/>
           </ownedFunctions>
           <ownedFunctions xsi:type="org.polarsys.capella.core.data.la:LogicalFunction"
-              id="9281f27e-d3f8-4945-8c85-c94ccb1e332d" name="[F142] SubmodelElement-Aktualiseranfrage an BaSyxConnector">
+              id="9281f27e-d3f8-4945-8c85-c94ccb1e332d" name="[F142] SubmodelElement-Aktualiserungsanfrage an BaSyxConnector">
             <inputs xsi:type="org.polarsys.capella.core.data.fa:FunctionInputPort"
                 id="b36a5dc1-47ea-474f-9678-120cba4a003c" name="FIP 1"/>
             <outputs xsi:type="org.polarsys.capella.core.data.fa:FunctionOutputPort"
@@ -1310,7 +1310,7 @@
                 id="b370cce7-6042-4a1d-a837-d7ba57421dc6" name="[F130] Eingabewert erhalten"
                 representedInstance="#3f08f0d9-46a5-4959-a123-6b6dff121b9f"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
-                id="4107e245-2ffe-424a-b086-58151027e637" name="[F142] SubmodelElement-Aktualiseranfrage an BaSyxConnector"
+                id="4107e245-2ffe-424a-b086-58151027e637" name="[F142] SubmodelElement-Aktualiserungsanfrage an BaSyxConnector"
                 representedInstance="#9281f27e-d3f8-4945-8c85-c94ccb1e332d"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
                 id="8df0b2a8-38fb-4976-b766-05beb7e3767b" name="[F200] URL erzeugen"
@@ -1319,7 +1319,7 @@
                 id="0078ff23-2363-4759-8a86-8e3b4a23c9b4" name="[F210] HttpClient aufrufen"
                 representedInstance="#adac4952-3862-403b-9206-184c1d683042"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
-                id="c8a18b7c-f7bf-4b36-a867-17245aa42c78" name="[F300] PUT-Abfrage ausführen"
+                id="c8a18b7c-f7bf-4b36-a867-17245aa42c78" name="[F300] PUT-Anfrage ausführen"
                 representedInstance="#6383d4f3-2cd3-4dee-8388-ceef58acceb9"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
                 id="29a1c514-2fbf-4230-ad08-1f987185bbea" name="REST-Abfragen verarbeiten"
@@ -1836,7 +1836,7 @@
                 id="0a0f9e39-973d-4e69-94cb-508212c120c9" name="[F210] HttpClient aufrufen"
                 representedInstance="#adac4952-3862-403b-9206-184c1d683042"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
-                id="9beccd1a-9664-4a27-8a65-649c4ad9671a" name="[F310] GET-Abfrage ausführen"
+                id="9beccd1a-9664-4a27-8a65-649c4ad9671a" name="[F310] GET-Anfrage ausführen"
                 representedInstance="#b1cd69f7-f088-445d-8bb7-b400237b0e24"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
                 id="24371d2d-4f4b-4c1f-ab32-0f37486dcb0b" name="REST-Abfragen verarbeiten"
@@ -2737,7 +2737,7 @@
                 id="0e9f34cb-aab9-4e0d-bc05-2b8c6fd3c078" name="[F210] HttpClient aufrufen"
                 representedInstance="#adac4952-3862-403b-9206-184c1d683042"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
-                id="aff4448e-de61-4465-98bd-3b184e21eb8e" name="[F310] GET-Abfrage ausführen"
+                id="aff4448e-de61-4465-98bd-3b184e21eb8e" name="[F310] GET-Anfrage ausführen"
                 representedInstance="#b1cd69f7-f088-445d-8bb7-b400237b0e24"/>
             <ownedInstanceRoles xsi:type="org.polarsys.capella.core.data.interaction:InstanceRole"
                 id="6a6ed81b-b07d-4da2-8039-e0022204bdb0" name="REST-Anfragen verarbeiten"
@@ -3904,9 +3904,6 @@
               <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation"
                   id="7ad58478-8416-455b-8c6e-2a275ac85e54" targetElement="#2c9cdcfb-c4ec-4322-a34f-b7762d4435c4"
                   sourceElement="#cc69755e-cf73-492c-a527-a993ce2ba6af"/>
-              <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation"
-                  id="ed500dd5-9cac-4b10-98e4-57e92f951c07" targetElement="#36eee131-0e33-4fc4-8f5b-882bf75eea2a"
-                  sourceElement="#cc69755e-cf73-492c-a527-a993ce2ba6af"/>
             </ownedLogicalComponents>
             <ownedLogicalComponents xsi:type="org.polarsys.capella.core.data.la:LogicalComponent"
                 id="50580a55-0131-4c70-b8ef-d652a0094a7c" name="ConnectedPropertyBlock">
@@ -3927,6 +3924,9 @@
                   sourceElement="#50580a55-0131-4c70-b8ef-d652a0094a7c"/>
               <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation"
                   id="22144e2f-d404-47c6-91c9-4591b0b5178d" targetElement="#9281f27e-d3f8-4945-8c85-c94ccb1e332d"
+                  sourceElement="#50580a55-0131-4c70-b8ef-d652a0094a7c"/>
+              <ownedFunctionalAllocation xsi:type="org.polarsys.capella.core.data.fa:ComponentFunctionalAllocation"
+                  id="ed500dd5-9cac-4b10-98e4-57e92f951c07" targetElement="#36eee131-0e33-4fc4-8f5b-882bf75eea2a"
                   sourceElement="#50580a55-0131-4c70-b8ef-d652a0094a7c"/>
             </ownedLogicalComponents>
           </ownedLogicalComponents>

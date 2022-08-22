@@ -23,14 +23,14 @@
 \newenvironment{codeblock}[3]
 {%
  \VerbatimEnvironment
- \begin{listing}[!ht]
+ \begin{listing}[!h]
  \caption{#3} \label{code:#2}%
  \begin{minted}{#1}%
 }
 {\end{minted}\end{listing}}
 
 \newcommand{\img}[5][]{%
-\begin{figure}[tph]
+\begin{figure}[!hbt]
 \centering
 \includegraphics[width=14cm,height=#2,keepaspectratio]{#3}%
 \ifthenelse{\isempty{#1}}%
@@ -42,7 +42,7 @@
 
 \newcommand{\imgls}[4][]{%
 \begin{landscape}%
-\begin{figure}[H]
+\begin{figure}[p]
 \centering
 \makebox[\textwidth]{\includegraphics[width=.9\paperwidth]{#2}}%
 \ifthenelse{\isempty{#1}}%
@@ -70,7 +70,7 @@
 \semester{3}
 \email{molina@rhrk.uni-kl.de}
 \supervision{Dipl.-Ing. Paaranan Sivasothy\\ Prof. Dr.-Ing. Jörg Seewig}
-\date{Juni 2022}
+\date{August 2022}
 \keywords{MATLAB/Simulink, BaSys, digitaler Zwilling, Hardware-in-the-Loop}
 
 \begin{abstract}

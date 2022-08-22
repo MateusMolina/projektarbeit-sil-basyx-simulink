@@ -47,18 +47,17 @@ Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen eine
 
 Außerdem wurden nur Open-Source Bibliotheken angewendet, beziehungsweise die \textit{libcurl} und \textit{jsoncpp}. Die erstere wird effektiv als Implementierungsgrundlage für den \textit{HttpClient} angewendet, während die letztere zur Dekodierung von HTTP-Antworten verwendet wird.
 
-Der Block nimmt die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch sich die Handlung von Anfrangen an die \textit{Simulink-Engine} implementieren lässt. Partikulär vom \textit{PropertySAConnectorBlock} ist ein Funktionsbaustein, um Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels des \textit{BasyxConnector} zu tätigen. 
+Der Block nimmt die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch sich die Behandlung von Anfrangen an die \textit{Simulink-Engine} implementieren lässt. Partikulär vom \textit{PropertySAConnectorBlock} ist ein Funktionsbaustein, um Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels des \textit{BasyxConnector} zu tätigen. 
 
 Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese Komponente wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinen Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
 
 Ein normaler Kommunikationsfluss besteht darin, dass der Block \textit{PropertySAConnectorBlock} (3) in Simulink ausgeführt wird, wodurch nun Methoden vom  \textit{BasyxConnector} aufgerufen werden. Dieser setzt im Anschluss den \textit{HttpClient} ein, um effektiv die Http-Anfrage auszusetzen. Die Antwort des Servers wird im Anschluss vom \textit{BasyxConnector} abgewickelt und dem ursprünglichen Block entweder den abgerufenen Wert oder eine Fehlermeldung weitergegeben.
 
-Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielsweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und wiederum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Schluss-Event sollen grundsätzlich für diesen Anwendungsfall alle initialisierten Objekten vom Arbeitsspeicher bereinigt werden.
+Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielsweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und wiederum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Schluss-Event sollen sämtliche initialisierten Objekten im Arbeitsspeicher bereinigt werden.
 
-In der Abb. \ref{fig:LABs} lässt sich die Funktionsbausteine der oben erwähnten Komponenten veranschaulichen. 
+In der Abb. \ref{fig:LABs} lassen sich die Funktionsbausteine der oben erwähnten Komponenten veranschaulichen. 
 
 
-% [ ] Remove Registryblock from this image
 \img{15cm}{media/diagrams/LAB_Structure.jpg}{LABs}{Funktionsbausteine jeder Teilkomponente}
 
 
