@@ -7,10 +7,14 @@ In diesem Kapitel liegt der Schwerpunkt an der Vorstellung von dem Beispielszena
 
 Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem alle Fähigkeiten der in der Arbeit entwickelten Bibliothek beobachtet werden können. Dafür wurde ein vereinfachtes Beispiel vom \textit{Condition-Monitoring} realisiert, bei dem die Funktionsweise eines Temperatursensors und des Hauptantriebssystems einer Pressmaschine im Simulink nachgebildet und deren digitale Zwillinge in einem BaSyx-Server gespeichert werden. Die Temperaturdaten werden letztendlich in einem in Simulink realisierten Dashboard dargestellt.
 
-\subsection{Setup vom BaSyx/Docker}
+% [ ] @tagline use-case besser beschreiben
+
+\subsection{Setup der \textit{BaSyx}-Infrastruktur mit \textit{Docker}}
 
 % [X] Docker-Compose Auszug aufbau  usw
 Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügbaren \textit{docker containers} von \textit{BaSyx} im Anspruch. Bei Nutzung von \textit{docker-compose} wird eine schnelle Bereitstellung von beiden notwendigen \textit{containers} möglich. Im Codeauszug \ref{code:docker-compose} wird der Aufbau der im Beispiel eingesetzten Konfigurationsdatei für \textit{docker-compose}.
+
+% [ ] @tagline instead of running a complex java app the user can essentially start the basyx cont in order to have basyx running as a service in the machine
 
 % [X] Change listing package to minted to support YAML
 \begin{codeblock}{YAML}{docker-compose}{Auszug aus der Datei docker/docker-compose.yml}
@@ -73,4 +77,4 @@ Im Abbild \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und 
 
 Die Simulation wurde im Echtzeitmodus betrieben, bei dem die Simulationszeit der Wanduhrzeit entsprach. Dieser Modus wurde vorgezogen, weil damit sich die Zusammenwirkung BaSyx und Simulink besser vorstellen lässt. Der Abbild-Modus ist prinzipiell sinnvoll, wenn die Simulation asynchron bezüglich der Hardware-, bzw. Software-in-the-loop abläuft.   
 
-Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden mehrere Blöcke mit Abtastraten bis 1KHz im Beispiel erfolgreich verwendet. 
+Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden im Beispiel mehrere Blöcke mit Abtastraten bis 1KHz erfolgreich verwendet. 

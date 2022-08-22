@@ -1,5 +1,5 @@
 
-% [ ] add more sources to Simulationsprozess
+% [X] add more sources to Simulationsprozess
 \section{Der Simulationsprozess}
  
 Unter Simulation wird die Nachahmung der Funktionsweise eines realen Systems verstanden. Im Kerne der Simulation steht ein Modell, Konstrukt, das die für die Anwendung wichtigste Merkmale des ausgewählten Systems darstellt. 
@@ -30,20 +30,27 @@ In Abbildung 30 sind die drei Eckpfeiler einer durchgängigen Simulationskette d
 
 \end{comment}
 
-% [ ] Ergänzung Hardware-in-the-loop
+% [X] Ergänzung Hardware-in-the-loop
 \subsection{\textit{Hardware-in-the-Loop (HiL)}}
 
 Ein reales System durch Einsatz von physischen Prototypen ist oftmals wegen der mehreren Konfigurationsmöglichkeiten nicht möglich. Eine Alternative dazu stellt die Anbindung der Hardware an die Simulationsumgebung durch eine elektrische Schnittstelle \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Dieser Prozess wird als \textit{Hardware-in-the-Loop} (\textit{HiL}) genannt. \textquote[\cite{zimmerDurchgaengigerSimulationsprozessZur2015}]{\textit{Hardware-in-the-Loop (HiL)} Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.}
 
+\img[ellisControlSystemDesign2012]{10cm}{media/2022-08-22-11-39-16.png}{hilreg}{Blockschaltbild eines Regelungssystems, in dem der Regler im HIL getest ist}
+
+HIL ist seit Jahren in verschieden Branchen der Industrie, von Aerospace bis zu Automotiv, eingesetzt, in denen Systeme besonders komplex sind. Mit seinem Einsatzt werden mehreren Vorteilen erzielt, wie der Reduzierung der Kosten zum Testen und des mit Ausfall einhergehenden Risikos. Außerdem lässt sich damit, Komponenten früher im Produktlebenszyklus testen, da andere für das Testen nowendigen Komponente eventuell nur später in der Entwicklung verfügbar sein können. \cite{ellisControlSystemDesign2012}
+
+Ein anderer wichtiger Vorteil dieses Ansatzes bezieht sich auf das Variantenmanagement. Varianten können mit Einsatz von HIL leichter erzeugt werden, unter Berücksichtigung, dass Anlagen oft variieren können, und die Prüfung von Mustern jeder Variante kann teuer sein. Mit Hilfe von HIL können daher Tests nur an einer Teilmenge der verfügbaren Varianten durchgeführt werden. \cite{ellisControlSystemDesign2012}    
 
 
 % RESEARCH
 \begin{comment}
 Durch die zunehmende Anzahl an vernetzten Steuergeräten in Fahrzeugen nimmt die Bedeutung der Simulation zur Steigerung von Synergiepotenzialen und zur Vermeidung von Fehlfunktionen stetig zu. Eine Überprüfung durch reale Prototypen ist durch die Vielzahl an Konfigurationsmöglichkeiten nicht mehr möglich. Außerdem sind häufig Einsatzszenarien gefordert, zu denen die Hardwarekomponente noch nicht verfügbar ist. Das Konzept des Hardware-in-the-Loop (HiL) Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.
 Im Fokus sind bei diesem Ansatz vor allem Steuergeräte wie Fahrwerksregelsysteme, Antriebssteuergeräte und Komfortsteuergeräte sowie Bauteile von Motor, Getriebe, etc. des Fahrzeugs. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+
+HIL has been used for years in industries such as aerospace or automotive where plants are especially complex. HIL can augment testing of physical plants to provide many advantages such as: • Reduced cost to test The high cost to execute tests on complex machinery like aircraft sub-systems can justify substantial investment in HIL. Field testing can be reduced by using HIL as a complement. On their Web site, National Instruments presents one example where Process Automation
+
 \end{comment}
 
-% [ ] Ergänzung Software-in-the-loop
 \subsection{\textit{Software-in-the-Loop}}
 Ein Nachteil des \textit{Hardware-in-the-Loop} wäre die relative Verzögerung, bis im Projekt die Hardware verfügbar wird \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Eine Alternative für das Testen in früheren Phasen ist die Erstellung einer Software-Darstellung des Systems, die die für die Phase notwendigen Anforderungen abdeckt. Damit lässt sich eine reine Software-Schnittstelle zwischen den Testkomponenten verwenden, im Gegensatz zu einer aufwendigeren elektrischen Schnittstelle, was für den \textit{Hardware-in-the-Loop} der Fall ist \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. 
 
