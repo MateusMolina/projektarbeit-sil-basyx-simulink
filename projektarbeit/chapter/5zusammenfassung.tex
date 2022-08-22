@@ -5,23 +5,21 @@ In diesem Kapitel wird eine Zusammenfassung sowohl der wichtigsten geleisteten P
 \section{Fazit}
 % [X] Hat zur POC gedient, und man kann erfolgreich Testen, in zwei Betriebsmodus durchzuführen usw...
 Diese Arbeit hat seinen Schwerpunkt auf den Konzeptnachweis, dass Simulink-Modelle schnell und einfach an bestehender BaSyx-Architekturen angeschlossen werden können. In diesem Sinne sind zwei Anwendungsfälle ermöglicht worden: einer für die in Echtzeit Verbindung mit BaSyx-Komponenten, und anderer, Abbild-Modus, für die asynchrone Bearbeitung von Datensätzen aus diesen.
-
-Außerdem wurde ein Testszenario für die Validierung des Erfüllens aller festgelegten Anforderungen konzipiert. Dieses Beispiel zeigt weiterhin, wie eine herkömmliche Anwendung des Maschinenbaus und der Verfahrenstechnik mittels Simulink und BaSyx bereitgestellt werden kann.
-
 % [X] Modulare Konzepierung, die leicht durch andere Modulen erweitbar ist
 
 Das ganze System wurde modular entworfen, damit sich künftige Erweiterungen der Fähigkeiten leichter implementieren lassen. Neue Blöcke und Anwendungsfälle können bzw. auf vorhandene Methoden zugreifen, um dadurch über eine getestete Abstraktion der für C++ vorhandene Matlab-Logik verfügen.    
 
+Außerdem wurde ein Testszenario für die Validierung des Erfüllens aller festgelegten Anforderungen konzipiert. Dieses Beispiel zeigt weiterhin, wie eine herkömmliche Anwendung des Maschinenbaus und der Verfahrenstechnik mittels Simulink und BaSyx bereitgestellt werden kann.
 
-% [ ] Daraus lässt sich die Schlussfolgerung ziehen, dass
+% [X] Daraus lässt sich die Schlussfolgerung ziehen, dass
+Die Arbeit zeigt schließlich, dass mit Anwendung der entwickelten Bibliothek \textit{BaSyx} und \textit{Simulink} unkompliziert miteinander verbunden werden können. Sein Einsatz eignet sich besonders gut für das Testen Komponenten in früheren Phasen des Produktlebenszyklus, Demonstratoren aufzubauen und unterschiedliche Varianten eines Konzepts in den Echtbetrieb zu bringen.
+
 
 \section{Ausblick}
 % [X] Anforderung bezüglich Geschwindikeit usw müssen noch berücksichtigt werden, Optimierungen
 Da das Projekt sich prinzipiell mit dem strukturellen Testen der Anbindung BaSyx und Simulink auseinandergesetzt hat, sollen Fähigkeiten bezüglich der Sicherheit und Ausführungsdauer in späteren Iterationen berücksichtigt werden.
 
-% [ ] Genauere Beispiele bzgl. SIcherheit? Anbindung an BaSyx SDK
-
-Der einzige in der Arbeit entworfene Block kann verständlich mit Anforderugen anderer Anwendungen nicht völlig nachkommen. Andere Blöcke können somit erstellt werden, um beispielsweise besser Text-Werte zu behandeln und der Kommunikationsfluss weiter zu vereinfachen.   
+Der einzige in der Arbeit entworfene Block kann verständlich mit Anforderungen anderer Anwendungen nicht völlig nachkommen. Andere Blöcke können somit erstellt werden, um beispielsweise besser Text-Werte zu behandeln und der Kommunikationsfluss weiter zu vereinfachen.   
 
 % [X] Einfügen von weiteren Blöcken, bzw. für die Verbindung mitm Server
 Darüber hinaus wäre es sinnvoll, die Bibliothek in einer anspruchsvolleren Anwendung einzusetzen. Solche Anwendung könnte besser die Vorteile einer Digitalisierungsstruktur mit diesen Werkzeugen hervorheben und genauer deren Grenzen zu erkennen.   
