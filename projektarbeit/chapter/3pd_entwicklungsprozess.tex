@@ -1,6 +1,6 @@
 \section{Entwicklungsprozess} \label{Entwicklungsprozess}
 
-Dieser Teilkapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Die funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
+Dieser Teilkapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Die funktionalen Aspekte des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
 
 \subsection{Konzept und Anforderungsdefinition} \label{Konzept}
 
@@ -43,11 +43,11 @@ In diesem Entwicklungsschritt wurden keine Anforderungen bezüglich Grenzen für
 
 Für die Modellierung des funktionalen Anteils des Systems wurde die Arcadia-Methodologie mit der \textit{Capella}-Modellierungsumgebung verwendet. Das System lässt sich in 3 Teilsystemen unterteilen: der (1) \textit{BasyxConnector}, der (2) \textit{HttpClient} und der Blöcke (3) \textit{PropertySAConnectorBlock}.
 
-Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden die durch die sämtlichen für eine Client-Anfrage notwendigen Daten generiert und diese an den intern-gespeicherten Client weitergeleitet. Darüber hinaus wird die Logik für die Kommunikation mit einem \textit{BaSyx AAS} Server, bzw. \textit{Basyx-Registry}-Server, in dieser Komponente   integriert. Für den Umfang dieses Projekt wurde nur eine Art von \textit{Client} entworfen, bzw. den \textit{HttpClient}, dessen Aufgabe aus sowohl der Abgabe von HTTP-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch dem Empfangen der Antwort vom Servers besteht.
+Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden die durch die sämtlichen für eine Client-Anfrage notwendigen Daten generiert und diese an den intern-gespeicherten Client weitergeleitet. Darüber hinaus wird die Logik für die Kommunikation mit einem \textit{BaSyx AAS} Server, bzw. \textit{Basyx-Registry}-Server, in dieser Komponente   integriert. Für den Umfang dieses Projekt wurde nur eine Art von \textit{Client} entworfen, bzw. den \textit{HttpClient}, dessen Aufgabe aus sowohl der Abgabe von HTTP-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch dem Empfangen der Antwort vom Server besteht.
 
 Außerdem wurden nur Open-Source Bibliotheken angewendet, beziehungsweise die \textit{libcurl} und \textit{jsoncpp}. Die erstere wird effektiv als Implementierungsgrundlage für den \textit{HttpClient} angewendet, während die letztere zur Dekodierung von HTTP-Antworten verwendet wird.
 
-Der Block nimmt die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch sich die Behandlung von Anfrangen an die \textit{Simulink-Engine} implementieren lässt. Partikulär vom \textit{PropertySAConnectorBlock} ist ein Funktionsbaustein, um Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels des \textit{BasyxConnector} zu tätigen. 
+Der Block nimmt die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch sich die Behandlung von Anfragen an die \textit{Simulink-Engine} implementieren lässt. Partikulär vom \textit{PropertySAConnectorBlock} ist ein Funktionsbaustein, um Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels des \textit{BasyxConnector} zu tätigen. 
 
 Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese Komponente wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinen Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
 
@@ -74,7 +74,7 @@ Im Diagramm \ref{fig:LAB_ALL} werden alle Kommunikationsflüsse dargestellt, die
 Im Diagramm \ref{fig:uml} lässt sich ein Überblick der Architektur der Bibliothek erhalten. Zusätzlich zu den internen Komponenten (\textit{BasyxConnector}, \textit{httpClient}) und den externen Bibliotheken (\textit{jsoncpp, curlcpp, und simstruc}) wird die Komponente \textit{UrlHandler} im Anspruch genommen, wobei die für die Bearbeitung von \textit{strings} und Erstellung von \textit{URL} verantwortlich ist.
 
 % [X] Kurze erklärung von den externen Bibliotheken
-Wie in den vorherigen Kapiteln erklärt wurde, wird \textit{curlcpp} für das Tätigen HTTP-Anfragen und \textit{jsoncpp} für die Dekodierung der HTTP-Antworten verwendet. Außerdem legt \textit{simstruc} die Datenstruktur für Simulink fest und kapselt die auf das Modell, bzw. \textit{S-function} bezogenen Parameter ein. 
+Wie in den vorherigen Kapiteln erklärt wurde, wird \textit{curlcpp} für das Tätigen von HTTP-Anfragen und \textit{jsoncpp} für die Dekodierung der HTTP-Antworten verwendet. Außerdem legt \textit{simstruc} die Datenstruktur für Simulink fest und kapselt die auf das Modell, bzw. \textit{S-function} bezogenen Parameter ein. 
 
 
 \imgls{media/diagrams/LAB_C10C20C40.jpg}{LAB_ALL}{Darstellung des Kommunikationsflusses vom A10, A20 und A40}

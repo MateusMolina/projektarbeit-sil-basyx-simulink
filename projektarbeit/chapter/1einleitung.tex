@@ -12,7 +12,7 @@ Eine Open-Source Implementierung der von \textit{BaSys} festgelegten Konzepte is
 Das von \textit{BaSyx} bereitgestellte SDK ist in verschiedenen Kontexten der Digitalisierung anwendbar, sei es für die Erstellung digitaler Zwillinge oder Vernetzung von mehreren unabhängigen Plattformen, die herkömmlich mit unterschiedlichen Datenformaten arbeiten. Eine Schnittstelle, die von Interesse für manche Ingenieure ist, ist die direkte Verbindung mit \textit{MATLAB/Simulink}, wobei die mit diesen erstellten Modellen über eine Kommunikationsschnittstelle mit bestehenden \textit{BaSyx}-Infrastrukturen verfügen können. 
 
 % Details über Anwendung von Simulink im Markt
-\textit{MATLAB/Simulink} wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}. Simulink, zusammen mit BaSyx, könnte eingesetzt werden, um \textit{Hardware-In-The-Loop}, bzw. \textit{Software-In-The-Loop} leichter einzusetzen, sodass sich BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile ode für die Regelung gesamter Komponenten angewandt würde. 
+\textit{MATLAB/Simulink} wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}. Simulink, zusammen mit BaSyx, könnte eingesetzt werden, um \textit{Hardware-In-The-Loop}, bzw. \textit{Software-In-The-Loop} leichter einzusetzen, sodass sich BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile oder für die Regelung gesamter Komponenten angewandt würde. 
 
 Nach Prüfung von verschiedenen Alternativen, um Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstelle zusätzliche Kenntnisse in C, REST und in der inneren Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine unkomplizierte und erfolgreiche Verbindung der beiden Plattformen würde dem Stand der Technik folgende Vorteile bringen:
 
@@ -27,7 +27,7 @@ Nach Prüfung von verschiedenen Alternativen, um Simulink und BaSyx zusammen ein
 
 Eine mögliche Lösung für die oben besprochene Problemstellung bietet eine \textit{Simulink}-Bibliothek, die in der Lage ist, sich mit einem \textit{BaSyx}-Server zu verbinden und das Abrufen und Aktualisieren von \textit{AAS}-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
 
-Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek vor. Anhand eines Anwendungsbeispiels, das im Wesentlichen aus xy besteht, wird der Nutzen dieser Bibliothek belegt. Unten wird der vorgesehene Umfang zusammengefasst:
+Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek vor. Anhand eines Anwendungsbeispiels, das im Wesentlichen aus einem Simulink-Modell besteht, wird der Nutzen dieser Bibliothek belegt. Unten wird der vorgesehene Umfang zusammengefasst:
 
 % Zusammengefasster Umfang
 \begin{enumerate}

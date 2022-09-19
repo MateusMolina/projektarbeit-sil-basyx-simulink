@@ -1,14 +1,14 @@
 \chapter{Validierung} \label{validierung}
 % [X] Vorstellung des Kapitels
 
-In diesem Kapitel liegt der Schwerpunkt an der Vorstellung von dem Beispielszenario, genutzt, um die richtige Umsetzung der sämtlichen Anforderungen zu veranschaulichen. Bei dem ersten Teilkapitel wird dessen Aufbau besprochen, während bei dem zweiten und letzten ein Überblick bezüglich der Erwartungen und der aus dem Beispiel ausgegebenen Ergebenisse gewonnen wird. 
+In diesem Kapitel liegt der Schwerpunkt an der Vorstellung von dem Beispielszenario, genutzt, um die richtige Umsetzung der sämtlichen Anforderungen zu veranschaulichen. Bei dem ersten Teilkapitel wird dessen Aufbau besprochen, während bei dem zweiten und letzten ein Überblick bezüglich der Erwartungen und der aus dem Beispiel ausgegebenen Ergebnisse gewonnen wird. 
 
 \section{Beispielszenario}
 
 Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem die Fähigkeiten der in der Arbeit entwickelten Bibliothek beobachtet werden können. Dafür wurde ein vereinfachtes Beispiel vom \textit{Condition-Monitoring} realisiert, bei dem die Funktionsweise eines Temperatursensors und des Hauptantriebssystems einer Pressmaschine im Simulink nachgebildet und deren digitale Zwillinge in einem \textit{BaSyx}-Server gespeichert werden. Die Temperaturdaten werden letztendlich in einem in Simulink realisierten Dashboard dargestellt.
 
 % [X] @tagline use-case besser beschreiben
-Dies bezieht sich auf einen häufigen Anwendungsfall in der Industrie, in dem der Zustand der Machine überwacht werden soll, um möglich Ausfälle und Fehler zu erkennen. Im ausgewählten Szenario wirken die Daten aus dem Temperatursensor als Metrik für die Entscheidungsfindung, ob die Stanze sich in normalen Betriebzustände befindet, wobei eine Überschreittung eines voreingestellten Schwellenwerts zu einer Warnung auf dem Dashboard führt. 
+Dies bezieht sich auf einen häufigen Anwendungsfall in der Industrie, in dem der Zustand der Machine überwacht werden soll, um möglich Ausfälle und Fehler zu erkennen. Im ausgewählten Szenario wirken die Daten aus dem Temperatursensor als Metrik für die Entscheidungsfindung, ob sich die Stanze im normalen Betriebzustand befindet, wobei eine Überschreitung eines voreingestellten Schwellenwerts zu einer Warnung auf dem Dashboard führt. 
 
 
 \subsection{Setup der \textit{BaSyx}-Infrastruktur mit \textit{Docker}}
@@ -61,7 +61,7 @@ Das Simulink-Modell (Abb. \ref{fig:simupresse}) besteht aus 4 Teilsystemen:
 
 
 
-Beim Einstellen des Schiebers im Last-Teilsystem ändert sich die Temperatur vom Hauptantriebe. Dieser Effekt wird sich auf das Temperatursensor-Teilsystem fortgepflanzt, bei dem die Temperaturdaten erfassen und an den \textit{TempSensor/temperatur SubmodelElement} übertragen werden. Anschließend werden die Daten im Dashboard-Teilsystem über einen zusätzlichen \textit{PropertySAConnectorBlock} angefragt, in einem späteren Block verarbeitet und im einen Graf dargestellt. Der Graf ist in 3 Bereichen aufgeteilt: in grünen Bereich wird die Temperaturen vom normalen Betrieb dargestellt, während in gelben und roten sind entsprechend der Warnzustand und der Notzustand erkennbar. 
+Beim Einstellen des Schiebers im Last-Teilsystem ändert sich die Temperatur vom Hauptantriebe. Dieser Effekt wird sich auf das Temperatursensor-Teilsystem fortgepflanzt, bei dem die Temperaturdaten erfassen und an den \textit{TempSensor/temperatur SubmodelElement} übertragen werden. Anschließend werden die Daten im Dashboard-Teilsystem über einen zusätzlichen \textit{PropertySAConnectorBlock} angefragt, in einem späteren Block verarbeitet und in einem Graf dargestellt. Der Graf ist in 3 Bereichen aufgeteilt: in grünen Bereich wird die Temperaturen vom normalen Betrieb dargestellt, während in gelben und roten sind entsprechend der Warnzustand und der Notzustand erkennbar. 
 
 
 \section{Ausführung und Prüfen der Anforderungen}
@@ -79,4 +79,4 @@ In der Abb. \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert un
 
 Die Simulation wurde im Echtzeitmodus betrieben, bei dem die Simulationszeit der Wanduhrzeit entsprach. Dieser Modus wurde vorgezogen, weil damit sich die Zusammenwirkung BaSyx und Simulink besser vorstellen lässt. Der Abbild-Modus ist prinzipiell sinnvoll, wenn die Simulation asynchron bezüglich der Hardware-, bzw. Software-in-the-loop abläuft.   
 
-Es lohnt sich erwähnen, dass so weit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden im Beispiel mehrere Blöcke mit Abtastraten bis 1KHz erfolgreich verwendet. 
+Es lohnt sich erwähnen, dass soweit Anforderungen bezüglich der höchsten möglichen Abtastrate nicht betrachtet worden sind. Jedoch wurden im Beispiel mehrere Blöcke mit Abtastraten bis 1KHz erfolgreich verwendet. 
