@@ -8,7 +8,7 @@ In diesem Kapitel liegt der Schwerpunkt an der Vorstellung von dem Beispielszena
 Für das Testen des Systems wurde ein Beispielszenario entwickelt, bei dem die Fähigkeiten der in der Arbeit entwickelten Bibliothek beobachtet werden können. Dafür wurde ein vereinfachtes Beispiel vom \textit{Condition-Monitoring} realisiert, bei dem die Funktionsweise eines Temperatursensors und des Hauptantriebssystems einer Pressmaschine im Simulink nachgebildet und deren digitale Zwillinge in einem \textit{BaSyx}-Server gespeichert werden. Die Temperaturdaten werden letztendlich in einem in Simulink realisierten Dashboard dargestellt.
 
 % [X] @tagline use-case besser beschreiben
-Dies bezieht sich auf einen häufigen Anwendungsfall in der Industrie, in dem der Zustand der Machine überwacht werden soll, um möglich Ausfälle und Fehler zu erkennen. Im ausgewählten Szenario wirken die Daten aus dem Temperatursensor als Metrik für die Entscheidungsfindung, ob sich die Stanze im normalen Betriebzustand befindet, wobei eine Überschreitung eines voreingestellten Schwellenwerts zu einer Warnung auf dem Dashboard führt. 
+Dies bezieht sich auf einen häufigen Anwendungsfall in der Industrie, in dem der Zustand einer Maschine überwacht werden soll, um möglich Ausfälle und Fehler frühzeitig zu erkennen. Im ausgewählten Szenario wirken die Daten aus dem Temperatursensor als Metrik für die Entscheidungsfindung, ob sich die Stanze im normalen Betriebzustand befindet, wobei eine Überschreitung eines voreingestellten Schwellenwerts im einfachsten Fall zu einer Warnung auf dem Dashboard führt. 
 
 
 \subsection{Setup der \textit{BaSyx}-Infrastruktur mit \textit{Docker}}
@@ -40,7 +40,7 @@ Beide für das Beispiel verwendeten Registry- und AAS-Server nehmen die verfügb
             - 4001:4001
 \end{codeblock}
 
-Beim Anfahren lädt der AAS-\textit{container} das im Abb. \ref{fig:aasxexplorer} dargestellte AAS. Dieses enthält zwei \textit{Submodels} für vereinfachte Abbildung von beiden Hauptantrieb und Temperatursensor. Diese weisen wiederum je ein \textit{SubmodelElement} auf, die entsprechend zur Darstellung der aktuellen Last am Antriebe und des aktuellen erfassten Temperaturdatenpunktes dienen.  
+Beim Anfahren lädt der AAS-\textit{container} die im Abb. \ref{fig:aasxexplorer} dargestellte AAS. Dieses enthält zwei \textit{Submodels} für vereinfachte Abbildung von beiden Hauptantrieb und Temperatursensor. Diese weisen wiederum je ein \textit{SubmodelElement} auf, die entsprechend zur Darstellung der aktuellen Last am Antriebe und des aktuellen erfassten Temperaturdatenpunktes dienen.  
 
 \img{10cm}{media/presse/aasxexplorer.png}{aasxexplorer}{Bildschirmaufnahme der Verwaltungsschalle auf AASX Package Explorer}
 

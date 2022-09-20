@@ -3,7 +3,7 @@
 
 % [X] Update all code blocks
 % [X] Übersicht von was hier besprochen wird
-Dieser Teilkapitel fängt mit einer Erläuterung davon an, welche Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschließend wird es auf die Einkapselung von BaSyx in einer \textit{S-function} und auf jede im System implementierte Fähigkeit eingegangen, wobei jeweils das Konzept und Lösungsansatz kurz erklärt werden. Zum letzten Thema ist ein Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschnittstelle eines mit \textit{S-function} erstellten Blockes.
+Dieser Teilkapitel fängt mit einer Erläuterung davon an, welche Werkzeuge für die Entwicklung des Systems angewendet worden sind. Anschließend wird es auf die Einkapselung von BaSyx in einer \textit{S-function} und auf jede im System implementierte Fähigkeit eingegangen und jeweils das Konzept und Lösungsansatz kurz erklärt. Zum letzten Thema ist ein Überblick über den Entwurf direkt in der Simulationsumgebung vom Simulink gegeben, mit dem Schwerpunkt auf die Personalisierung der Benutzerschnittstelle eines mit \textit{S-function} erstellten Blockes.
 
 
 % [X] Entwicklungsumgebung
@@ -11,11 +11,11 @@ Dieser Teilkapitel fängt mit einer Erläuterung davon an, welche Werkzeuge für
 
 % [X] C++, CMAKE
 % [X] Testbasierte Entwicklung
-Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsumgebung entwickelt. Zusätzlich war CMake durchaus eingesetzt, um das \textit{Packaging} der sämtlichen Module durchzuführen. Für alle Module wurde testgetriebene Entwicklung eingesetzt, um sicherzustellen, dass alle funktionelle  und nicht-funktionelle Anforderungen abgedeckt werden. Darüber hinaus wurden beide \textit{google-test} und \textit{google-mock }für die Realisierung von Testfällen angewendet.
+Die Bibliothek wurde in C++ mit Visual Studio Code als integrierte Entwicklungsumgebung entwickelt. Zusätzlich war \textit{CMake} durchaus eingesetzt, um das \textit{Packaging} der sämtlichen Module durchzuführen. Für alle Module wurde testgetriebene Entwicklung eingesetzt, um sicherzustellen, dass alle funktionelle  und nicht-funktionelle Anforderungen abgedeckt werden. Darüber hinaus wurden beide \textit{google-test} und \textit{google-mock }für die Realisierung von Testfällen angewendet.
 
 % [X] Docker
 
-Für die Ausführung der Testszenarien sind eine Kombination aus Docker und Simulink verwendet worden, unter Verwendung der von BaSyx veröffentlichen \textit{Docker-Containers} für den \textit{Registry}- und \textit{AAS}-Server für die Bereitstellung der BaSyx-Architektur eingesetzt wurden. Außerdem wurden die Verwaltungsschalen mittels \textit{AASX Package Explorer} erstellt, eine Open-Source-Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
+Für die Ausführung der Testszenarien sind eine Kombination aus Docker und Simulink verwendet worden. Die BaSyx-Architektur wurde unter Verwendung der von BaSyx veröffentlichen \textit{Docker-Containers} für den \textit{Registry}- und \textit{AAS}-Server bereitgestellt. Außerdem wurden die Verwaltungsschalen mittels \textit{AASX Package Explorer} erstellt, eine Open-Source-Software zur grafischen Visualisierung und Bearbeitung von \textit{AAS/Submodel/SubmodelElements}.
 \subsection{Wrappen des BaSyx als S-Funktion}
 
 % [X] Funktionweise des BasyxConnectors und wie es mit dem Block verbunden ist
