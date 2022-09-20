@@ -68,7 +68,7 @@ Beim Einstellen des Schiebers im Last-Teilsystem ändert sich die Temperatur vom
 
 Im Laufe des Tests hat es sich herausgestellt, dass das System in der Lage war, alle Anforderungen angemessen zu realisieren. Das Beispiel wies vielfache Instanzen des Blockes \textit{PropertySAConnectorBlock} auf, und beide Lese- und Aktualisierungsanfrage erfordert hat. Darüber hinaus wurden alle für seine Funktionsweise relevanten Parameter direkt im Simulink eingestellt.
 
-In der Abb. \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle bei variiertem Lastfaktor angezeigt.
+In der Abb. \ref{fig:plotpresse} werden die Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle bei variiertem Lastfaktor angezeigt. Bei Erreichen vom 70 Grad Celsius, eine willkürlich definierte Grenze, geht die Maschine in einen Notzustand über. Der Sensor ist im Simulink-Modell nicht direkt mit dem Dashboard verbunden, auf diese Weise, läuft die Interaktion nur über seinen entsprechenden digitalen Zwilling durch.
 
 
 \img{10cm}{media/presse/lauf.png}{plotpresse}{Verläufe von dem Augenblickswert und dem vom Sensor abgetasteten Wert der Temperatur an der Kontaktstelle}
