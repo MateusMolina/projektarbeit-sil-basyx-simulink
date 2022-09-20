@@ -1,10 +1,9 @@
-% TODO #15 Schreiben Grundlage der REST-Schnittstellen
 \section{REST-Schnittstellen}
-REST ist der am meisten verbreitete Kommunikationsarchitektur zur Vernetzung von Maschinen und wird bei mehreren Anwendungsfällen angewandt, wie z.B. IoT-Technologien \cite{reinheimerIndustrieHerausforderungenKonzepte2017}. In diesem Zusammenhang werden zwischen zwei Entitäten unterscheiden, nämlich der Server und der Client. Dieser initialisiert die Anfrage an den ersteren, der anschließend diese bearbeitet und dem Client zurückgibt \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}.
+\textit{REST} ist der am meisten verbreitete Kommunikationsarchitektur zur Vernetzung von Maschinen und wird bei mehreren Anwendungsfällen angewandt, wie z.B. \textit{IoT}-Technologien \cite{reinheimerIndustrieHerausforderungenKonzepte2017}. In diesem Zusammenhang wird es zwei Entitäten unterschieden, nämlich dem Server und dem Client. Der letztere initialisiert die Anfrage, während der Server diese bearbeitet und je nach Fall eine Antwort zurückschickt. \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}.
 
-In REST werden Daten über HTTP übertragen und wird es dadurch die Realisierung von Webservices ermöglicht. Ressourcen (jedes Objekt einer Anwendung) repräsentiert eine Ressource, die über eine Adresse (URI, eng:. \emph{Uniform Resource Identifier}) zugreifbar wird \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}. Auf diese Ressource kann eine Anwendung zugreifen, wenn ihr den Identifikator, die zu auszuführende Aktion und das Format der erwartenden Antwort des Servers bekannt sind \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}. Allgemein gilt, dass jede über HTTP übertragene Botschaft alle Informationen enthalten darf, die für ihr volle Assimilierung in der Serverseite gebraucht werden, und daher wird die gleiche Anforderung von der REST-Schnittstelle geerbt.
+In REST werden Daten über HTTP übertragen und wird es dadurch die Realisierung von Webservices ermöglicht. Ressourcen (jedes Objekt einer Anwendung) repräsentiert eine Ressource, die über eine Adresse (URI, eng:. \textit{Uniform Resource Identifier}) zugreifbar ist \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}. Auf diese Ressource kann eine Anwendung zugreifen, wenn ihr den Identifikator, die zu auszuführende Aktion und das Format der erwartenden Antwort des Servers bekannt sind \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}. Allgemein gilt, dass jede über \textit{HTTP} übertragene Botschaft alle Informationen enthalten darf, die für ihr volle Assimilierung in der Serverseite gebraucht werden, und daher wird die gleiche Anforderung von der REST-Schnittstelle geerbt.
 
-In dieser Architektur werden vier generische HTTP-Methoden zur Verfügung gestellt: GET, PUT, POST und DELETE. Diese werden jeweils verwendet, um das Aufrufen, das Hinzufügen, Verarbeiten und das Löschen von Daten des Servers auszuführen \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}.
+In dieser Architektur werden vier generische HTTP-Methoden zur Verfügung gestellt: \textit{GET, PUT, POST und DELETE}. Diese werden jeweils verwendet, um das Aufrufen, das Hinzufügen, Verarbeiten und das Löschen von Daten im Server durchzuführen \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}.
 
 
 % RESEARCH
@@ -12,7 +11,7 @@ In dieser Architektur werden vier generische HTTP-Methoden zur Verfügung gestel
 \cite{balzertLehrbuchSoftwaretechnikEntwurf2011}
 “Die Technik REST (REpresentational State Transfer) ermöglicht es, Webservices zu realisieren.” 
 
-“Bei einer RESTkonformen-Anwendung werden Daten über HTTP übertragen, ohne eine zusätzliche Transportschicht” 
+“Bei einer RESTkonformen-Anwendung werden Daten über \textit{HTTP} übertragen, ohne eine zusätzliche Transportschicht” 
 
 “Jedes einzelne Objekt einer Anwendung, z. B. Kunde oder Anzeige, stellt in REST eine Ressource dar, die von außen über eine URI erreichbar ist.” 
 
@@ -20,7 +19,7 @@ In dieser Architektur werden vier generische HTTP-Methoden zur Verfügung gestel
 
 “Eine Anwendung kann mit einer Ressource interagieren, wenn sie zwei Dinge kennt: den Identifikator der Ressource und die Aktion, die ausgeführt werden soll. Außerdem muss die Anwendung wissen, wie das Format der zurückgegebenen Information (Repräsentation) zu verstehen ist.” 
 
-“In REST stellen die HTTP-Methoden GET, PUT, POST und DELETE die generischen Methoden dar, die auf alle Ressourcen angewandt werden können” 
+“In REST stellen die \textit{HTTP}-Methoden GET, PUT, POST und DELETE die generischen Methoden dar, die auf alle Ressourcen angewandt werden können” 
 
 “GET: Fragt die Repräsentation einer Ressource ab. GET-Anfragen können beliebig oft gestellt werden. HTTP schreibt vor, dass GET »sicher «(safe) sein muss. Das bedeutet, dass diese Methode nur Informationen beschafft und sonst keine Effekte verursacht. POST: Einer Ressource kann etwas hinzugefügt werden. POST-Anfragen können Seiteneffekte haben. PUT: Mit PUT können neue Ressourcen erzeugt oder der Inhalt bestehender Ressourcen ersetzt werden. DELETE: Ressourcen können gelöscht werden.” 
 

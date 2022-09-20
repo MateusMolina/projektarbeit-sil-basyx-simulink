@@ -4,66 +4,37 @@
 
 % MATLAB/Simulink könnte eine sinnvolle Simulationsumgebung für die Ausführung von \emph{Hardware}- und \emph{Software-In-the-Loop} unter Verwendung von BaSyx zur Verwaltung von AAS (digitalen Zwillingen).
 
-% Details über Anwendung von Simulink im Markt
-MATLAB/Simulink wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}. 
-% Verbidung mit Industrie 4.0
-% Details über Anwendung von BaSys im Markt
-BaSys 4.0 ist ein vom BMBF gefördertes Forschungsprojekt, das von Fraunhofer IESE gemeinsam mit 14 weiteren Partnern aus dem Bereich der Produktionstechnik entwickelt wird, um digitale Zwillinge als digitale Repräsentanzen für die Produktion zu realisieren \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}. Eine Open-Source Implementierung der von BaSys festgelegten Konzepten, ist Eclipse BaSyx, ein von BaSys finanziertes Middleware, das wiederverwendbaren Industrie 4.0 Komponenten und SDK in verschiedenen Programmiersprachen bereitstellt, wobei die schnelle Entwicklung neuer Software-Komponenten ermöglicht wird \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
-% TODO Was für Firmen nutzen BaSyx?
-% Was für Vorteilen würden sich ergeben, durch die Verbindung beider Plattformen?
-% TODO #7 Hardware-In-The-Loop vs Model-In-The-Loop vs Model-Based Systems Engineering (MBSE)
-Simulink zusammen mit BaSyx könnten eingesetzt werden, um \emph{Hardware-In-The-Loop}, bzw. \emph{Software-In-The-Loop} leichter einzusetzen, wobei BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile oder Regelung gesamter Komponenten angewandt würde. 
+% [X] Industrie 4.0
+Die Anforderungen der neuen Industrie 4.0 erfordern besondere Werkzeuge und Plattformen, die für eine wandelbare und flexible Produktion ausgedacht sind. \textit{BaSys} und die Referenzimplementierung seiner Konzepte, \textit{BaSyx}, legen Bausteine fest, auf die für diese Anwendung konforme Systeme ihrer Struktur basieren können. \textit{BaSys 4.0} ist ein vom \textit{BMBF} gefördertes Forschungsprojekt, das von \textit{Fraunhofer IESE} gemeinsam mit 14 weiteren Partnern aus dem Bereich der Produktionstechnik entwickelt wird, um digitale Zwillinge als digitale Abbildungen für die Produktion zu realisieren \cite{fraunhofer-institutfurexperimentellessoftwareengineeringieseBaSysFlyer}. 
 
-Nach Prüfung von verschiedenen Alternativen, Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstele zusätzliche Kenntnisse im C, REST und die innere Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine unkomplizierte und erfolgreiche Verbindung der beiden Plattformen würde dem Stand der Technik folgende Vorteile bringen:
+Eine Open-Source Implementierung der von \textit{BaSys} festgelegten Konzepte ist \textit{Eclipse BaSyx}, eine von \textit{BaSys} finanzierte \textit{Middleware}, die wiederverwendbare Industrie 4.0 Komponenten und SDK in verschiedenen Programmiersprachen bereitstellt, wodurch die schnelle Entwicklung neuer Software-Komponenten ermöglicht wird \cite{eclipsefoundationinc.BaSyxEclipsepedia}.
+
+Das von \textit{BaSyx} bereitgestellte SDK ist in verschiedenen Kontexten der Digitalisierung anwendbar, sei es für die Erstellung digitaler Zwillinge oder Vernetzung von mehreren unabhängigen Plattformen, die herkömmlich mit unterschiedlichen Datenformaten arbeiten. Eine Schnittstelle, die von Interesse für manche Ingenieure ist, ist die direkte Verbindung mit \textit{MATLAB/Simulink}, wobei die mit diesen erstellten Modellen über eine Kommunikationsschnittstelle mit bestehenden \textit{BaSyx}-Infrastrukturen verfügen können. 
+
+% Details über Anwendung von Simulink im Markt
+\textit{MATLAB/Simulink} wird häufig in verschiedenen Industrie-Branchen von Ingenieuren großer und kleinerer Firmen eingesetzt, um Modelle mit wiederverwendbaren Komponenten und Bibliotheken zu simulieren \cite{enlyftSimulinkMarketShare} \cite{themathworksinc.SimulinkGettingStarted}. Simulink, zusammen mit BaSyx, könnte eingesetzt werden, um \textit{Hardware-In-The-Loop}, bzw. \textit{Software-In-The-Loop} leichter einzusetzen, sodass sich BaSyx um die Struktur der digitalen Zwillinge kümmern würde, während Simulink für die Modellierung des Verhaltens einzelner Bauteile oder für die Regelung gesamter Komponenten angewandt würde. 
+
+Nach Prüfung von verschiedenen Alternativen, um Simulink und BaSyx zusammen einzusetzen, hat sich herausgestellt, dass eine Kommunikationsschnittstelle zusätzliche Kenntnisse in C, REST und in der inneren Funktionsweise vom BaSyx voraussetzt, was ein limitierender Faktor für eine breitere Verwendung in der Industrie darstellen könnte. Eine unkomplizierte und erfolgreiche Verbindung der beiden Plattformen würde dem Stand der Technik folgende Vorteile bringen:
 
 \begin{itemize}
-    \item Mehr Anreiz, früher im Projekt nach BaSys strukturierte digitale Zwillinge einzusetzen
-    \item vereinfachte und schnellere Anbindung eines zu testen Hardware/Software an ein MATLAB/Simulink-Modell;
-    \item Reduzieren der Lernkurve, Ingenieure in Simulink mit BaSyx verträglichen Modellen herstellen zu können;
-    \item wirksame Einsetzung realer Daten in MATLAB/Simulink/Modellen.  
+    \item Mehr Anreiz, früher im Projekt nach \textit{BaSys} strukturierte digitalen Zwillingen einzusetzen
+    \item vereinfachte und schnellere Anbindung von zu testenden Hardware- und Softwarekomponenten an ein MATLAB/Simulink-Modell;
+    \item Reduktion der für die Erstellung von mit BaSyx verträglichen Modellen Lernkurve;
+    \item wirksame Einbindung realer Daten in MATLAB/Simulink Modelle.  
 \end{itemize}
-
-Eine detaillierte Rechtfertigung für das Projekt lässt sich im Kapitel \ref{marktforschung} finden.
 
 \section{Zielstellung}
 
-Eine mögliche Lösung für die oben besprochene Problemstellung besteht in einer Simulink-Bibliothek, die in der Lage ist, Verbindungen mit BaSyx-Servern zu realisieren und das Abrufen und Aktualisieren von AAS-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
+Eine mögliche Lösung für die oben besprochene Problemstellung bietet eine \textit{Simulink}-Bibliothek, die in der Lage ist, sich mit einem \textit{BaSyx}-Server zu verbinden und das Abrufen und Aktualisieren von \textit{AAS}-Eigenschaften in Echtzeit direkt in dieser Umgebung zu ermöglichen.
 
-Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek und eines Anwendungsbeispieles, das im Wesentlichen aus einem Simulink-Modell besteht, das die entwickelte Bibliothek in Zusammenhang mit einem AAS nutzt. Unten wird der vorgesehene Umfang zusammengefasst:
+Dieses Projekt sieht die Entwicklung der oben beschriebenen Bibliothek vor. Anhand eines Anwendungsbeispiels, das im Wesentlichen aus einem Simulink-Modell besteht, wird der Nutzen dieser Bibliothek belegt. Unten wird der vorgesehene Umfang zusammengefasst:
 
 % Zusammengefasster Umfang
 \begin{enumerate}
-    \item Entwicklung einer Bibliothek für MATLAB/Simulink, um die Verbindung mit BaSyx AAS zu vereinfachen.
-    \item Einsetzung der Bibliothek in einem Anwendungsbeispiel, das alle Anforderungen aus der Tabelle \ref{table:Anforderungstabelle} erfüllt.
+    \item Entwicklung einer Bibliothek für \textit{MATLAB/Simulink}, um die Verbindung mit \textit{BaSyx AAS} zu vereinfachen.
+    \item Einsatz der Bibliothek in einem Anwendungsbeispiel, das alle Anforderungen aus der Tabelle \ref{table:Anforderungstabelle} erfüllt.
 \end{enumerate}
 
-
-% für milestone @mai
-% TODO #19 Build Anforderungstabelle 
-% Anforderungstabelle
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|c | c|} 
-        \hline
-        id & Anforderung \\ 
-        \hline
-        \setword{A10}{req:A10} & Soll mit einem BaSyx-Server verbinden können \\
-        \hline
-    \end{tabular}
-    \caption{Anforderungstabelle}
-    \label{table:Anforderungstabelle}
-    \end{table}
-% - Herleitung der Tabelle
-% - Ausgabe der Marktforshcung??
-
-Laut der Anforderung \ref{req:A10}
-
-
 \section{Gliederung der Arbeit}
-Im Kapitel \ref{grundlagen} wird was diskutiert.
-
-Im Kapitel \ref{plannung_durchfuhrung} wird was diskutiert.
-
-Im Kapitel \ref{validierung} wird was diskutiert.
-
-Im Kapitel \ref{zusammenfassung} wird was diskutiert.
+% [X] Write Gliederung
+Im Kapitel \ref{grundlagen} werden die für das Verständnis der Arbeit wesentlichen Grundlagen erklärt. Danach wird im Kapitel \ref{plannung_durchfuhrung} sowohl eine detaillierte Beschreibung des Entwicklungsprozesses, als auch des Entwurfes behandelt. Der Schwerpunkt liegt dabei auf der Realisierung sämtlicher Anforderungen des Projekts. Im Kapitel \ref{validierung} findet sich ein Beispielszenario, das das Testen wesentlicher Funktionalitäten des Systems ermöglicht hat. Letztendlich wird die Arbeit im Kapitel \ref{zusammenfassung} zusammengefasst und ein Ausblick gegeben, wie mögliche Erweiterungen aussehen könnten.

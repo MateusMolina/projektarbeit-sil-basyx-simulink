@@ -1,93 +1,85 @@
 \section{Entwicklungsprozess} \label{Entwicklungsprozess}
 
-Dieser Kapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Den funktionalen Aspekten des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
-
-\subsection{Anforderungen}
-
-Die Entwicklung der Bibliothek hat vorwiegend zwei Anwendungsfälle berücksichtigt:
-\begin{enumerate}
-    \item AF1: als Schnittstelle zum Testen von einer Hardware/Software über Simulink in nicht-Echtzeit Taktung und Lesen von Parametern einmal am Anfang der Simulation, und Setzen einmal am Ende dieser;
-    \item AF2: als Schnittstelle zum Testen von einer Hardware/Software über Simulink mit verlangsamter Simulationstaktung. Dies ermöglicht das in Echtzeit Lesen und Setzen von Parametern des digitalen Zwillings im Laufe der Simulation. Die Abtast-, bzw. Aktualisierungsrate können im Block eingestellt werden.
-\end{enumerate} 
-
-Aus den Anwendungsfällen lässt es sich zwei Betriebsmodi entnehmen: Betriebsmodus 1: Nicht-Echtzeit (BM1) für den ersten Anwendungsfall und Betriebsmodus 2: Echtzeit (BM2) für den zweiten. 
-
-Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich voraus, dass das System in der Lage sein soll:
-\begin{enumerate}
-    \item A1: den Wert aus einem SubmodelElement abzulesen
-    \item A2: den Wert aus einem SubmodelElement zu aktualisieren
-    \item A3: aus einem Registry Server Daten vom einen AAS abzurufen
-    \item A4: Fehler in Simulink-konformen Fehlermeldungen anzuzeigen
-    \item A5: Parallelität angemessen zu implementieren, indem die Verbindung mit mehreren \textit{SubmodelElements} in einem gleichen Modell möglich ist.
-    \item A6: beide Betriebsmodi (BM1/BM2) zu realisieren.
-    \item A7: eine Bedieneroberfläche im Simulink zu haben, mit der sich Parameter wie Betriebsmodus, ID von \textit{AAS}, \textit{Submodel}, und \textit{SubmodelElement} einstellen lassen.
-\end{enumerate}
-
-In diesem Entwicklungsschritt wurden keine Anforderungen bezüglich Grenzen für die Abtastrate von beiden Lese- und Schreibverfahren und Sicherheit der Datenübertragung festgelegt, stattdessen liegt der Schwerpunkt der Arbeit an der Entwicklung einer ausbaubare Grundlage für die Bibliothek, die eventuell durch feinere Anforderungen permissiv erweitert werden könnte.
-
+Dieser Teilkapitel erläutert in mehr Detail, wie das System ausgegliedert ist und wie das Projekt entworfen wurde. Im Kapitel \ref{Konzept} wird das Konzept erläutert, und die für dessen Realisierung notwendigen Anforderungen aufgeführt. Die funktionalen Aspekte des Projektes finden sich im Kapitel \ref{Funspec} veranschaulicht. 
 
 \subsection{Konzept und Anforderungsdefinition} \label{Konzept}
 
-% [ ] Problemstellung und Motivation NOCHMALS AUFÜHRLICHER
+Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Funktionen zugegriffen. \textit{S-functions} ergänzen die Simulink-Umgebung, indem personalisierte Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
 
-Die Lösung besteht in einer Bibliothek für Simulink, die mit einem vorhandenen BaSyx-AAS-Server verbindet und das Ablesen und Aktualisieren von dessen Elementen ermöglicht. Dafür wurde auf die verfügbare REST-Schnittstelle vom BaSyx und Matlab S-Functions zugegriffen. S-Functions ergänzen die d Simulink-Umgebung, indem personalisierten Blöcke in einer der unterstützenden Programmiersprachen (z.B. C, C++, Fortran und Matlab) entworfen werden können.
+Mit der Bibliothek wäre der Benutzer Simulink in der Lage, unkompliziert seinem Modell BaSyx-Blöcken hinzuzufügen und daher mit bestehenden \textit{SubmodelElements} interagieren. 
+
+Die Entwicklung der Bibliothek hat vorwiegend zwei Anwendungsfälle berücksichtigt:
+\begin{enumerate}
+    \item als Schnittstelle zum Testen von einer Hardware/Software über Simulink im Abbild-Modus, wobei die Simulation mit einem am Anfang aufgenommenen Abbild der Parameterwerte arbeitet, indem das Lesen von Parametern einmal am Anfang der Simulation und Setzen einmal am Ende dieser stattfindet;
+    \item als Schnittstelle zum Testen von einer Hardware/Software über Simulink mit verlangsamter Simulationstaktung. Dies ermöglicht das in Echtzeit Lesen und Setzen von Parametern des digitalen Zwillings im Laufe der Simulation. Die Abtast-, bzw. Aktualisierungsrate können im Block eingestellt werden.
+\end{enumerate} 
+
+Aus den Anwendungsfällen lassen sich zwei Betriebsmodi entnehmen: Abbild-Modus für den ersten Anwendungsfall und Betriebsmodus 2: Echtzeitmodus für den zweiten. 
+
+Für die ordentliche Realisierung der obenerwähnten Anwendungsfälle setzt sich voraus, dass das System die sämtlichen in der Tabelle \ref{table:Anforderungstabelle} enthaltenen Anforderungen erfüllen darf.
+
+\begin{table}
+\caption{Anforderungstabelle}
+\label{table:Anforderungstabelle}
+\begin{tabularx}{\textwidth}{@{}cX@{}}
+\toprule
+ID & Anforderung \\ 
+\midrule
+    \setword{A10}{req:A10} & das System soll den Wert aus einem \textit{SubmodelElement} ablesen können \\
+    \setword{A20}{req:A20} & das System soll den Wert aus einem \textit{SubmodelElement} aktualisieren können \\
+    \setword{A30}{req:A30} & das System soll aus einem Registry Server Daten vom einen AAS abrufen können \\
+    \setword{A40}{req:A40} & das System soll Fehler in Simulink-konformen Fehlermeldungen anzeigen können \\
+    \setword{A50}{req:A50} & das System soll Parallelität angemessen implementieren, indem die Verbindung mit mehreren \textit{SubmodelElements} in einem gleichen Modell möglich ist. \\
+    \setword{A60}{req:A60} & das System soll beide Betriebsmodi (Abbild- und Echtzeitmodus) realisieren. \\
+    \setword{A70}{req:A70} & das System soll eine Bedieneroberfläche im Simulink haben, mit der sich Parameter wie Betriebsmodus, ID von \textit{AAS}, \textit{Submodel}, und \textit{SubmodelElement} einstellen lassen. \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 
+In diesem Entwicklungsschritt wurden keine Anforderungen bezüglich Grenzen für die Abtastrate von beiden Lese- und Schreibverfahren und der Sicherheit der Datenübertragung festgelegt, stattdessen liegt der Schwerpunkt an der Entwicklung einer ausbaubaren Grundlage für die Bibliothek, die eventuell durch feinere Anforderungen permissiv erweitert werden könnte.
 
 \subsection{Funktionale Spezifikation} \label{Funspec}
 
-Für die Modellierung des funktionalen Anteils des Systems wurde die Arcadia-Methodologie mit der Capella-Modellierungsumgebung verwendet. Das System lässt sich in 3 Teilsystemen unterteilen: der (1) \textit{BasyxConnector}, der (2) \textit{HttpClient} und die Blöcke (3.1) \textit{ConnectedRegistryServerBlock} und (3.2) \textit{ConnectedPropertyBlock}.
+Das System lässt sich in 3 Teilsystemen unterteilen: der (1) \textit{BasyxConnector}, der (2) \textit{HttpClient} und der Blöcke (3) \textit{PropertySAConnectorBlock}.
 
-Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden durch den die sämtlichen für eine Client-Anfrage notwendigen Informationen generiert und diese an den intern-gespeicherten Client weitergeleitet. Darüber hinaus wird die Logik für die Kommunikation mit einem BaSyx-AAS-Server, bzw. Basyx-Registry-Server, in dieser Komponente   integriert. Für den Umfang dieses Projekt wurde nur eine Art von \textit{Client} entworfen, bzw. die \textit{HttpClient}, dessen Aufgabe aus sowohl der Abgabe von Http-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch dem Empfangen der Antwort seitens des Servers besteht.
+Der \textit{BasyxConnector} dient als Kommunikationsschnittstellen zwischen einem Block und einem Client. Genauer gesagt werden die durch die sämtlichen für eine Client-Anfrage notwendigen Daten generiert und diese an den intern-gespeicherten Client weitergeleitet. Darüber hinaus wird die Logik für die Kommunikation mit einem \textit{BaSyx AAS} Server, bzw. \textit{Basyx-Registry}-Server, in dieser Komponente integriert. Für den Umfang dieses Projektes wurde nur eine Art von \textit{Client} entworfen, bzw. den \textit{HttpClient}, dessen Aufgabe aus sowohl der Abgabe von HTTP-Anfrage wie \textit{GET, PUT, POST und DELETE}, als auch dem Empfangen der Antworten vom Server besteht.
 
-Außerdem wurden nur Open-Source Bibliotheken angewendet, beziehungsweise die \textit{libcurl} und \textit{jsoncpp}. Das Erstere wird effektiv als Implementierungsgrundlage für den \textit{HttpClient} angewendet, während das Letztere zur Dekodierung von Http-Antworten dient.
+Die \textit{Open-Source} Bibliotheken \textit{libcurl} und \textit{jsoncpp} haben im Hintergrund eine wichtige Rolle bei der Umsetztung der Anforderungen gespielt. Die erstere wird effektiv als Implementierungsgrundlage für den \textit{HttpClient} angewendet, während die letztere zur Dekodierung von HTTP-Antworten verwendet wird. Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinen Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
 
-Die Blöcke nehmen die Funktionalitäten eines \textit{CommonBlock} im Anspruch, wodurch die Ein- und Ausgabe von Werten an \textit{Simulink} sich  implementieren lassen. Partikulär vom \textit{ConnectedPropertyBlock} ist ein Funktionsbaustein, um Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels den \textit{BasyxConnector} zu tätigen. Andererseits wird das Abrufen von Informationen aus einem \textit{Registry Server} durch den \textit{ConnectedRegistryServerBlock} realisiert. Beide Blöcke können miteinander verbunden werden, in den Fall, dass der Pfad bis zum gewünschten \textit{AAS} nicht bekannt gegeben war. 
+Alle Blöcke nehmen die Funktionalitäten eines \textit{CommonBlock} im Anspruch, durch den sich die Behandlung von Anfragen an die \textit{Simulink-Engine} implementieren lässt. Derzeit ist eine einzige Implementierung dieser Klasse vorhanden, nähmlich der \textit{PropertySAConnectorBlock}, welche in der Lage ist, Leseanfrage und Aktualisierungsanfrage an einen eingegebenen Submodel Element mittels des \textit{BasyxConnector} zu tätigen. 
+
+Ein normaler Kommunikationsfluss besteht darin, dass der Block \textit{PropertySAConnectorBlock} (3) in Simulink ausgeführt wird, wodurch nun Methoden vom  \textit{BasyxConnector} aufgerufen werden. Dieser setzt im Anschluss den \textit{HttpClient} ein, um effektiv die Http-Anfrage auszusetzen. Die Antwort des Servers wird im Anschluss vom \textit{BasyxConnector} abgewickelt und dem ursprünglichen Block entweder den abgerufenen Wert oder eine Fehlermeldung weitergegeben.
+
+Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielsweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und wiederum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Abschluss-Event sollen sämtliche initialisierten Objekte im Arbeitsspeicher bereinigt werden.
+
+In der Abb. \ref{fig:LABs} lassen sich die Funktionsbausteine der oben erwähnten Komponenten veranschaulichen. 
 
 
-Darüber hinaus wurde eine zusätzliche Komponente zur Bearbeitung von URLs entwickelt. Diese Komponente wird durchaus im Projekt verwendet und verfügt über mehrere Methoden, URL automatisch in seinen Bauteilen zu zerlegen und dessen API-Pfad zu bearbeiten. 
-
-Ein normaler Kommunikationsfluss besteht darin, dass eines der (3.x) Blöcke seitens Simulink ausgeführt wird, wodurch nun Methoden vom  \textit{BasyxConnector} aufgerufen werden. Dieser setzt im Anschluss den \textit{HttpClient} ein, um effektiv die Http-Anfrage auszusetzen. Die Antwort des Servers wird im Anschluss vom \textit{BasyxConnector} abgewickelt und entweder den abgerufenen Wert oder eine Fehlermeldung dem ursprünglichen Block weitergegeben.
-
-Mögliche Events sind das Start-, Takt- und Schluss-Event. Für das Start-Event werden beispielsweise alle durch die Simulink-Oberfläche eingegebenen Parameter im Block internen Speicher abgespeichert. Das Takt-Event wird zu jedem Simulink-Zeitschritt aufgerufen, wobei die aktualisierten Eingabewerte an dem Block geschickt werden und wiederum eine aktualisierte Ausgabe vom Simulink erwartet wird. Im Schluss-Event sollen grundsätzlich für diesen Anwendungsfall alle initialisierten Objekten vom Arbeitsspeicher bereinigt werden.
-
-In der Abb. \ref{fig:LABs} lassen die Funktionsbausteine der oben erwähnten Komponenten sich veranschaulichen. 
-
-\begin{figure}[H]\centering
-\includegraphics[width=15cm,keepaspectratio]{media/diagrams/LAB_Structure.jpg}
-\caption{Funktionsbausteine jeder Teilkomponente}
-\label{fig:LABs}
-\end{figure} einer Bibliothek für Si % TODO WTF
+\img{15cm}{media/diagrams/LAB_Structure.jpg}{LABs}{Funktionsbausteine jeder Teilkomponente}
 
 
 \subsection{Systemarchitektur} \label{SysArch}
 
-\emph{Logische Architektur für das Erfüllen vom A1, A2 und A4}
+\emph{Logische Architektur für das Erfüllen vom \ref{req:A10}, \ref{req:A20} und \ref{req:A40}}
 
-\begin{landscape}
-    \begin{figure}[hbtp] 
-        \centering
-         \makebox[\textwidth]{\includegraphics[width=.9\paperwidth]{media/diagrams/LAB_C10C20C40.jpg}}
-        \caption{Darstellung des Kommunikationsflusses vom A1, A2 und A4}
-        \label{fig:LAB_ALL}
-    \end{figure}    
-\end{landscape}
-    
+% [X] Erklärung über das Diagramm unten (landscape)
+Im Diagramm \ref{fig:LAB_ALL} werden alle Kommunikationsflüsse dargestellt, die über eine Verbindung mit dem \textit{AAS}-Server verfügen. Alle grüne Elemente sind Funktionen der jeweiligen funktionellen Komponente. Außerdem entspricht jede Linienfarbe einem Kommunikationsfluss und daher einer realisierten Fähigkeit. 
+
+Die wichtigen Komunikationsflüsse werden im nächsten Kapitel näher erläutert.
+
+
 \emph{Klassendiagramm}
 
-
 % [X] Erklärung der Klassendiagramm
-Im Diagramm \ref{fig:uml} lässt sich ein Überblick der Architektur der Bibliothek erhalten. Zusätzlich zu den internen Komponenten (BasyxConnector, httpClient) und den externen Bibliotheken (jsoncpp, curlcpp, und simstruc) wird die Komponente \textit{UrlHandler} im Anspruch genommen, wobei die für die Bearbeitung von URL und Zergliedern von \textit{strings} verantwortlich ist.
+Im Diagramm \ref{fig:uml} lässt sich ein Überblick der Architektur der Bibliothek erhalten. Zusätzlich zu den internen Komponenten (\textit{BasyxConnector}, \textit{httpClient}) und den externen Bibliotheken (\textit{jsoncpp, curlcpp, und simstruc}) wird die Komponente \textit{UrlHandler} im Anspruch genommen, welche für die Bearbeitung von \textit{strings} und Erstellung von \textit{URL} verantwortlich ist.
 
 % [X] Kurze erklärung von den externen Bibliotheken
-Wie in den vorherigen Kapiteln erklärt wurde, wird \textit{curlcpp} für das Tätigen HTTP-Anfragen und \textit{jsoncpp} für die Dekodierung dieser verwendet. Außerdem legt \textit{simstruc} die Datenstruktur für Simulink fest und kapselt die auf das Modell, bzw. \textit{S-Function} bezogenen Parameter und Ausgaben ein. 
+Wie schon , wird \textit{curlcpp} für das Tätigen von HTTP-Anfragen und \textit{jsoncpp} für die Dekodierung der HTTP-Antworten verwendet. Außerdem legt \textit{simstruc} die Datenstruktur für Simulink fest und kapselt die auf das Modell, bzw. \textit{S-function}, bezogenen Parameter ein. 
+
+
+\imgls{media/diagrams/LAB_C10C20C40.jpg}{LAB_ALL}{Darstellung der Kommunikationsflüsse A10, A20 und A40}
+
 
 % [X] UML DIAGRAMM
-\begin{figure}[H]\centering
-    \includegraphics[width=15cm,keepaspectratio]{media/diagrams/ClassDiagram.png}
-    \caption{Klassendiagramm}
-    \label{fig:uml}
-\end{figure}
-
-
-    
+\imgls{media/diagrams/ClassDiagram.png}{uml}{Klassendiagramm}

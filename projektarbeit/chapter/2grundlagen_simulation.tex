@@ -1,12 +1,12 @@
 
-% ISSUE #11 add more sources to Simulationsprozess
+% [X] add more sources to Simulationsprozess
 \section{Der Simulationsprozess}
  
-Unter Simulation wird die Nachahmung der Funktionsweise eines realen Systems verstanden. Im Kerne der Simulation steht ein Modell, Konstrukt, das die für die Anwendung wichtigste Merkmale des ausgewählten Systems darstellt. 
+Unter Simulation wird die Nachahmung der Funktionsweise eines realen Systems verstanden. Im Zentrum der Simulation steht ein Modell, Konstrukt, das die für die Anwendung wichtigsten Merkmale des ausgewählten Systems darstellt. 
 
-Sie finden Anwendung in unterschiedliche Bereiche der Technik und nehmen eine wichtige Rolle bei der Lösung dynamischen und komplexen Problemen, die mittels analytischer Vorgehensweise nicht ohne weiteres gelöst werden können. Durch ihren Einsatz gewinnt der Nutzer Klarheit und Verständnis an dem Entwicklungsprozess \cite{zimmerDurchgangigerSimulationsprozessZur2015}. 
+Sie finden Anwendung in unterschiedlichen Bereichen der Technik und nehmen eine wichtige Rolle bei der Lösung dynamischer und komplexer Probleme ein, die mittels analytischer Vorgehensweise nicht ohne weiteres gelöst werden können. Durch ihren Einsatz gewinnt der Nutzer Klarheit und Verständnis für den Entwicklungsprozess \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. 
 
-In den folgenden Unterkapiteln werden \emph{Hardware-in-the-loop} und \emph{Software-in-the-loop} vorgestellt, zwei Prozessabläufe der Simulationstechnik, die im Produktentstehungsprozess häufig verwendet werden. Der Begriff \emph{x-in-the-loop} deutet darauf hin, dass Abstraktionen eines Systems im Laufe des Entwicklungsprozesses eingesetzt werden, bzw. die Anbindung einer Hardware, sowie eine Software-Darstellung des Systems an die Simulationsumgebung.
+In den folgenden Unterkapiteln werden \textit{Hardware-in-the-loop} und \textit{Software-in-the-loop} vorgestellt, zwei Prozesse der Simulationstechnik, die im Produktentstehungsprozess häufig verwendet werden. Der Begriff \textit{x-in-the-loop} deutet darauf hin, dass Abstraktionen eines Systems im Laufe des Entwicklungsprozesses eingesetzt werden, bzw. die Anbindung einer Hardware, sowie eine Software-Darstellung des Systems an die Simulationsumgebung.
 
 % RESEARCH
 \begin{comment}
@@ -17,7 +17,7 @@ Validierung Durch die Validierung soll die Anforderung an ein Produkt und eine W
 
 Verifikation Die Verifikation soll gewährleisten, dass ein Simulationsmodell seiner Spezifikation entspricht und damit zum Beispiel die Wertigkeit eines Softwareproduktes für den operativen Einsatz aufzeigt
 
-Im Folgenden werden Prozessabläufe einer Simulation exemplarisch vorgestellt, welche unter anderem bei der Umsetzung des in dieser Arbeit entwickelten Simulationsprozesses als Modell dienen. Durch die sukzessive Weiterentwicklung von Simulationsmethoden können Lücken in der Prozesskette geschlossen und neue Felder identifiziert werden. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+Im Folgenden werden Prozessabläufe einer Simulation exemplarisch vorgestellt, welche unter anderem bei der Umsetzung des in dieser Arbeit entwickelten Simulationsprozesses als Modell dienen. Durch die sukzessive Weiterentwicklung von Simulationsmethoden können Lücken in der Prozesskette geschlossen und neue Felder identifiziert werden. \cite{zimmerDurchgaengigerSimulationsprozessZur2015}
 
 x-in-the-Loop
 software-in-the-loop
@@ -25,33 +25,39 @@ model-in-the-loop
 
 In Abbildung 30 sind die drei Eckpfeiler einer durchgängigen Simulationskette dargestellt. Dabei wird die Informationsnotwendigkeit durch die (verfügbaren) Modelle, das Konzept der Simulation durch die Architektur und die Zusammensetzung der einzelnen Simulationskomponenten durch die Anforderungen repräsentiert. Mit diesen Anforderungen an den Umgang der Durchgängigkeit lassen sich in dieser Produktentwicklungsphase ein besseres Gesamtverständnis des Systems und eine Steigerung des Reifegrades zu früheren Zeitpunkten erreichen.
 
-\begin{figure}[H]\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{media/2022-04-02-18-31-51.png}
-\caption{Die drei Eckpfeiler eines durchgängigen Simulationsprozesses: Modelle, Architektur und Anforderungen}
-\label{fig:simulationsprozess}
-\end{figure}
+\img{10cm}{media/2022-04-02-18-31-51.png}{simulationsprozess}{Die drei Eckpfeiler eines durchgängigen Simulationsprozesses: Modelle, Architektur und Anforderungen}
+
 
 \end{comment}
 
-\subsection{Hardware-in-the-Loop (HiL)}
-\emph{Hardware-in-the-Loop} (HiL)
-Ein reales System durch Einsatz von physischen Prototypen ist oftmals wegen den mehreren Konfigurationsmöglichkeiten nicht möglich. Eine Alternative dazu stellt die Anbindung der Hardware an die Simulationsumgebung durch eine elektrische Schnittstelle \cite{zimmerDurchgangigerSimulationsprozessZur2015}. Dieser Prozess wird als \emph{Hardware-in-the-Loop} (HiL) genannt. \textquote[\cite{zimmerDurchgangigerSimulationsprozessZur2015}]{Hardware-in-the-Loop (HiL) Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.}
+% [X] Ergänzung Hardware-in-the-loop
+\subsection{\textit{Hardware-in-the-Loop (HiL)}}
 
+Ein reales System durch Einsatz von physischen Prototypen ist oftmals wegen der Vielzahl an Konfigurationsmöglichkeiten nicht möglich. Eine Alternative dazu stellt die Anbindung der Hardware an die Simulationsumgebung durch eine elektrische Schnittstelle dar. Dieser Prozess wird als \textit{Hardware-in-the-Loop} (\textit{HiL}) bezeichnet. Im Wesentlichen wird ein reales Bauteil in einem virtuellen Versuch eingesetzt, und zwar schnell und ohne Risiken einzugehen, wie beispielsweise eine Beschädigung des Prototyps. \cite{zimmerDurchgaengigerSimulationsprozessZur2015} 
+
+\img[ellisControlSystemDesign2012]{10cm}{media/2022-08-22-11-39-16.png}{hilreg}{Blockschaltbild eines Regelungssystems, in dem der Regler im HIL getestet ist}
+
+HIL ist seit Jahren in verschieden Branchen der Industrie, von Luft- und Raumfahrt bis zur Fahrzeugtechnik, eingesetzt, in denen Systeme besonders komplex sind. Der Einsatz von HiL bietet mehrere Vorteile, wie die Reduzierung der Kosten zum Testen und des mit Ausfall einhergehenden Risikos. Außerdem lassen sich damit, Komponenten früher im Produktlebenszyklus testen, da andere für das Testen notwendiger Komponente eventuell erst später in der Entwicklung verfügbar sein können. \cite{ellisControlSystemDesign2012} 
+
+Ein anderer wichtiger Vorteil dieses Ansatzes bezieht sich auf das Variantenmanagement. Varianten können mit Einsatz von \textit{HiL} leichter erzeugt werden, unter Berücksichtigung, dass Anlagen oft variieren können, und die Prüfung von Mustern jeder Variante kann teuer sein. Mit Hilfe von \textit{HiL} können daher Tests nur an einer Teilmenge der verfügbaren Varianten durchgeführt werden. \cite{ellisControlSystemDesign2012}    
 
 
 % RESEARCH
 \begin{comment}
 Durch die zunehmende Anzahl an vernetzten Steuergeräten in Fahrzeugen nimmt die Bedeutung der Simulation zur Steigerung von Synergiepotenzialen und zur Vermeidung von Fehlfunktionen stetig zu. Eine Überprüfung durch reale Prototypen ist durch die Vielzahl an Konfigurationsmöglichkeiten nicht mehr möglich. Außerdem sind häufig Einsatzszenarien gefordert, zu denen die Hardwarekomponente noch nicht verfügbar ist. Das Konzept des Hardware-in-the-Loop (HiL) Ansatzes bezeichnet oftmals den Einsatz eines realen Steuergerätes oder eines realen Bauteils in einem virtuellen Fahrversuch, ohne dabei ein Risiko für den Fahrer oder Schäden an Prototypen einzugehen.
 Im Fokus sind bei diesem Ansatz vor allem Steuergeräte wie Fahrwerksregelsysteme, Antriebssteuergeräte und Komfortsteuergeräte sowie Bauteile von Motor, Getriebe, etc. des Fahrzeugs. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+
+HIL has been used for years in industries such as aerospace or automotive where plants are especially complex. HIL can augment testing of physical plants to provide many advantages such as: • Reduced cost to test The high cost to execute tests on complex machinery like aircraft sub-systems can justify substantial investment in HIL. Field testing can be reduced by using HIL as a complement. On their Web site, National Instruments presents one example where Process Automation
+
 \end{comment}
 
-\subsection{Software-in-the-Loop}
-Ein Nachteil des \emph{Hardware-in-the-Loop} wäre der relativ Verzug, bis im Projekt die Hardware verfügbar wird \cite{zimmerDurchgangigerSimulationsprozessZur2015}. Eine Alternative für das Testen in früheren Phasen ist die Erstellung einer Software-Darstellung des Systems, die, die für die Phase notwendigen Anforderungen abdeckt. Damit lässt sich eine reine Software-Schnittstelle zwischen den Testkomponenten verwenden, im Gegensatz zu einer aufwendigeren elektrischen Schnittstelle, was für das \emph{Hardware-in-the-Loop} der Fall ist \cite{zimmerDurchgangigerSimulationsprozessZur2015}. 
+\subsection{\textit{Software-in-the-Loop}}
+Ein Nachteil des \textit{Hardware-in-the-Loop} wäre die Verzögerung, bis die für das Projekt benötigte Hardware zur Verfügung steht \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. Eine Alternative für das Testen in früheren Phasen ist die Erstellung einer Software-Darstellung des Systems, die die für die jeweilige Phase notwendigen Anforderungen abdeckt. Damit lässt sich eine reine Software-Schnittstelle zwischen den Testkomponenten verwenden, im Gegensatz zu einer aufwändigeren elektrischen Schnittstelle, Schnittstelle im Falle des \textit{HiL}-Ansatzes. \cite{zimmerDurchgaengigerSimulationsprozessZur2015}. 
 
 
 % RESEARCH
 \begin{comment}
-Der Nachteil der oben erwähnten HiL-Systeme, dass die Hardware teilweise relativ spät zur Verfügung steht, kann durch den Software-in-the-loop (SiL) Ansatz kompensiert werden. Während der Implementierungsphase können Nutzer Regelungsstrategien anhand dieser SiL Systemen testen. Im Gegensatz zu HiL Systemen, bei denen eine elektrische Schnittstelle verwendet wird, sind die Schnittstellen zwischen den Testkomponenten auf Betriebssystem-Ebene, also reine Software-Schnittstellen. \cite{zimmerDurchgangigerSimulationsprozessZur2015}
+Der Nachteil der oben erwähnten HiL-Systeme, dass die Hardware teilweise relativ spät zur Verfügung steht, kann durch den \textit{Software-in-the-loop (SiL)} Ansatz kompensiert werden. Während der Implementierungsphase können Nutzer Regelungsstrategien anhand dieser SiL Systemen testen. Im Gegensatz zu HiL Systemen, bei denen eine elektrische Schnittstelle verwendet wird, sind die Schnittstellen zwischen den Testkomponenten auf Betriebssystem-Ebene, also reine Software-Schnittstellen. \cite{zimmerDurchgaengigerSimulationsprozessZur2015}
 \end{comment}
 
 

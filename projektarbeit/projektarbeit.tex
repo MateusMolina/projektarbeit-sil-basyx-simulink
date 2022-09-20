@@ -1,61 +1,96 @@
 \documentclass[german, pt]{MTSreport}
+\usepackage{microtype}
+\usepackage[cache=false]{minted}
 \usepackage{pdflscape}
-
 \usepackage{listings}
 \usepackage{color}
-
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
-% TODO change listing index to code or something like that
- 
-\lstset{frame=tb,
-  language=C++,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
-}
-
+\usepackage{xifthen}
+\usepackage{tabularx,ragged2e,booktabs}
 \usepackage{comment}
 % \usepackage{draftwatermark}
-% \SetWatermarkText{DRAFT}
-% \SetWatermarkScale{0.5}
+% \SetWatermarkText{1.DRAFT}
+% \SetWatermarkScale{0.3}
 \bibliography{listings/bibliography}
 
+% BEGIN CUSTOM CONFIG
+\newcolumntype{C}{>{\Centering\arraybackslash}X}
+\setminted{frame=lines,framesep=2mm,breaklines,tabsize=2}
+\renewcommand{\listingscaption}{Codeausschnitt}
+\renewcommand{\listoflistingscaption}{Codeausschnitte}
+% END   CUSTOM CONFIG
 
+% BEGIN CUSTOM ENVIRONMENTS/METHODS
+\newenvironment{codeblock}[3]
+{%
+ \VerbatimEnvironment
+ \begin{listing}[!h]
+ \caption{#3} \label{code:#2}%
+ \begin{minted}{#1}%
+}
+{\end{minted}\end{listing}}
 
-% Custom methods
+\newcommand{\img}[5][]{%
+\begin{figure}[!hbt]
+\centering
+\includegraphics[width=14cm,height=#2,keepaspectratio]{#3}%
+\ifthenelse{\isempty{#1}}%
+{\caption{#5}}%
+{\caption{#5 \cite{#1}}}%
+\label{fig:#4}%
+\end{figure}%
+}
+
+\newcommand{\imgls}[4][]{%
+\begin{landscape}%
+\begin{figure}[p]
+\centering
+\makebox[\textwidth]{\includegraphics[width=.9\paperwidth]{#2}}%
+\ifthenelse{\isempty{#1}}%
+{\caption{#4}}%
+{\caption{#4 \cite{#1}}}%
+\label{fig:#3}%
+\end{figure}%
+\end{landscape}%
+}
+
 \makeatletter
 \newcommand{\setword}[2]{%
   \phantomsection
   #1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
 }
 \makeatother
-% End 
 
-\title{Ermöglichung des Hardware- und Software-in-the-Loop durch die Einbindung von BaSyx und MATLAB/Simulink}
+% END   CUSTOM ENVIRONMENTS/METHODS
+
+
+\title{Ermöglichung von Hardware- und Software-in-the-Loop durch die Integration von BaSyx und MATLAB/Simulink}
 % \subtitle{Untertitel wenn nötig} % Just delete it if you don't have a subtitle
 \author{Mateus Molina}
 \tuklid{420495}
 \semester{3}
 \email{molina@rhrk.uni-kl.de}
 \supervision{Dipl.-Ing. Paaranan Sivasothy\\ Prof. Dr.-Ing. Jörg Seewig}
-\date{Juni 2022}
-\keywords{Simulink, BaSyx, Digitaler Zwilling}
+\date{August 2022}
+\keywords{MATLAB/Simulink, BaSys, digitaler Zwilling, Hardware-in-the-Loop}
 
 \begin{abstract}
-Fill this area with your abstract
+% [X] Fill this area with your abstract
+
+In der nachfolgenden Arbeit wird eine Anbindung des \textit{BaSyx} SDKs in die \textit{MATLAB/Simulink} ausgelegt und entwickelt, mit dem Ziel, Anwendungsfälle wie u.a. die Realisierung von \textit{Hardware-in-the-Loop} und \textit{Condition Monitoring} abzudecken. Die erarbeitete Lösung ermöglicht die Erfassung und Aktualisierung von Daten aus \textit{BaSyx AAS}-Servers über eine vereinfachte Schnittstelle in Form von mit \textit{C MEX S-function} entworfenen \textit{Simulink}-Blöcken. Ergänzt wird diese durch  Diagramme unterschiedlicher Betrachtungspunkte der Architektur und ein Beispielszenario, das exemplarisch zur Validierung der festgelegten Anforderungen eingesetzt wurde. 
+
+
+% \begin{comment}
+%   Ziel der vorliegenden Arbeit ist die Erarbeitung einheitlicher informationstechnischer Schnittstellen für die Lean Production. Die erarbeitete Referenzarchitektur definiert technologieunabhängige Schnittstellen und schafft den notwendigen Rahmen für die Nutzung digitaler Technologien in bestehenden Lean-Methoden. Bestandteil der Referenzarchitektur ist eine Systemarchitektur, die Rollen und deren Verhältnisse beschreibt. Ergänzt wird sie durch ein Informationsmodell, das die je Rolle benötigten Funktionalitäten und die ausgetauschten Nachrichten spezifiziert, sowie durch eine Softwarearchitektur für die Umsetzung der Schnittstellen. Die Referenzarchitektur wurde auf einen bestehenden Forschungsdemonstrator der Technologie-Initiative SmartFactory KL e.V. exemplarisch übertragen.
+
+%   Ziel der nachfolgenden Arbeit ist es, den Einfluss heteronormativer Kinder- und Jugendliteratur auf kindliche und jugendliche Leser:innen zu erforschen. Dabei stellen sich folgende Fragen: Wie unterscheidet sich die Rezeption kindlicher Leser:innen von der Erwachsener? Wie wirken sich dementsprechend heteronormative Strukturen in der Kinder- und Jugendliteratur auf das Selbstverständnis und die Wertevorstellungen dieser aus? Und welche Risiken und Chancen ergeben sich dabei für die Literatur?
+%   Möglich sind in diesem Zusammenhang eine Übernahme heteronormativer Vorstellungen in das Wertesystem der kindlichen Leser:innen, aber auch eine Infragestellung ist nicht auszuschließen. Relevant werden hierbei auch unter anderem die sozio-kulturellen und bildungsbezogenen Erfahrungswelten und Prägungen der Kinder sein.
+%   Zur Beantwortung der Leitfrage werden die Ergebnisse quantitativer psychologischer wie auch literaturwissenschaftlicher Studien ausgewertet.
+%   Es wird sich herausstellen, dass der Einfluss von Kinder- und Jugendliteratur einen erheblichen Einfluss auf das Selbst- und Weltbild der Leser:innen haben kann, sofern diese Einflussnahme von den sozialen, kulturellen und bildungsbezogenen Umständen der Kinder begünstigt wird. Daraus kann sich eine gewisse Verantwortung für Schriftsteller:innen und Verlagshäuser hinsichtlich der Darstellung heteronormativer Strukturen ergeben, derer sie sich bewusst sein sollten.
+
+
+%   In der vorliegenden Arbeit wird eine Integration des Logitech SDKs für das Forcefeedback-Lenkrad G27 in die MATLAB/Simulink Umgebung durchgeführt. Um das SDK unter MATLAB/Simulink verwenden zu können wird eine S-function benötigt welche in diesem Fall in der Programmiersprache C++ verfasst und als C MEXDatei kompiliert wird. Zum Testen der geforderten Funktionalität wird unter Simulink eine entsprechende Simulationsumgebung erstellt
+% \end{comment}
+
 \end{abstract}
 
 % \begin{preface}
@@ -75,6 +110,7 @@ Fill this area with your abstract
 \input{chapter/3pd.tex}
 \input{chapter/4validierung.tex}
 \input{chapter/5zusammenfassung.tex}
+
 \appendix
 
 \end{document}
