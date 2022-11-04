@@ -1,4 +1,5 @@
 \documentclass[german, pt]{MTSreport}
+\usepackage[ngerman]{babel}
 \usepackage{microtype}
 \usepackage[cache=false]{minted}
 \usepackage{pdflscape}
@@ -23,14 +24,14 @@
 \newenvironment{codeblock}[3]
 {%
  \VerbatimEnvironment
- \begin{listing}[!h]
+ \begin{listing}[hbt!]
  \caption{#3} \label{code:#2}%
  \begin{minted}{#1}%
 }
-{\end{minted}\end{listing}}
+{\end{minted}\end{listing}\FloatBarrier}
 
 \newcommand{\img}[5][]{%
-\begin{figure}[!hbt]
+\begin{figure}[hbt!]
 \centering
 \includegraphics[width=14cm,height=#2,keepaspectratio]{#3}%
 \ifthenelse{\isempty{#1}}%
@@ -38,6 +39,7 @@
 {\caption{#5 \cite{#1}}}%
 \label{fig:#4}%
 \end{figure}%
+\FloatBarrier
 }
 
 \newcommand{\imgls}[4][]{%
@@ -67,10 +69,10 @@
 % \subtitle{Untertitel wenn nötig} % Just delete it if you don't have a subtitle
 \author{Mateus Molina}
 \tuklid{420495}
-\semester{3}
+\semester{4}
 \email{molina@rhrk.uni-kl.de}
 \supervision{Dipl.-Ing. Paaranan Sivasothy\\ Prof. Dr.-Ing. Jörg Seewig}
-\date{August 2022}
+\date{November 2022}
 \keywords{MATLAB/Simulink, BaSys, digitaler Zwilling, Hardware-in-the-Loop}
 
 \begin{abstract}
