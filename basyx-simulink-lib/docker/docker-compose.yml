@@ -15,4 +15,26 @@ services:
         - ./conf/aas-config:/usr/share/config:z
     ports:
       - 4001:4001
-
+#   dashboard-aas:
+#     image: eclipsebasyx/dashboard-aas:0.1.0-SNAPSHOT
+#     container_name: dashboard-aas
+#     environment:
+#       - BaSyxDashboardSubmodel_Min=15
+# #      - BaSyxDashboardSubmodel_Max=30
+#     ports:
+#       - 6400:6400
+  # node-red:
+  #   image: nodered/node-red
+  #   container_name: node-red
+  #   ports:
+  #     - 1880:1880
+  #   volumes:
+  #     - ./node-red:/data
+  grafana:
+    image: grafana/grafana:7.4.0
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./lib:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
