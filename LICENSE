@@ -1,0 +1,12 @@
+This repository is licensed under the MIT License, but it includes source code
+that depends on MathWorks MATLAB and Simulink proprietary tooling.
+
+Use of this software requires a valid MATLAB and/or Simulink license from
+MathWorks, and users must comply with MathWorks' licensing terms and
+conditions. This repository does not include or redistribute MATLAB or
+Simulink binaries, headers, or license material. The author does not
+provide any warranty or permission beyond the rights granted under the
+project's chosen open-source license.
+
+This notice is not legal advice and should not be interpreted as replacing
+the applicable MathWorks software license.
